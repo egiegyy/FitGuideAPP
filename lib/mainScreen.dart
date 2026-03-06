@@ -14,27 +14,25 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
 
-  final List<Map<String, dynamic>> pages = [
-    {"icon": Icons.home, "label": "Home", "page": const HomePage()},
-    {
-      "icon": Icons.fitness_center,
-      "label": "Workout",
-      "page": const Equipment(),
-    },
-    {
-      "icon": Icons.qr_code_scanner_outlined,
-      "label": "Scanner",
-      "page": const Scanner(),
-    },
-    {"icon": Icons.person, "label": "Profile", "page": const ProfilePage()},
+  final List<Widget> pages = const [
+    HomePage(),
+    Equipment(),
+    Scanner(),
+    ProfilePage(),
   ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
 
-      body: pages[_selectedIndex]["page"],
+      body: IndexedStack(index: _selectedIndex, children: pages),
 
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.black,
@@ -42,27 +40,24 @@ class _MainScreenState extends State<MainScreen> {
         selectedItemColor: Colors.blue,
         unselectedItemColor: Colors.white,
         type: BottomNavigationBarType.fixed,
-        items: List.generate(pages.length, (index) {
-          return BottomNavigationBarItem(
-            icon: IconButton(
-              icon: Icon(
-                pages[index]["icon"],
-                color: _selectedIndex == index ? Colors.blue : Colors.white,
-              ),
-              onPressed: () {
-                setState(() {
-                  _selectedIndex = index;
-                });
 
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => pages[index]["page"]),
-                );
-              },
-            ),
-            label: pages[index]["label"],
-          );
-        }),
+        onTap: _onItemTapped,
+
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+
+          BottomNavigationBarItem(
+            icon: Icon(Icons.fitness_center),
+            label: "Workout",
+          ),
+
+          BottomNavigationBarItem(
+            icon: Icon(Icons.qr_code_scanner_outlined),
+            label: "Scanner",
+          ),
+
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
+        ],
       ),
     );
   }

@@ -1,8 +1,9 @@
-import 'package:fitguide/mainScreen.dart';
-import 'package:fitguide/view/equipment.dart';
-import 'package:fitguide/view/home.dart';
-import 'package:fitguide/view/profile.dart';
-import 'package:fitguide/view/signUp.dart';
+import 'package:fitguide/view/exercise/legPressCalfRaise.dart';
+import 'package:fitguide/view/machine/chestPressMachine.dart';
+import 'package:fitguide/view/machine/latPulldownMachine.dart';
+import 'package:fitguide/view/machine/legPressMachine.dart';
+import 'package:fitguide/view/My%20Routine%20Page/routine.dart';
+import 'package:fitguide/view/splash.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: MainScreen(),
+      home: Splash(),
       //home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }

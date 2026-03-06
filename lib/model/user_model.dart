@@ -1,33 +1,73 @@
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class UserModel {
-  String username;
-  String email;
-  String password;
-  UserModel({
-    required this.username,
-    required this.email,
-    required this.password,
-  });
+class UserPref {
+  static const String userKey = "users";
+  static const String loginUserKey = "loginUser";
 
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'username': username,
-      'email': email,
-      'password': password,
+  static Future<void> saveUser({
+    required String username,
+    required String email,
+    required String password,
+  }) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    List<String> users = prefs.getStringList(userKey) ?? [];
+
+    Map<String, dynamic> newUser = {
+      "username": username,
+      "email": email,
+      "password": password,
     };
+
+    users.add(jsonEncode(newUser));
+
+    await prefs.setStringList(userKey, users);
   }
 
-  factory UserModel.fromMap(Map<String, dynamic> map) {
-    return UserModel(
-      username: map['username'] as String,
-      email: map['email'] as String,
-      password: map['password'] as String,
-    );
+  static Future<List<Map<String, dynamic>>> getUsers() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    List<String> users = prefs.getStringList(userKey) ?? [];
+
+    return users.map((e) => jsonDecode(e) as Map<String, dynamic>).toList();
   }
 
-  String toJson() => json.encode(toMap());
+  static Future<bool> login(String username, String password) async {
+    final prefs = await SharedPreferences.getInstance();
 
-  factory UserModel.fromJson(String source) =>
-      UserModel.fromMap(json.decode(source) as Map<String, dynamic>);
+    final users = await getUsers();
+
+    for (var user in users) {
+      if (user["username"] == username && user["password"] == password) {
+        await prefs.setString(loginUserKey, username);
+
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  static Future<String?> getLoginUser() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    return prefs.getString(loginUserKey);
+  }
+
+  //cek status login
+  static Future<bool> isLogin() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    final user = prefs.getString(loginUserKey);
+
+    return user != null;
+  }
+
+  //logout
+  static Future<void> logout() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    await prefs.remove(loginUserKey);
+  }
 }

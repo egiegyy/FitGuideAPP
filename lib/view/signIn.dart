@@ -1,4 +1,4 @@
-import 'package:fitguide/database/user_preferance.dart';
+import 'package:fitguide/database/preferance.dart';
 import 'package:fitguide/view/home.dart';
 import 'package:fitguide/view/signUp.dart';
 import 'package:flutter/material.dart';

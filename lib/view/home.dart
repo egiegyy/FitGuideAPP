@@ -1,4 +1,4 @@
-import 'package:fitguide/database/user_preferance.dart';
+import 'package:fitguide/database/preferance.dart';
 import 'package:fitguide/view/equipment.dart';
 import 'package:flutter/material.dart';
 
@@ -50,7 +50,6 @@ class _HomePageState extends State<HomePage> {
             color: Colors.white,
           ),
         ),
-        actions: [Icon(Icons.search_rounded, color: Colors.white, size: 30)],
       ),
       body: Padding(
         padding: EdgeInsetsGeometry.all(20),

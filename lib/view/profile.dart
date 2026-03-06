@@ -1,5 +1,5 @@
 import 'package:fitguide/view/progress.dart';
-import 'package:fitguide/view/routine.dart';
+import 'package:fitguide/view/My%20Routine%20Page/routine.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -12,19 +12,12 @@ class ProfilePage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.black,
         centerTitle: true,
-        leading: const Icon(Icons.arrow_back, color: Colors.white),
-        actions: const [
-          Padding(
-            padding: EdgeInsets.only(right: 15),
-            child: Icon(Icons.notifications_none, color: Colors.white),
-          ),
-        ],
         title: const Text(
           "Profile",
           style: TextStyle(
             fontWeight: FontWeight.bold,
             color: Colors.white,
-            fontSize: 22,
+            fontSize: 25,
           ),
         ),
       ),

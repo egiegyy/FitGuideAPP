@@ -20,7 +20,6 @@ class Scanner extends StatelessWidget {
             color: Colors.white,
           ),
         ),
-        actions: [Icon(Icons.notifications, color: Colors.white, size: 30)],
       ),
     );
   }

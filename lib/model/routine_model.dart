@@ -1,24 +1,19 @@
 class RoutineModel {
+  final int? id;
   final String day;
-  final String description;
+  final String exercise;
 
-  RoutineModel({required this.day, required this.description});
+  RoutineModel({this.id, required this.day, required this.exercise});
 
-  RoutineModel copyWith({String? day, String? description}) {
-    return RoutineModel(
-      day: day ?? this.day,
-      description: description ?? this.description,
-    );
+  Map<String, dynamic> toMap() {
+    return {'id': id, 'day': day, 'exercise': exercise};
   }
 
-  factory RoutineModel.fromJson(Map<String, dynamic> json) {
+  factory RoutineModel.fromMap(Map<String, dynamic> map) {
     return RoutineModel(
-      day: json['day'] ?? '',
-      description: json['description'] ?? '',
+      id: map['id'],
+      day: map['day'],
+      exercise: map['exercise'],
     );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {'day': day, 'description': description};
   }
 }
