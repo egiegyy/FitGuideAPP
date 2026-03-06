@@ -1,5 +1,6 @@
 import 'package:fitguide/database/preferance.dart';
 import 'package:fitguide/view/equipment.dart';
+import 'package:fitguide/view/package.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -376,7 +377,12 @@ class _HomePageState extends State<HomePage> {
                 width: double.infinity,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Package()),
+                    );
+                  },
                   child: Text(
                     "See More Package",
                     style: TextStyle(
