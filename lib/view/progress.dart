@@ -71,7 +71,7 @@ class _ProgressState extends State<Progress> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(20), // ✅ FIX
+        padding: const EdgeInsets.all(20),
         child: ListView(
           children: [
             Container(
