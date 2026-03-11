@@ -60,7 +60,7 @@ class _CloseGripLatPulldownPageState extends State<CloseGripLatPulldownPage> {
               Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: Colors.grey.withAlpha(800),
+                  color: Colors.white.withAlpha(800),
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: const Column(
@@ -94,7 +94,7 @@ class _CloseGripLatPulldownPageState extends State<CloseGripLatPulldownPage> {
               Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: Colors.grey.withAlpha(800),
+                  color: Colors.white.withAlpha(800),
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: const Text(
@@ -122,7 +122,7 @@ class _CloseGripLatPulldownPageState extends State<CloseGripLatPulldownPage> {
               Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: Colors.grey.withAlpha(800),
+                  color: Colors.white.withAlpha(800),
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: Column(

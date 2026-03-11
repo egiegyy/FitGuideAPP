@@ -1,209 +1,172 @@
-import 'package:fitguide/view/home.dart';
-import 'package:fitguide/view/equipment.dart';
+import 'package:fitguide/view/package/fullbodyworkout.dart';
+import 'package:fitguide/view/package/legworkout.dart';
+import 'package:fitguide/view/package/pullworkout.dart';
+import 'package:fitguide/view/package/pushworkout.dart';
 import 'package:flutter/material.dart';
 
 class Package extends StatefulWidget {
-  const Package({super.key});
+  Package({super.key});
 
   @override
   State<Package> createState() => _PackageState();
 }
 
 class _PackageState extends State<Package> {
-  bool isMyRoutineSelected = false;
-
-  int _selectedIndex = 1;
-
-  final List<Map<String, dynamic>> programWorkout = [
-    {
-      "name": "Bench Press",
-      "level": "Beginner",
-      "type": "Push",
-      "image": "assets/images/ContohPushPullLeg.png",
-    },
-    {
-      "name": "Lat Pulldown",
-      "level": "Beginner",
-      "type": "Pull",
-      "image": "assets/images/ContohPushPullLeg.png",
-    },
-    {
-      "name": "Seated Cable Row",
-      "level": "Beginner",
-      "type": "Pull",
-      "image": "assets/images/ContohPushPullLeg.png",
-    },
-    {
-      "name": "Pull Up",
-      "level": "Intermediate",
-      "type": "Pull",
-      "image": "assets/images/ContohPushPullLeg.png",
-    },
-    {
-      "name": "Leg Press",
-      "level": "Beginner",
-      "type": "Leg",
-      "image": "assets/images/ContohPushPullLeg.png",
-    },
-    {
-      "name": "Romanian Deadlift",
-      "level": "Intermediate",
-      "type": "Leg",
-      "image": "assets/images/ContohPushPullLeg.png",
-    },
-    {
-      "name": "Push Up",
-      "level": "Beginner",
-      "type": "Full Body",
-      "image": "assets/images/ContohFullBody.png",
-    },
-    {
-      "name": "Plank",
-      "level": "Beginner",
-      "type": "Full Body",
-      "image": "assets/images/ContohFullBody.png",
-    },
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        centerTitle: true,
-        title: const Text(
-          "Workout",
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: 25,
-          ),
-        ),
-      ),
       body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: isMyRoutineSelected
-                          ? const Color(0xff6C9E56)
-                          : Colors.transparent,
-                      foregroundColor: Colors.white,
-                      side: const BorderSide(color: Colors.white),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      elevation: 0,
+        padding: EdgeInsetsGeometry.all(20),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              /// PUSH
+              Container(
+                padding: EdgeInsets.all(20),
+                margin: EdgeInsets.only(bottom: 15),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: ListTile(
+                  leading: Image.asset("assets/images/Leg Press.png"),
+                  title: Text(
+                    "Push",
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
                     ),
+                  ),
+                  trailing: TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => PushWorkout()),
+                      );
+                    },
+                    child: const Text(
+                      "More",
+                      style: TextStyle(
+                        color: Color(0xff6C9E56),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+          
+              /// PULL
+              Container(
+                padding: EdgeInsets.all(20),
+                margin: EdgeInsets.only(bottom: 15),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: ListTile(
+                  leading: Image.asset("assets/images/Leg Press.png"),
+                  title: Text(
+                    "Pull",
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  trailing: TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => PullWorkout()),
+                      );
+                    },
+                    child: const Text(
+                      "More",
+                      style: TextStyle(
+                        color: Color(0xff6C9E56),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+          
+              /// LEG
+              Container(
+                padding: EdgeInsets.all(20),
+                margin: EdgeInsets.only(bottom: 15),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: ListTile(
+                  leading: Image.asset("assets/images/Leg Press.png"),
+                  title: Text(
+                    "Leg",
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  trailing: TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => LegWorkout()),
+                      );
+                    },
+                    child: const Text(
+                      "More",
+                      style: TextStyle(
+                        color: Color(0xff6C9E56),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+          
+              /// FULL BODY
+              Container(
+                padding: EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: ListTile(
+                  leading: Image.asset("assets/images/Leg Press.png"),
+                  title: Text(
+                    "Full Body",
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  trailing: TextButton(
                     onPressed: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const Equipment(),
+                          builder: (context) => FullBodyWorkout(),
                         ),
                       );
-
-                      setState(() {
-                        isMyRoutineSelected = true;
-                      });
                     },
                     child: const Text(
-                      "Equipment",
+                      "More",
                       style: TextStyle(
+                        color: Color(0xff6C9E56),
                         fontWeight: FontWeight.bold,
-                        fontSize: 20,
                       ),
                     ),
                   ),
                 ),
-
-                const SizedBox(width: 12),
-
-                Expanded(
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: !isMyRoutineSelected
-                          ? const Color(0xff6C9E56)
-                          : Colors.transparent,
-                      foregroundColor: Colors.white,
-                      side: const BorderSide(color: Colors.white),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      elevation: 0,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        isMyRoutineSelected = false;
-                      });
-                    },
-                    child: const Text(
-                      "Package",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-
-            const SizedBox(height: 20),
-
-            Expanded(
-              child: ListView.builder(
-                itemCount: programWorkout.length,
-                itemBuilder: (BuildContext context, int index) {
-                  final data = programWorkout[index];
-
-                  return Padding(
-                    padding: const EdgeInsets.all(5),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.grey.withAlpha(80),
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: ListTile(
-                        leading: const Icon(
-                          Icons.fitness_center,
-                          color: Colors.white,
-                        ),
-                        title: Text(
-                          data["name"],
-                          style: const TextStyle(
-                            color: Colors.blue,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                          ),
-                        ),
-                        subtitle: Text(
-                          data["type"],
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
-                          ),
-                        ),
-                        trailing: TextButton(
-                          onPressed: () {},
-                          child: const Text(
-                            "see more>",
-                            style: TextStyle(color: Color(0xff6C9E56)),
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
-                },
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

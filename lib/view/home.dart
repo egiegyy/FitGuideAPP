@@ -1,6 +1,12 @@
 import 'package:fitguide/database/preferance.dart';
+import 'package:fitguide/database/sqflite.dart';
+import 'package:fitguide/view/My%20Routine%20Page/routine.dart';
+import 'package:fitguide/view/My%20Routine%20Page/routine_day.dart';
 import 'package:fitguide/view/equipment.dart';
 import 'package:fitguide/view/package.dart';
+import 'package:fitguide/view/package/pullworkout.dart';
+import 'package:fitguide/view/package/pushworkout.dart';
+import 'package:fitguide/view/workoutTab.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -13,6 +19,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   String username = "";
 
+  List<String> routineDays = [];
+
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
@@ -21,11 +29,22 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  void getUser() async {
+  Future<void> getUser() async {
     String? user = await UserPref.getLoginUser();
 
+    if (!mounted) return;
+
     setState(() {
-      username = user ?? "";
+      username = user ?? "User";
+    });
+  }
+
+  /// LOAD ROUTINE FROM DATABASE
+  void loadRoutine() async {
+    final data = await DBHelper.getRoutineDays();
+
+    setState(() {
+      routineDays = data;
     });
   }
 
@@ -33,12 +52,14 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     getUser();
+    loadRoutine();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
+
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.white, size: 30),
         backgroundColor: Colors.black,
@@ -52,12 +73,13 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
+
       body: Padding(
         padding: EdgeInsetsGeometry.all(20),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
+
             children: [
               Text(
                 "Halo, $username",
@@ -67,32 +89,43 @@ class _HomePageState extends State<HomePage> {
                   color: Colors.blue,
                 ),
               ),
+
               Text(
                 "today is your Push Day!",
                 style: TextStyle(fontSize: 14, color: Colors.white),
               ),
+
               SizedBox(height: 20),
+
+              /// POSTER
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
+
                 child: Row(
                   children: [
                     SizedBox(
                       height: 200,
                       width: 300,
+
                       child: ClipRRect(
                         borderRadius: BorderRadiusGeometry.circular(15),
+
                         child: Image.asset(
                           "assets/images/posterCompetition.png",
                           fit: BoxFit.fill,
                         ),
                       ),
                     ),
+
                     SizedBox(width: 10),
+
                     SizedBox(
                       height: 200,
                       width: 300,
+
                       child: ClipRRect(
                         borderRadius: BorderRadiusGeometry.circular(15),
+
                         child: Image.asset(
                           "assets/images/posterCompetition2.png",
                           fit: BoxFit.fill,
@@ -102,7 +135,10 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               ),
+
               SizedBox(height: 20),
+
+              /// YOUR ROUTINE
               Text(
                 "Your routine",
                 style: TextStyle(
@@ -111,191 +147,134 @@ class _HomePageState extends State<HomePage> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
+
               SizedBox(height: 10),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: 150,
-                      padding: EdgeInsets.all(10),
+
+              /// IF ROUTINE EMPTY
+              routineDays.isEmpty
+                  ? Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.all(20),
+
                       decoration: BoxDecoration(
-                        color: Colors.black,
+                        border: Border.all(color: Colors.white),
                         borderRadius: BorderRadius.circular(15),
-                        border: Border.all(
-                          color: Colors.white,
-                          style: BorderStyle.solid,
-                        ),
                       ),
+
                       child: Column(
                         children: [
                           Text(
-                            "Push Day",
+                            "There is no Routine",
+                            style: TextStyle(color: Colors.white),
                             textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.blue,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
+                          ),
+
+                          SizedBox(height: 10),
+
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blue,
                             ),
-                          ),
-                          Text(
-                            "Bench Press, Shoulder Press, Lateral Raise, Tricep Pushdown",
-                            textAlign: TextAlign.center,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(color: Colors.white, fontSize: 14),
-                          ),
-                          Align(
-                            alignment: AlignmentGeometry.bottomRight,
-                            child: TextButton(
-                              style: ButtonStyle(),
-                              onPressed: () {},
-                              child: Text(
-                                "More",
-                                style: TextStyle(color: Colors.green),
+
+                            onPressed: () async {
+                              await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const MyRoutine(),
+                                ),
+                              );
+
+                              /// reload routine setelah user membuat routine
+                              loadRoutine();
+                            },
+
+                            child: Text(
+                              "Add Routine",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
                         ],
                       ),
-                    ),
-                    SizedBox(width: 10),
-                    Container(
-                      width: 150,
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.circular(15),
-                        border: Border.all(
-                          color: Colors.white,
-                          style: BorderStyle.solid,
-                        ),
-                      ),
-                      child: Column(
-                        children: [
-                          Text(
-                            "Pull Day",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.blue,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                            ),
-                          ),
-                          Text(
-                            "Lat Pulldown, Seated Cable Row, Face Pull, Hammer Curl",
-                            textAlign: TextAlign.center,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(color: Colors.white, fontSize: 14),
-                          ),
-                          Align(
-                            alignment: AlignmentGeometry.bottomRight,
-                            child: TextButton(
-                              style: ButtonStyle(),
-                              onPressed: () {},
-                              child: Text(
-                                "More",
-                                style: TextStyle(color: Colors.green),
+                    )
+                  /// SHOW USER ROUTINE
+                  : SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+
+                      child: Row(
+                        children: routineDays.map((day) {
+                          return Padding(
+                            padding: EdgeInsets.only(right: 10),
+
+                            child: Container(
+                              width: 150,
+                              padding: EdgeInsets.all(10),
+
+                              decoration: BoxDecoration(
+                                color: Colors.black,
+                                borderRadius: BorderRadius.circular(15),
+                                border: Border.all(color: Colors.white),
+                              ),
+
+                              child: Column(
+                                children: [
+                                  Text(
+                                    day,
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.blue,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+
+                                  Text(
+                                    "Your custom workout",
+                                    textAlign: TextAlign.center,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+
+                                  Align(
+                                    alignment: Alignment.bottomRight,
+
+                                    child: TextButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                RoutineDayPage(day: day),
+                                          ),
+                                        );
+                                      },
+
+                                      child: Text(
+                                        "More",
+                                        style: TextStyle(
+                                          color: Colors.green,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                          ),
-                        ],
+                          );
+                        }).toList(),
                       ),
                     ),
-                    SizedBox(width: 10),
-                    Container(
-                      width: 150,
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.circular(15),
-                        border: Border.all(
-                          color: Colors.white,
-                          style: BorderStyle.solid,
-                        ),
-                      ),
-                      child: Column(
-                        children: [
-                          Text(
-                            "Leg Day",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.blue,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                            ),
-                          ),
-                          Text(
-                            "Barbell Squat, Leg Press, Hip Thrust, Leg Curl, Standing Calf Raise",
-                            textAlign: TextAlign.center,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(color: Colors.white, fontSize: 14),
-                          ),
-                          Align(
-                            alignment: AlignmentGeometry.bottomRight,
-                            child: TextButton(
-                              style: ButtonStyle(),
-                              onPressed: () {},
-                              child: Text(
-                                "More",
-                                style: TextStyle(color: Colors.green),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(width: 10),
-                    Container(
-                      width: 150,
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.circular(15),
-                        border: Border.all(
-                          color: Colors.white,
-                          style: BorderStyle.solid,
-                        ),
-                      ),
-                      child: Column(
-                        children: [
-                          Text(
-                            "Upper Day",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.blue,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                            ),
-                          ),
-                          Text(
-                            "Bench Press, Lat Pulldown, Seated Row, Shoulder Press, Bicep Curl",
-                            textAlign: TextAlign.center,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(color: Colors.white, fontSize: 14),
-                          ),
-                          Align(
-                            alignment: AlignmentGeometry.bottomRight,
-                            child: TextButton(
-                              style: ButtonStyle(),
-                              onPressed: () {},
-                              child: Text(
-                                "More",
-                                style: TextStyle(color: Colors.green),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+
               SizedBox(height: 20),
+
+              /// PACKAGE EXERCISE
               Text(
                 "Package Exercise",
                 style: TextStyle(
@@ -304,18 +283,26 @@ class _HomePageState extends State<HomePage> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
+
               SizedBox(height: 10),
+
+              /// PACKAGE LIST
               ListTile(
                 contentPadding: EdgeInsets.all(5),
-                leading: Image.asset("assets/images/ContohPushPullLeg.png"),
+
+                leading: ClipRRect(
+                  borderRadius: BorderRadiusGeometry.circular(10),
+                  child: Image.asset("assets/images/ContohPushPullLeg.png"),
+                ),
                 title: Text(
-                  "Push Pull Leg",
+                  "Pull Workout",
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                     color: Colors.blue,
                   ),
                 ),
+
                 subtitle: Text(
                   "Push Pull Leg is a workout split that groups exercises based on movement patterns: Push trains chest, shoulders, and triceps; Pull trains back and biceps; and Leg focuses on lower body muscles like thighs and glutes.",
                   style: TextStyle(
@@ -326,65 +313,89 @@ class _HomePageState extends State<HomePage> {
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
+
                 trailing: TextButton(
-                  style: ButtonStyle(),
-                  onPressed: () {},
-                  child: Text(
-                    "More",
-                    style: TextStyle(
-                      color: Colors.green,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-              Divider(),
-              ListTile(
-                contentPadding: EdgeInsets.all(5),
-                leading: Image.asset("assets/images/ContohPushPullLeg.png"),
-                title: Text(
-                  "Upper Body",
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.blue,
-                  ),
-                ),
-                subtitle: Text(
-                  "Push Pull Leg is a workout split that groups exercises based on movement patterns: Push trains chest, shoulders, and triceps; Pull trains back and biceps; and Leg focuses on lower body muscles like thighs and glutes.",
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w300,
-                    color: Colors.white,
-                  ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                trailing: TextButton(
-                  style: ButtonStyle(),
-                  onPressed: () {},
-                  child: Text(
-                    "More",
-                    style: TextStyle(
-                      color: Colors.green,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(height: 10),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Package()),
+                      MaterialPageRoute(builder: (context) => PushWorkout()),
                     );
                   },
                   child: Text(
-                    "See More Package",
+                    "More",
+                    style: TextStyle(
+                      color: Colors.green,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+
+              Divider(),
+
+              ListTile(
+                contentPadding: EdgeInsets.all(5),
+
+                leading: ClipRRect(
+                  borderRadius: BorderRadiusGeometry.circular(10),
+                  child: Image.asset("assets/images/ContohPushPullLeg.png"),
+                ),
+                title: Text(
+                  "Pull Workout",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue,
+                  ),
+                ),
+
+                subtitle: Text(
+                  "Push Pull Leg is a workout split that groups exercises based on movement patterns: Push trains chest, shoulders, and triceps; Pull trains back and biceps; and Leg focuses on lower body muscles like thighs and glutes.",
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w300,
+                    color: Colors.white,
+                  ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+
+                trailing: TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => PullWorkout()),
+                    );
+                  },
+                  child: Text(
+                    "More",
+                    style: TextStyle(
+                      color: Colors.green,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+
+              SizedBox(height: 10),
+
+              SizedBox(
+                width: double.infinity,
+
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green,
+                  ),
+
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => WorkoutPage()),
+                    );
+                  },
+
+                  child: Text(
+                    "See More",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 14,
@@ -393,6 +404,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
+
               SizedBox(height: 20),
             ],
           ),

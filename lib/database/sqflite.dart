@@ -62,7 +62,6 @@ class DBHelper {
   static Future<int?> insertRoutine(String day, String exercise) async {
     final db = await DBHelper.db();
 
-    /// cek apakah exercise sudah ada di hari tersebut
     final exist = await db.query(
       'routine',
       where: 'day = ? AND exercise = ?',
@@ -70,7 +69,6 @@ class DBHelper {
     );
 
     if (exist.isNotEmpty) {
-      /// jika sudah ada jangan insert
       return null;
     }
 
@@ -95,14 +93,27 @@ class DBHelper {
     return result.map((e) => e['day'] as String).toList();
   }
 
+  /// GET EXERCISE PREVIEW (FIRST 2 EXERCISES PER DAY)
+  static Future<List<String>> getRoutineExercisePreview(String day) async {
+    final db = await DBHelper.db();
+
+    final result = await db.query(
+      'routine',
+      columns: ['exercise'],
+      where: 'day = ?',
+      whereArgs: [day],
+      limit: 2,
+    );
+
+    return result.map((e) => e['exercise'] as String).toList();
+  }
+
   /// DELETE ROUTINE
   static Future<int> deleteRoutine(int id) async {
     final db = await DBHelper.db();
 
     return await db.delete('routine', where: 'id = ?', whereArgs: [id]);
   }
-  
-  /// PROGRESS CRUD
 
   static Future<int> insertProgress(Map<String, dynamic> data) async {
     final db = await DBHelper.db();

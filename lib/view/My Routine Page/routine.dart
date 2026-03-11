@@ -1,5 +1,5 @@
 import 'package:fitguide/database/sqflite.dart';
-import 'package:fitguide/view/My%20Routine%20Page/add_exercise.dart';
+import 'package:fitguide/view/My Routine Page/add_exercise.dart';
 import 'package:flutter/material.dart';
 import 'routine_day.dart';
 
@@ -73,7 +73,7 @@ class _MyRoutineState extends State<MyRoutine> {
     if (day != null) {
       await Navigator.push(
         context,
-        MaterialPageRoute(builder: (_) => RoutineDayPage(day: day)),
+        MaterialPageRoute(builder: (_) => AddExercisePage(day: day)),
       );
 
       loadDays();
@@ -85,6 +85,7 @@ class _MyRoutineState extends State<MyRoutine> {
       context,
       MaterialPageRoute(builder: (_) => RoutineDayPage(day: day)),
     );
+
     loadDays();
   }
 
@@ -126,7 +127,6 @@ class _MyRoutineState extends State<MyRoutine> {
 
       body: Padding(
         padding: const EdgeInsets.all(20),
-
         child: days.isEmpty
             /// jika belum ada routine
             ? Column(children: [addButton()])
@@ -160,6 +160,7 @@ class _MyRoutineState extends State<MyRoutine> {
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
+
                                 children: [
                                   Text(
                                     day,

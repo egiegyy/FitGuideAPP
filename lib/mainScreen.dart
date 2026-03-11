@@ -1,8 +1,8 @@
+import 'package:fitguide/view/profile2.dart';
 import 'package:flutter/material.dart';
 import 'package:fitguide/view/home.dart';
-import 'package:fitguide/view/equipment.dart';
+import 'package:fitguide/view/workoutTab.dart';
 import 'package:fitguide/view/scanner.dart';
-import 'package:fitguide/view/profile.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -14,13 +14,22 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
 
+  /// LIST PAGE UTAMA
   final List<Widget> pages = const [
+    /// HOME
     HomePage(),
-    Equipment(),
-    Scanner(),
-    ProfilePage(),
+
+    /// WORKOUT
+    WorkoutPage(),
+
+    /// SCANNER
+    ScannerPage(),
+
+    /// PROFILE
+    ProfilePage2(),
   ];
 
+  /// NAVIGATION FUNCTION
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -32,13 +41,19 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       backgroundColor: Colors.black,
 
+      /// PAGE SWITCHER
       body: IndexedStack(index: _selectedIndex, children: pages),
 
+      /// BOTTOM NAVIGATION
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.black,
+
         currentIndex: _selectedIndex,
+
         selectedItemColor: Colors.blue,
+
         unselectedItemColor: Colors.white,
+
         type: BottomNavigationBarType.fixed,
 
         onTap: _onItemTapped,

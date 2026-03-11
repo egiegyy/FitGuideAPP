@@ -27,6 +27,11 @@ class _RoutineDayPageState extends State<RoutineDayPage> {
     setState(() {
       exercises = data;
     });
+
+    /// jika semua exercise sudah dihapus → kembali ke halaman sebelumnya
+    if (data.isEmpty) {
+      Navigator.pop(context);
+    }
   }
 
   Future deleteExercise(int id) async {
@@ -61,10 +66,8 @@ class _RoutineDayPageState extends State<RoutineDayPage> {
           ),
         ),
       ),
-
       body: Padding(
         padding: const EdgeInsets.all(20),
-
         child: Column(
           children: [
             Expanded(
@@ -77,24 +80,22 @@ class _RoutineDayPageState extends State<RoutineDayPage> {
                     )
                   : ListView.builder(
                       itemCount: exercises.length,
-
                       itemBuilder: (context, index) {
                         final routine = exercises[index];
 
-                        /// cari exercise dari library
                         final exerciseData = allExercises.firstWhere(
                           (e) => e.name == routine['exercise'],
+                          orElse: () => allExercises.first,
                         );
 
                         return Container(
-                          // margin: const EdgeInsets.only(bottom: 10),
-                          padding: .only(top: 15, bottom: 15),
+                          margin: const EdgeInsets.only(bottom: 10),
+                          padding: const EdgeInsets.only(top: 15, bottom: 15),
                           decoration: BoxDecoration(
                             color: Colors.black,
                             borderRadius: BorderRadius.circular(15),
                             border: Border.all(color: Colors.white),
                           ),
-
                           child: ListTile(
                             leading: ClipRRect(
                               borderRadius: BorderRadius.circular(10),
@@ -105,7 +106,6 @@ class _RoutineDayPageState extends State<RoutineDayPage> {
                                 fit: BoxFit.cover,
                               ),
                             ),
-
                             title: Text(
                               exerciseData.name,
                               style: const TextStyle(
@@ -114,8 +114,6 @@ class _RoutineDayPageState extends State<RoutineDayPage> {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-
-                            /// klik membuka halaman detail exercise
                             onTap: () {
                               Navigator.push(
                                 context,
@@ -124,14 +122,12 @@ class _RoutineDayPageState extends State<RoutineDayPage> {
                                 ),
                               );
                             },
-
                             trailing: IconButton(
                               icon: const Icon(
                                 Icons.delete,
                                 color: Colors.red,
                                 size: 20,
                               ),
-
                               onPressed: () {
                                 deleteExercise(routine['id']);
                               },
@@ -144,17 +140,14 @@ class _RoutineDayPageState extends State<RoutineDayPage> {
 
             InkWell(
               onTap: openAddExercise,
-
               child: Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(10),
-
                 decoration: BoxDecoration(
                   color: Colors.black,
                   borderRadius: BorderRadius.circular(15),
                   border: Border.all(color: Colors.white),
                 ),
-
                 child: const Column(
                   children: [Icon(Icons.add, color: Colors.white)],
                 ),

@@ -1,9 +1,8 @@
-import 'package:fitguide/view/exercise/legPressCalfRaise.dart';
-import 'package:fitguide/view/machine/chestPressMachine.dart';
-import 'package:fitguide/view/machine/latPulldownMachine.dart';
-import 'package:fitguide/view/machine/legPressMachine.dart';
-import 'package:fitguide/view/My%20Routine%20Page/routine.dart';
+import 'package:fitguide/mainScreen.dart';
+import 'package:fitguide/view/home.dart';
+import 'package:fitguide/view/profile2.dart';
 import 'package:fitguide/view/splash.dart';
+import 'package:fitguide/view/workoutTab.dart';
 import 'package:flutter/material.dart';
 
 void main() {

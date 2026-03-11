@@ -2,139 +2,84 @@ import 'package:fitguide/view/exercise/closeGripLP.dart';
 import 'package:fitguide/view/exercise/wideGripLP.dart';
 import 'package:flutter/material.dart';
 
-class LatPulldownMachine extends StatefulWidget {
-  const LatPulldownMachine({super.key});
+class PullWorkout extends StatefulWidget {
+  const PullWorkout({super.key});
 
   @override
-  State<LatPulldownMachine> createState() => _LatPulldownMachineState();
+  State<PullWorkout> createState() => _PullWorkoutState();
 }
 
-class _LatPulldownMachineState extends State<LatPulldownMachine> {
+class _PullWorkoutState extends State<PullWorkout> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
+
       appBar: AppBar(
-        iconTheme: const IconThemeData(color: Colors.white, size: 30),
         backgroundColor: Colors.black,
         centerTitle: true,
         title: const Text(
-          "Workout",
+          "Package",
           style: TextStyle(
+            color: Colors.white,
             fontWeight: FontWeight.bold,
             fontSize: 25,
-            color: Colors.white,
           ),
         ),
-        actions: const [
-          Icon(Icons.search_rounded, color: Colors.white, size: 30),
-        ],
       ),
+
       body: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: EdgeInsetsGeometry.all(20),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(15),
-                child: Image.asset("assets/images/Lat Pulldown Machine.png"),
+              Container(
+                alignment: Alignment.topLeft,
+                height: 150,
+                width: 150,
+                decoration: BoxDecoration(),
+          
+                child: ClipRRect(
+                  borderRadius: BorderRadiusGeometry.circular(20),
+                  child: Image.asset("assets/images/ContohPushPullLeg.png"),
+                ),
               ),
           
-              const SizedBox(height: 10),
+              SizedBox(height: 10),
           
-              const Text(
-                "Lat Pulldown Machine",
+              Text(
+                "Pull Workout",
                 style: TextStyle(
                   color: Colors.blue,
-                  fontSize: 25,
                   fontWeight: FontWeight.bold,
+                  fontSize: 35,
                 ),
               ),
           
-              const SizedBox(height: 10),
-          
-              Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: Colors.white.withAlpha(800),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: const Text(
-                  "Alat gym untuk melatih otot punggung dengan gerakan menarik bar dari atas ke arah dada. Latihan ini membantu memperkuat dan membentuk punggung bagian atas. Otot utama yang dilatih adalah latissimus dorsi, dengan bantuan biceps dan bahu belakang.",
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-          
-              const SizedBox(height: 20),
-          
-              const Text(
-                "Exercise",
+              Text(
+                "Created by FitGuide",
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
+                  fontSize: 15,
                 ),
               ),
           
-              const SizedBox(height: 20),
-          
-              /// WIDE GRIP LAT PULLDOWN
-              ListTile(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const WideGripLatPulldownPage(),
-                    ),
-                  );
-                },
-                leading: ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: Image.asset("assets/images/LatPulldownMachine.png"),
-                ),
-                title: const Text(
-                  "Wide Grip Lat Pulldown",
-                  style: TextStyle(
-                    color: Colors.blue,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                trailing: TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const WideGripLatPulldownPage(),
-                      ),
-                    );
-                  },
-                  child: const Text(
-                    "More",
-                    style: TextStyle(
-                      color: Color(0xff6C9E56),
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-          
-              const SizedBox(height: 20),
+              Divider(),
           
               /// CLOSE GRIP LAT PULLDOWN
               ListTile(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const CloseGripLatPulldownPage(),
-                    ),
-                  );
-                },
                 leading: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: Image.asset("assets/images/LatPulldownMachine.png"),
+                  child: Image.asset(
+                    "assets/images/Lat Pulldown.png",
+                    width: 50,
+                    height: 50,
+                    fit: BoxFit.cover,
+                  ),
                 ),
+          
                 title: const Text(
                   "Close Grip Lat Pulldown",
                   style: TextStyle(
@@ -143,12 +88,56 @@ class _LatPulldownMachineState extends State<LatPulldownMachine> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
+          
                 trailing: TextButton(
                   onPressed: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const CloseGripLatPulldownPage(),
+                        builder: (context) => CloseGripLatPulldownPage(),
+                      ),
+                    );
+                  },
+          
+                  child: const Text(
+                    "More",
+                    style: TextStyle(
+                      color: Color(0xff6C9E56),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+          
+              Divider(),
+          
+              /// WIDE GRIP LAT PULLDOWN
+              ListTile(
+                leading: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Image.asset(
+                    "assets/images/Lat Pulldown.png",
+                    width: 50,
+                    height: 50,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+          
+                title: const Text(
+                  "Wide Grip Lat Pulldown",
+                  style: TextStyle(
+                    color: Colors.blue,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+          
+                trailing: TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => WideGripLatPulldownPage(),
                       ),
                     );
                   },
@@ -161,6 +150,8 @@ class _LatPulldownMachineState extends State<LatPulldownMachine> {
                   ),
                 ),
               ),
+          
+              Divider(),
             ],
           ),
         ),
