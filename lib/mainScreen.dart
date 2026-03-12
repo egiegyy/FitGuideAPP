@@ -1,4 +1,4 @@
-import 'package:fitguide/view/profile2.dart';
+import 'package:fitguide/view/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:fitguide/view/home.dart';
 import 'package:fitguide/view/workoutTab.dart';
@@ -15,7 +15,7 @@ class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
 
   /// LIST PAGE UTAMA
-  final List<Widget> pages = const [
+  final List<Widget> pages = [
     /// HOME
     HomePage(),
 
@@ -26,7 +26,7 @@ class _MainScreenState extends State<MainScreen> {
     ScannerPage(),
 
     /// PROFILE
-    ProfilePage2(),
+    ProfilePage(),
   ];
 
   /// NAVIGATION FUNCTION

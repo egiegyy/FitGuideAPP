@@ -142,7 +142,7 @@ class _HomePageState extends State<HomePage> {
               Text(
                 "Your routine",
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.blue,
                   fontSize: 25,
                   fontWeight: FontWeight.bold,
                 ),
@@ -229,18 +229,6 @@ class _HomePageState extends State<HomePage> {
                                       fontSize: 20,
                                     ),
                                   ),
-
-                                  Text(
-                                    "Your custom workout",
-                                    textAlign: TextAlign.center,
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 14,
-                                    ),
-                                  ),
-
                                   Align(
                                     alignment: Alignment.bottomRight,
 
@@ -254,7 +242,6 @@ class _HomePageState extends State<HomePage> {
                                           ),
                                         );
                                       },
-
                                       child: Text(
                                         "More",
                                         style: TextStyle(
@@ -278,12 +265,11 @@ class _HomePageState extends State<HomePage> {
               Text(
                 "Package Exercise",
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.blue,
                   fontSize: 25,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-
               SizedBox(height: 10),
 
               /// PACKAGE LIST
@@ -404,7 +390,6 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
-
               SizedBox(height: 20),
             ],
           ),

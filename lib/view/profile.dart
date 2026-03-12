@@ -1,21 +1,21 @@
-import 'package:fitguide/database/sqflite.dart';
+import 'dart:io';
 import 'package:fitguide/database/preferance.dart';
-import 'package:fitguide/view/progress.dart';
+import 'package:fitguide/database/sqflite.dart';
 import 'package:fitguide/view/My Routine Page/routine.dart';
+import 'package:fitguide/view/progress.dart';
 import 'package:fitguide/view/setting.dart';
 import 'package:fitguide/view/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:io';
 
-class ProfilePage2 extends StatefulWidget {
-  const ProfilePage2({super.key});
+class ProfilePage extends StatefulWidget {
+  const ProfilePage({super.key});
 
   @override
-  State<ProfilePage2> createState() => _ProfilePage2State();
+  State<ProfilePage> createState() => _ProfilePageState();
 }
 
-class _ProfilePage2State extends State<ProfilePage2> {
+class _ProfilePageState extends State<ProfilePage> {
   List<String> routineDays = [];
 
   String username = "";
@@ -27,8 +27,14 @@ class _ProfilePage2State extends State<ProfilePage2> {
   @override
   void initState() {
     super.initState();
-    loadRoutine();
-    getUser();
+    initProfile();
+  }
+
+  /// INIT PROFILE DATA
+  Future initProfile() async {
+    await getUser();
+    await loadProfileImage();
+    await loadRoutine();
   }
 
   /// GET USERNAME
@@ -38,6 +44,21 @@ class _ProfilePage2State extends State<ProfilePage2> {
     setState(() {
       username = user ?? "username";
     });
+  }
+
+  /// LOAD PROFILE IMAGE
+  Future loadProfileImage() async {
+    String? user = await UserPref.getLoginUser();
+
+    if (user == null) return;
+
+    String? path = await UserPref.getProfileImage(user);
+
+    if (path != null) {
+      setState(() {
+        profileImage = File(path);
+      });
+    }
   }
 
   /// LOAD ROUTINE
@@ -54,6 +75,12 @@ class _ProfilePage2State extends State<ProfilePage2> {
     final XFile? image = await picker.pickImage(source: source);
 
     if (image != null) {
+      String? user = await UserPref.getLoginUser();
+
+      if (user != null) {
+        await UserPref.saveProfileImage(user, image.path);
+      }
+
       setState(() {
         profileImage = File(image.path);
       });
@@ -64,7 +91,7 @@ class _ProfilePage2State extends State<ProfilePage2> {
   void settingButton() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => SettingPage()),
+      MaterialPageRoute(builder: (context) => const SettingPage()),
     );
   }
 
@@ -335,12 +362,15 @@ class _ProfilePage2State extends State<ProfilePage2> {
               /// SETTINGS
               Container(
                 decoration: BoxDecoration(
-                  color: Colors.white.withAlpha(800),
+                  color: Colors.white.withOpacity(0.2),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: ListTile(
-                  leading: Icon(Icons.settings_rounded, color: Colors.white),
-                  title: Text(
+                  leading: const Icon(
+                    Icons.settings_rounded,
+                    color: Colors.white,
+                  ),
+                  title: const Text(
                     "Settings",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -349,7 +379,7 @@ class _ProfilePage2State extends State<ProfilePage2> {
                   ),
                   trailing: IconButton(
                     onPressed: settingButton,
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.arrow_forward_ios_rounded,
                       color: Colors.white,
                     ),
@@ -362,11 +392,14 @@ class _ProfilePage2State extends State<ProfilePage2> {
               /// LOGOUT
               Container(
                 decoration: BoxDecoration(
-                  color: Colors.white.withAlpha(800),
+                  color: Colors.white.withOpacity(0.2),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: ListTile(
-                  leading: Icon(Icons.logout_rounded, color: Colors.white),
+                  leading: const Icon(
+                    Icons.logout_rounded,
+                    color: Colors.white,
+                  ),
                   title: const Text(
                     "Logout",
                     style: TextStyle(
@@ -389,7 +422,7 @@ class _ProfilePage2State extends State<ProfilePage2> {
               /// DELETE ACCOUNT
               Container(
                 decoration: BoxDecoration(
-                  color: Colors.white.withAlpha(800),
+                  color: Colors.white.withOpacity(0.2),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: ListTile(

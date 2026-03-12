@@ -67,9 +67,8 @@ class UserPref {
 
     for (var user in users) {
       if (user["username"] == u && user["password"] == p) {
-        /// simpan username dari database
+        /// simpan username yang login
         await prefs.setString(loginUserKey, user["username"]);
-
         return true;
       }
     }
@@ -80,21 +79,18 @@ class UserPref {
   /// GET USER YANG LOGIN
   static Future<String?> getLoginUser() async {
     final prefs = await SharedPreferences.getInstance();
-
     return prefs.getString(loginUserKey);
   }
 
   /// CEK LOGIN STATUS
   static Future<bool> isLogin() async {
     final prefs = await SharedPreferences.getInstance();
-
     return prefs.getString(loginUserKey) != null;
   }
 
   /// LOGOUT
   static Future<void> logoutUser() async {
     final prefs = await SharedPreferences.getInstance();
-
     await prefs.remove(loginUserKey);
   }
 
@@ -110,13 +106,36 @@ class UserPref {
 
     users.removeWhere((userString) {
       final user = jsonDecode(userString) as Map<String, dynamic>;
-
       return user["username"] == loginUser;
     });
 
     await prefs.setStringList(userKey, users);
 
+    /// hapus profile image user
+    await prefs.remove("profile_$loginUser");
+
     /// logout setelah delete
     await prefs.remove(loginUserKey);
+  }
+
+  /// SAVE PROFILE IMAGE
+  static Future<void> saveProfileImage(String username, String path) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    await prefs.setString("profile_$username", path);
+  }
+
+  /// GET PROFILE IMAGE
+  static Future<String?> getProfileImage(String username) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    return prefs.getString("profile_$username");
+  }
+
+  /// DELETE PROFILE IMAGE
+  static Future<void> deleteProfileImage(String username) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    await prefs.remove("profile_$username");
   }
 }

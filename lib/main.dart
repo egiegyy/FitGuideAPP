@@ -1,6 +1,5 @@
 import 'package:fitguide/mainScreen.dart';
 import 'package:fitguide/view/home.dart';
-import 'package:fitguide/view/profile2.dart';
 import 'package:fitguide/view/splash.dart';
 import 'package:fitguide/view/workoutTab.dart';
 import 'package:flutter/material.dart';
