@@ -1,4 +1,7 @@
 import 'package:fitguide/database/sqflite.dart';
+import 'package:fitguide/view/exercise/chestPress.dart';
+import 'package:fitguide/view/exercise/legPress.dart';
+import 'package:fitguide/view/exercise/wideGripLP.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
@@ -13,13 +16,19 @@ class _ScannerPageState extends State<ScannerPage>
     with SingleTickerProviderStateMixin {
   late final AnimationController _animationController;
   late final Animation<double> _animation;
-
   final MobileScannerController controller = MobileScannerController();
 
   bool isScanning = false;
   bool scannerStarted = false;
 
   static const double scanSize = 280;
+
+  /// ROUTER MAP MACHINE PAGE
+  final Map<String, WidgetBuilder> machineRoutes = {
+    "lat_pulldown": (context) => const WideGripLatPulldownPage(),
+    "leg_press": (context) => const LegPressPage(),
+    "chest_press": (context) => const ChestPressPage(),
+  };
 
   @override
   void initState() {
@@ -55,26 +64,42 @@ class _ScannerPageState extends State<ScannerPage>
     if (!mounted) return;
 
     if (equipment != null) {
-      /// STOP CAMERA ONLY IF VALID
-      controller.stop();
+      /// STOP CAMERA
+      await controller.stop();
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Alat ditemukan: ${equipment['barcode']}")),
-      );
+      final pageId = equipment['page'];
 
-      /// routing ke halaman alat nanti disini
+      if (machineRoutes.containsKey(pageId)) {
+        /// NAVIGATE TO MACHINE PAGE
+        await Navigator.push(
+          context,
+          MaterialPageRoute(builder: machineRoutes[pageId]!),
+        );
+
+        /// AFTER RETURN FROM PAGE
+        if (!mounted) return;
+
+        await Future.delayed(const Duration(milliseconds: 500));
+
+        isScanning = false;
+
+        controller.start();
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Halaman alat belum tersedia")),
+        );
+
+        isScanning = false;
+        controller.start();
+      }
     } else {
-      /// CAMERA TETAP MENYALA
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Alat tidak ditemukan di FitGuide")),
       );
 
-      /// reset agar bisa scan lagi
-      Future.delayed(const Duration(milliseconds: 1500), () {
-        isScanning = false;
-      });
+      await Future.delayed(const Duration(milliseconds: 1200));
 
-      return;
+      isScanning = false;
     }
   }
 
@@ -91,12 +116,21 @@ class _ScannerPageState extends State<ScannerPage>
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        title: const Text("Scan Barcode"),
+        iconTheme: const IconThemeData(color: Colors.white, size: 30),
         backgroundColor: Colors.black,
+        centerTitle: true,
+        title: const Text(
+          "Scanner",
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
       ),
       body: Stack(
         children: [
-          /// CAMERA VIEW (ONLY AFTER BUTTON)
+          /// CAMERA VIEW
           if (scannerStarted)
             MobileScanner(
               controller: controller,
@@ -114,7 +148,7 @@ class _ScannerPageState extends State<ScannerPage>
               },
             ),
 
-          /// INTRO SCREEN (BEFORE SCAN)
+          /// INTRO SCREEN
           if (!scannerStarted)
             Center(
               child: ElevatedButton(
@@ -124,8 +158,16 @@ class _ScannerPageState extends State<ScannerPage>
                     horizontal: 30,
                     vertical: 15,
                   ),
+                  backgroundColor: Colors.green,
                 ),
-                child: const Text("Mulai Scan", style: TextStyle(fontSize: 18)),
+                child: const Text(
+                  "Start Scan",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    fontSize: 18,
+                  ),
+                ),
               ),
             ),
 
@@ -144,6 +186,7 @@ class _ScannerPageState extends State<ScannerPage>
                       backgroundBlendMode: BlendMode.dstOut,
                     ),
                   ),
+
                   Center(
                     child: Container(
                       width: scanSize,
@@ -194,8 +237,8 @@ class _ScannerPageState extends State<ScannerPage>
 
                     const Center(
                       child: Icon(
-                        Icons.center_focus_strong,
-                        color: Colors.white70,
+                        Icons.camera_alt_rounded,
+                        color: Colors.blue,
                         size: 40,
                       ),
                     ),
@@ -212,7 +255,7 @@ class _ScannerPageState extends State<ScannerPage>
               right: 0,
               child: Center(
                 child: Text(
-                  "Arahkan barcode ke dalam kotak",
+                  "Scan Barcode",
                   style: TextStyle(color: Colors.blue, fontSize: 18),
                 ),
               ),

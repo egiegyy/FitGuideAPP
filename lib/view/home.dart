@@ -173,7 +173,7 @@ class _HomePageState extends State<HomePage> {
 
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.blue,
+                              backgroundColor: Colors.green,
                             ),
 
                             onPressed: () async {
@@ -191,6 +191,7 @@ class _HomePageState extends State<HomePage> {
                             child: Text(
                               "Add Routine",
                               style: TextStyle(
+                                fontSize: 18,
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                               ),

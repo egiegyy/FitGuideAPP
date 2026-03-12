@@ -18,17 +18,18 @@ class DBHelper {
 
     return await openDatabase(
       path,
-      version: 3, // UPDATE VERSION
+      version: 4,
+
       /// FIRST CREATE DATABASE
       onCreate: (db, version) async {
-        /// TABLE PROGRESS
+        /// TABLE PROGRESS (WORKOUT LOG)
         await db.execute('''
         CREATE TABLE progress (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
-          name TEXT,
-          age TEXT,
+          exercise TEXT,
           weight TEXT,
-          height TEXT
+          reps TEXT,
+          date TEXT
         )
         ''');
 
@@ -54,7 +55,7 @@ class DBHelper {
         )
         ''');
 
-        /// INSERT SAMPLE EQUIPMENT
+        /// SAMPLE EQUIPMENT
         await db.insert('equipment', {
           'barcode': 'LAT001',
           'name': 'Lat Pulldown',
@@ -96,6 +97,21 @@ class DBHelper {
             muscle TEXT,
             description TEXT,
             animation TEXT
+          )
+          ''');
+        }
+
+        /// MIGRATION TO NEW PROGRESS STRUCTURE
+        if (oldVersion < 4) {
+          await db.execute('DROP TABLE IF EXISTS progress');
+
+          await db.execute('''
+          CREATE TABLE progress (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            exercise TEXT,
+            weight TEXT,
+            reps TEXT,
+            date TEXT
           )
           ''');
         }
@@ -181,6 +197,7 @@ class DBHelper {
   }
 
   /// PROGRESS FUNCTIONS
+
   static Future<int> insertProgress(Map<String, dynamic> data) async {
     final db = await DBHelper.db();
     return await db.insert('progress', data);
@@ -188,18 +205,11 @@ class DBHelper {
 
   static Future<List<Map<String, dynamic>>> getProgress() async {
     final db = await DBHelper.db();
-    return await db.query('progress');
-  }
-
-  static Future<int> updateProgress(int id, Map<String, dynamic> data) async {
-    final db = await DBHelper.db();
-
-    return await db.update('progress', data, where: 'id = ?', whereArgs: [id]);
+    return await db.query('progress', orderBy: "date DESC");
   }
 
   static Future<int> deleteProgress(int id) async {
     final db = await DBHelper.db();
-
     return await db.delete('progress', where: 'id = ?', whereArgs: [id]);
   }
 }

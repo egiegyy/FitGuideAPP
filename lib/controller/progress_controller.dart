@@ -1,36 +1,43 @@
 import 'package:fitguide/database/sqflite.dart';
 import 'package:fitguide/model/progress_model.dart';
 
-class UserController {
-  static Future<void> insertUser(ProgressModel user) async {
-    final dbs = await DBHelper.db();
-    await dbs.insert('progress', user.toMap());
+class ProgressController {
+  /// INSERT WORKOUT PROGRESS
+  static Future<void> insertProgress(ProgressModel progress) async {
+    final db = await DBHelper.db();
+
+    await db.insert('progress', progress.toMap());
   }
 
-  static Future<List<ProgressModel>> getAllUser() async {
-    final dbs = await DBHelper.db();
-    final results = await dbs.query('progress');
+  /// GET ALL WORKOUT PROGRESS (LATEST FIRST)
+  static Future<List<ProgressModel>> getAllProgress() async {
+    final db = await DBHelper.db();
+
+    final results = await db.query('progress', orderBy: "date DESC");
+
     return results.map((e) => ProgressModel.fromMap(e)).toList();
   }
 
-  static Future<int> updateUser(ProgressModel user) async {
-    final dbs = await DBHelper.db();
+  /// UPDATE WORKOUT PROGRESS
+  static Future<int> updateProgress(ProgressModel progress) async {
+    final db = await DBHelper.db();
 
-    if (user.id == null) {
-      throw Exception("ID wajib ada");
+    if (progress.id == null) {
+      throw Exception("Progress ID is required for update");
     }
 
-    return dbs.update(
+    return await db.update(
       'progress',
-      user.toMap(),
+      progress.toMap(),
       where: 'id = ?',
-      whereArgs: [user.id],
+      whereArgs: [progress.id],
     );
   }
 
-  static Future<int> deleteUser(int id) async {
-    final dbs = await DBHelper.db();
+  /// DELETE WORKOUT PROGRESS
+  static Future<int> deleteProgress(int id) async {
+    final db = await DBHelper.db();
 
-    return dbs.delete('progress', where: 'id = ?', whereArgs: [id]);
+    return await db.delete('progress', where: 'id = ?', whereArgs: [id]);
   }
 }
