@@ -90,7 +90,7 @@ class _LegPressMachineState extends State<LegPressMachine> {
                 },
                 leading: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: Image.asset("assets/images/LegPressMachine.png"),
+                  child: Image.asset("assets/images/Leg Press.png"),
                 ),
                 title: const Text(
                   "Leg Press",
@@ -133,7 +133,7 @@ class _LegPressMachineState extends State<LegPressMachine> {
                 },
                 leading: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: Image.asset("assets/images/LegPressMachine.png"),
+                  child: Image.asset("assets/images/Leg Press.png"),
                 ),
                 title: const Text(
                   "Leg Press Calf Raise",

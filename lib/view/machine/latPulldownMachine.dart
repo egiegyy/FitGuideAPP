@@ -40,9 +40,9 @@ class _LatPulldownMachineState extends State<LatPulldownMachine> {
                 borderRadius: BorderRadius.circular(15),
                 child: Image.asset("assets/images/Lat Pulldown Machine.png"),
               ),
-          
+
               const SizedBox(height: 10),
-          
+
               const Text(
                 "Lat Pulldown Machine",
                 style: TextStyle(
@@ -51,9 +51,9 @@ class _LatPulldownMachineState extends State<LatPulldownMachine> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-          
+
               const SizedBox(height: 10),
-          
+
               Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
@@ -65,9 +65,9 @@ class _LatPulldownMachineState extends State<LatPulldownMachine> {
                   style: TextStyle(color: Colors.white),
                 ),
               ),
-          
+
               const SizedBox(height: 20),
-          
+
               const Text(
                 "Exercise",
                 style: TextStyle(
@@ -75,9 +75,9 @@ class _LatPulldownMachineState extends State<LatPulldownMachine> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-          
+
               const SizedBox(height: 20),
-          
+
               /// WIDE GRIP LAT PULLDOWN
               ListTile(
                 onTap: () {
@@ -90,7 +90,7 @@ class _LatPulldownMachineState extends State<LatPulldownMachine> {
                 },
                 leading: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: Image.asset("assets/images/LatPulldownMachine.png"),
+                  child: Image.asset("assets/images/Lat Pulldown.png"),
                 ),
                 title: const Text(
                   "Wide Grip Lat Pulldown",
@@ -118,9 +118,9 @@ class _LatPulldownMachineState extends State<LatPulldownMachine> {
                   ),
                 ),
               ),
-          
+
               const SizedBox(height: 20),
-          
+
               /// CLOSE GRIP LAT PULLDOWN
               ListTile(
                 onTap: () {
@@ -133,7 +133,9 @@ class _LatPulldownMachineState extends State<LatPulldownMachine> {
                 },
                 leading: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: Image.asset("assets/images/LatPulldownMachine.png"),
+                  child: Image.asset(
+                    "assets/images/Close Grip Lat Pulldown.png",
+                  ),
                 ),
                 title: const Text(
                   "Close Grip Lat Pulldown",

@@ -38,7 +38,7 @@ class _WideGripWideGripLPState extends State<WideGripLatPulldownPage> {
                 height: 260,
                 color: const Color(0xffF4F6F8),
                 child: Image.asset(
-                  "assets/exercises/wide_grip_lat_pulldown.png",
+                  "assets/images/animation/lat_pulldown_animation.gif",
                   fit: BoxFit.contain,
                 ),
               ),

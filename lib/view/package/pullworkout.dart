@@ -39,15 +39,15 @@ class _PullWorkoutState extends State<PullWorkout> {
                 height: 150,
                 width: 150,
                 decoration: BoxDecoration(),
-          
+
                 child: ClipRRect(
                   borderRadius: BorderRadiusGeometry.circular(20),
                   child: Image.asset("assets/images/ContohPushPullLeg.png"),
                 ),
               ),
-          
+
               SizedBox(height: 10),
-          
+
               Text(
                 "Pull Workout",
                 style: TextStyle(
@@ -56,7 +56,7 @@ class _PullWorkoutState extends State<PullWorkout> {
                   fontSize: 35,
                 ),
               ),
-          
+
               Text(
                 "Created by FitGuide",
                 style: TextStyle(
@@ -65,21 +65,21 @@ class _PullWorkoutState extends State<PullWorkout> {
                   fontSize: 15,
                 ),
               ),
-          
+
               Divider(),
-          
+
               /// CLOSE GRIP LAT PULLDOWN
               ListTile(
                 leading: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: Image.asset(
-                    "assets/images/Lat Pulldown.png",
+                    "assets/images/Close Grip Lat Pulldown.png",
                     width: 50,
                     height: 50,
                     fit: BoxFit.cover,
                   ),
                 ),
-          
+
                 title: const Text(
                   "Close Grip Lat Pulldown",
                   style: TextStyle(
@@ -88,7 +88,7 @@ class _PullWorkoutState extends State<PullWorkout> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-          
+
                 trailing: TextButton(
                   onPressed: () {
                     Navigator.push(
@@ -98,7 +98,7 @@ class _PullWorkoutState extends State<PullWorkout> {
                       ),
                     );
                   },
-          
+
                   child: const Text(
                     "More",
                     style: TextStyle(
@@ -108,9 +108,9 @@ class _PullWorkoutState extends State<PullWorkout> {
                   ),
                 ),
               ),
-          
+
               Divider(),
-          
+
               /// WIDE GRIP LAT PULLDOWN
               ListTile(
                 leading: ClipRRect(
@@ -122,7 +122,7 @@ class _PullWorkoutState extends State<PullWorkout> {
                     fit: BoxFit.cover,
                   ),
                 ),
-          
+
                 title: const Text(
                   "Wide Grip Lat Pulldown",
                   style: TextStyle(
@@ -131,7 +131,7 @@ class _PullWorkoutState extends State<PullWorkout> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-          
+
                 trailing: TextButton(
                   onPressed: () {
                     Navigator.push(
@@ -150,7 +150,7 @@ class _PullWorkoutState extends State<PullWorkout> {
                   ),
                 ),
               ),
-          
+
               Divider(),
             ],
           ),

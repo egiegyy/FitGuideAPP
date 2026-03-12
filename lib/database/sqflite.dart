@@ -18,8 +18,7 @@ class DBHelper {
 
     return await openDatabase(
       path,
-      version: 2,
-
+      version: 3, // UPDATE VERSION
       /// FIRST CREATE DATABASE
       onCreate: (db, version) async {
         /// TABLE PROGRESS
@@ -41,6 +40,38 @@ class DBHelper {
           exercise TEXT
         )
         ''');
+
+        /// TABLE EQUIPMENT (FOR SCANNER)
+        await db.execute('''
+        CREATE TABLE equipment (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          barcode TEXT UNIQUE,
+          name TEXT,
+          page TEXT,
+          muscle TEXT,
+          description TEXT,
+          animation TEXT
+        )
+        ''');
+
+        /// INSERT SAMPLE EQUIPMENT
+        await db.insert('equipment', {
+          'barcode': 'LAT001',
+          'name': 'Lat Pulldown',
+          'page': 'lat_pulldown',
+        });
+
+        await db.insert('equipment', {
+          'barcode': 'CHEST001',
+          'name': 'Chest Press',
+          'page': 'chest_press',
+        });
+
+        await db.insert('equipment', {
+          'barcode': 'LEG001',
+          'name': 'Leg Press',
+          'page': 'leg_press',
+        });
       },
 
       /// DATABASE MIGRATION
@@ -54,8 +85,42 @@ class DBHelper {
           )
           ''');
         }
+
+        if (oldVersion < 3) {
+          await db.execute('''
+          CREATE TABLE IF NOT EXISTS equipment (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            barcode TEXT UNIQUE,
+            name TEXT,
+            page TEXT,
+            muscle TEXT,
+            description TEXT,
+            animation TEXT
+          )
+          ''');
+        }
       },
     );
+  }
+
+  /// CHECK EQUIPMENT BY BARCODE
+  static Future<Map<String, dynamic>?> getEquipmentByBarcode(
+    String barcode,
+  ) async {
+    final db = await DBHelper.db();
+
+    final result = await db.query(
+      'equipment',
+      where: 'barcode = ?',
+      whereArgs: [barcode],
+      limit: 1,
+    );
+
+    if (result.isNotEmpty) {
+      return result.first;
+    }
+
+    return null;
   }
 
   /// INSERT ROUTINE (PREVENT DUPLICATE)
@@ -93,7 +158,7 @@ class DBHelper {
     return result.map((e) => e['day'] as String).toList();
   }
 
-  /// GET EXERCISE PREVIEW (FIRST 2 EXERCISES PER DAY)
+  /// GET EXERCISE PREVIEW
   static Future<List<String>> getRoutineExercisePreview(String day) async {
     final db = await DBHelper.db();
 
@@ -115,6 +180,7 @@ class DBHelper {
     return await db.delete('routine', where: 'id = ?', whereArgs: [id]);
   }
 
+  /// PROGRESS FUNCTIONS
   static Future<int> insertProgress(Map<String, dynamic> data) async {
     final db = await DBHelper.db();
     return await db.insert('progress', data);

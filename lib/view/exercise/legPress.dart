@@ -38,7 +38,7 @@ class _LegPressPageState extends State<LegPressPage> {
                 height: 260,
                 color: const Color(0xffF4F6F8),
                 child: Image.asset(
-                  "assets/images/Leg Press.png",
+                  "assets/images/animation/leg_press_animation.gif",
                   fit: BoxFit.contain,
                 ),
               ),

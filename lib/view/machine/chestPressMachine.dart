@@ -88,7 +88,7 @@ class _ChestPressState extends State<ChestPressMachine> {
                 },
                 leading: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: Image.asset("assets/images/chestPress.png"),
+                  child: Image.asset("assets/images/Chest Press.png"),
                 ),
                 title: Text(
                   "Chest Press",
@@ -131,7 +131,7 @@ class _ChestPressState extends State<ChestPressMachine> {
                 },
                 leading: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: Image.asset("assets/images/chestPress.png"),
+                  child: Image.asset("assets/images/Chest Press.png"),
                 ),
                 title: Text(
                   "Close Grip Chest Press",
@@ -150,7 +150,7 @@ class _ChestPressState extends State<ChestPressMachine> {
                       ),
                     );
                   },
-                 child: const Text(
+                  child: const Text(
                     "More",
                     style: TextStyle(
                       color: Color(0xff6C9E56),

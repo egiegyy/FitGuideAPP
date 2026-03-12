@@ -38,7 +38,7 @@ class _ChestPressPageState extends State<ChestPressPage> {
                 height: 260,
                 color: const Color(0xffF4F6F8),
                 child: Image.asset(
-                  "assets/images/Chest Press.png",
+                  "assets/images/animation/chest_press_animation.gif",
                   fit: BoxFit.contain,
                 ),
               ),
