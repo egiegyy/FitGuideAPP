@@ -15,6 +15,10 @@ class _SignUpState extends State<SignUp> {
   final usernameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
+
+  bool isPasswordVisible = false;
+  bool isConfirmPasswordVisible = false;
 
   Future<void> register() async {
     final form = _formKey.currentState;
@@ -32,24 +36,21 @@ class _SignUpState extends State<SignUp> {
 
       if (!mounted) return;
 
-      /// REGISTER BERHASIL
       if (success) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("Registration Successful")),
         );
 
-        /// reset form
         usernameController.clear();
         emailController.clear();
         passwordController.clear();
+        confirmPasswordController.clear();
 
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => const SignIn()),
         );
-      }
-      /// USERNAME SUDAH ADA
-      else {
+      } else {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("Username already exists")),
         );
@@ -62,7 +63,54 @@ class _SignUpState extends State<SignUp> {
     usernameController.dispose();
     emailController.dispose();
     passwordController.dispose();
+    confirmPasswordController.dispose();
     super.dispose();
+  }
+
+  /// INPUT DECORATION FUNCTION
+  InputDecoration inputDecoration({
+    required IconData icon,
+    required String hint,
+    Widget? suffixIcon,
+  }) {
+    return InputDecoration(
+      filled: true,
+      fillColor: const Color(0xFFD9D9D9),
+
+      prefixIcon: Icon(icon, color: Colors.black54),
+
+      suffixIcon: suffixIcon,
+
+      hintText: hint,
+      hintStyle: const TextStyle(color: Colors.black54),
+
+      contentPadding: const EdgeInsets.symmetric(vertical: 18, horizontal: 20),
+
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(20),
+        borderSide: BorderSide.none,
+      ),
+
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(20),
+        borderSide: BorderSide.none,
+      ),
+
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(20),
+        borderSide: BorderSide.none,
+      ),
+
+      errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(20),
+        borderSide: const BorderSide(color: Colors.red),
+      ),
+
+      focusedErrorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(20),
+        borderSide: const BorderSide(color: Colors.red),
+      ),
+    );
   }
 
   @override
@@ -86,33 +134,43 @@ class _SignUpState extends State<SignUp> {
 
       body: Padding(
         padding: const EdgeInsets.all(20),
-
         child: SingleChildScrollView(
           child: Column(
             children: [
+              const SizedBox(height: 20),
+
               const Image(
                 image: AssetImage("assets/images/logoFitGuide.png"),
                 alignment: Alignment.topCenter,
               ),
 
-              Container(
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: Colors.grey.withOpacity(0.2),
-                  borderRadius: BorderRadius.circular(15),
-                ),
+              const SizedBox(height: 20),
 
-                padding: const EdgeInsets.all(20),
+              Form(
+                key: _formKey,
 
-                child: Form(
-                  key: _formKey,
+                child: Container(
+                  padding: const EdgeInsets.all(20),
+
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
 
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       /// USERNAME
+                      const Text(
+                        "Username",
+                        style: TextStyle(color: Colors.white),
+                      ),
+
+                      const SizedBox(height: 5),
+
                       TextFormField(
                         controller: usernameController,
-                        style: const TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.black),
 
                         validator: (value) {
                           if (value == null || value.trim().isEmpty) {
@@ -121,60 +179,58 @@ class _SignUpState extends State<SignUp> {
                           return null;
                         },
 
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          prefixIcon: const Icon(
-                            Icons.person,
-                            color: Colors.white,
-                          ),
-                          hintText: "Please input your username",
-                          hintStyle: const TextStyle(color: Colors.white),
-                          labelText: "Username",
+                        decoration: inputDecoration(
+                          icon: Icons.person,
+                          hint: "Username",
                         ),
                       ),
 
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 15),
 
                       /// EMAIL
+                      const Text(
+                        "Email",
+                        style: TextStyle(color: Colors.white),
+                      ),
+
+                      const SizedBox(height: 5),
+
                       TextFormField(
                         controller: emailController,
-                        style: const TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.black),
 
                         validator: (value) {
                           if (value == null || value.trim().isEmpty) {
                             return "Email cannot be empty";
                           }
 
-                          if (!value.contains("@")) {
+                          if (!value.contains("@gmail.com")) {
                             return "Email is not valid";
                           }
 
                           return null;
                         },
 
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          prefixIcon: const Icon(
-                            Icons.email,
-                            color: Colors.white,
-                          ),
-                          hintText: "Please input your email",
-                          hintStyle: const TextStyle(color: Colors.white),
-                          labelText: "Email",
+                        decoration: inputDecoration(
+                          icon: Icons.email_rounded,
+                          hint: "Email",
                         ),
                       ),
 
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 15),
 
                       /// PASSWORD
+                      const Text(
+                        "Password",
+                        style: TextStyle(color: Colors.white),
+                      ),
+
+                      const SizedBox(height: 5),
+
                       TextFormField(
                         controller: passwordController,
-                        obscureText: true,
-                        style: const TextStyle(color: Colors.white),
+                        obscureText: !isPasswordVisible,
+                        style: const TextStyle(color: Colors.black),
 
                         validator: (value) {
                           if (value == null || value.trim().isEmpty) {
@@ -188,29 +244,122 @@ class _SignUpState extends State<SignUp> {
                           return null;
                         },
 
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
+                        decoration: inputDecoration(
+                          icon: Icons.lock_outline,
+                          hint: "Password",
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              isPasswordVisible
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: Colors.black54,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                isPasswordVisible = !isPasswordVisible;
+                              });
+                            },
                           ),
-                          prefixIcon: const Icon(
-                            Icons.lock,
-                            color: Colors.white,
-                          ),
-                          hintText: "Please input your password",
-                          hintStyle: const TextStyle(color: Colors.white),
-                          labelText: "Password",
                         ),
                       ),
 
+                      const SizedBox(height: 15),
+
+                      /// CONFIRM PASSWORD
+                      const Text(
+                        "Confirm Password",
+                        style: TextStyle(color: Colors.white),
+                      ),
+
+                      const SizedBox(height: 5),
+
+                      TextFormField(
+                        controller: confirmPasswordController,
+                        obscureText: !isConfirmPasswordVisible,
+                        style: const TextStyle(color: Colors.black),
+
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Confirm password cannot be empty";
+                          }
+
+                          if (value != passwordController.text) {
+                            return "Password does not match";
+                          }
+
+                          return null;
+                        },
+
+                        decoration: inputDecoration(
+                          icon: Icons.lock_outline,
+                          hint: "Confirm Password",
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              isConfirmPasswordVisible
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: Colors.black54,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                isConfirmPasswordVisible =
+                                    !isConfirmPasswordVisible;
+                              });
+                            },
+                          ),
+                        ),
+                      ),
+
+                      const SizedBox(height: 10),
+
+                      /// ALREADY HAVE ACCOUNT
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            "Already have account? ",
+                            style: TextStyle(color: Colors.white),
+                          ),
+
+                          TextButton(
+                            style: TextButton.styleFrom(
+                              padding: EdgeInsets.zero,
+                              minimumSize: Size.zero,
+                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                            ),
+
+                            onPressed: () {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const SignIn(),
+                                ),
+                              );
+                            },
+
+                            child: const Text(
+                              "Sign In",
+                              style: TextStyle(
+                                color: Colors.green,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                       const SizedBox(height: 20),
 
                       /// SIGN UP BUTTON
                       SizedBox(
                         width: double.infinity,
+                        height: 50,
 
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blue,
+                            backgroundColor: const Color(0xFF6AA84F),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
                           ),
 
                           onPressed: register,
@@ -218,30 +367,10 @@ class _SignUpState extends State<SignUp> {
                           child: const Text(
                             "Sign Up",
                             style: TextStyle(
-                              color: Colors.white,
                               fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: Colors.white,
                             ),
-                          ),
-                        ),
-                      ),
-
-                      /// SIGN IN BUTTON
-                      SizedBox(
-                        width: double.infinity,
-
-                        child: OutlinedButton(
-                          onPressed: () {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const SignIn(),
-                              ),
-                            );
-                          },
-
-                          child: const Text(
-                            "Sign In",
-                            style: TextStyle(color: Colors.white),
                           ),
                         ),
                       ),

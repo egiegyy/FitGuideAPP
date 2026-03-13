@@ -143,7 +143,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             TextButton(
               onPressed: () async {
-                await UserPref.logoutUser();
+                await UserPref.logout();
 
                 Navigator.pushAndRemoveUntil(
                   context,

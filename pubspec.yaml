@@ -43,6 +43,7 @@ dependencies:
   lottie: ^3.3.2
   animate_do: ^4.2.0
   mobile_scanner: ^7.2.0
+  fl_chart: ^0.66.0
 
 dev_dependencies:
   flutter_test:

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fitguide/controller/progress_controller.dart';
 import 'package:fitguide/model/progress_model.dart';
-import 'package:fitguide/utils/decoration.dart';
+import 'package:fitguide/view/progress_chart.dart';
 
 class Progress extends StatefulWidget {
   const Progress({super.key});
@@ -16,7 +16,32 @@ class _ProgressState extends State<Progress> {
   final repsController = TextEditingController();
   DateTime selectedDate = DateTime.now();
 
-  /// DATE PICKER
+  InputDecoration inputDecoration({
+    required String hint,
+    required IconData icon,
+  }) {
+    return InputDecoration(
+      filled: true,
+      fillColor: const Color(0xFFD9D9D9),
+      hintText: hint,
+      hintStyle: const TextStyle(color: Colors.black54),
+      prefixIcon: Icon(icon, color: Colors.black54),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(20),
+        borderSide: BorderSide.none,
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(20),
+        borderSide: BorderSide.none,
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(20),
+        borderSide: BorderSide.none,
+      ),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+    );
+  }
+
   Future<void> pickDate() async {
     final picked = await showDatePicker(
       context: context,
@@ -24,6 +49,7 @@ class _ProgressState extends State<Progress> {
       lastDate: DateTime(2100),
       initialDate: selectedDate,
     );
+
     if (picked != null) {
       setState(() {
         selectedDate = picked;
@@ -31,7 +57,6 @@ class _ProgressState extends State<Progress> {
     }
   }
 
-  /// SAVE WORKOUT
   Future<void> saveProgress() async {
     if (exerciseController.text.isEmpty ||
         weightController.text.isEmpty ||
@@ -41,16 +66,20 @@ class _ProgressState extends State<Progress> {
       ).showSnackBar(const SnackBar(content: Text("All fields are required")));
       return;
     }
+
     final progress = ProgressModel(
       exercise: exerciseController.text,
       weight: weightController.text,
       reps: repsController.text,
       date: selectedDate.toString().split(" ")[0],
     );
+
     await ProgressController.insertProgress(progress);
+
     exerciseController.clear();
     weightController.clear();
     repsController.clear();
+
     setState(() {});
   }
 
@@ -62,264 +91,264 @@ class _ProgressState extends State<Progress> {
     super.dispose();
   }
 
+  Widget buildInputForm() {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.08),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Column(
+        children: [
+          TextFormField(
+            controller: exerciseController,
+            style: const TextStyle(color: Colors.black),
+            decoration: inputDecoration(
+              hint: "Exercise",
+              icon: Icons.fitness_center,
+            ),
+          ),
+          const SizedBox(height: 12),
+          TextFormField(
+            controller: weightController,
+            keyboardType: TextInputType.number,
+            style: const TextStyle(color: Colors.black),
+            decoration: inputDecoration(hint: "Weight (kg)", icon: Icons.scale),
+          ),
+          const SizedBox(height: 12),
+          TextFormField(
+            controller: repsController,
+            keyboardType: TextInputType.number,
+            style: const TextStyle(color: Colors.black),
+            decoration: inputDecoration(hint: "Reps", icon: Icons.repeat),
+          ),
+          const SizedBox(height: 12),
+
+          /// DATE
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+            decoration: BoxDecoration(
+              color: const Color(0xFFD9D9D9),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    selectedDate.toString().split(" ")[0],
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.calendar_today, color: Colors.blue),
+                  onPressed: pickDate,
+                ),
+              ],
+            ),
+          ),
+
+          const SizedBox(height: 15),
+
+          /// SAVE BUTTON
+          SizedBox(
+            width: double.infinity,
+            height: 45,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xff6C9E56),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+              ),
+              onPressed: saveProgress,
+              child: const Text(
+                "Save Workout",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildProgressList(List<ProgressModel> data) {
+    Map<String, List<ProgressModel>> grouped = {};
+
+    for (var item in data) {
+      grouped.putIfAbsent(item.date, () => []);
+      grouped[item.date]!.add(item);
+    }
+
+    return Column(
+      children: grouped.entries.map((entry) {
+        return Container(
+          margin: const EdgeInsets.only(bottom: 20),
+          padding: const EdgeInsets.all(15),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                entry.key,
+                style: const TextStyle(
+                  color: Colors.blue,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const Divider(),
+              ...entry.value.map((e) {
+                return ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  title: Text(
+                    e.exercise,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  subtitle: Text(
+                    "${e.weight} kg • ${e.reps} reps",
+                    style: const TextStyle(color: Colors.black54),
+                  ),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.edit, color: Color(0xff6C9E56)),
+                        onPressed: () async {
+                          await showEditDialog(e);
+                        },
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.delete, color: Colors.red),
+                        onPressed: () async {
+                          await ProgressController.deleteProgress(e.id!);
+                          setState(() {});
+                        },
+                      ),
+                    ],
+                  ),
+                );
+              }).toList(),
+            ],
+          ),
+        );
+      }).toList(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
+
       appBar: AppBar(
+        backgroundColor: Colors.black,
+        centerTitle: true,
         title: const Text(
           "Workout Progress",
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 22,
+            color: Colors.white,
+          ),
         ),
-        centerTitle: true,
-        backgroundColor: Colors.black,
       ),
+
       body: Padding(
         padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            /// INPUT FORM
-            Container(
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: Colors.grey.withValues(alpha: 0.2),
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: Column(
-                children: [
-                  /// EXERCISE
-                  TextFormField(
-                    controller: exerciseController,
-                    style: const TextStyle(color: Colors.white),
-                    decoration: decorationConstant(
-                      hintText: "Enter exercise name",
-                      labelText: "Exercise",
-                      prefixIcon: Icons.fitness_center,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
 
-                  /// WEIGHT
-                  TextFormField(
-                    controller: weightController,
-                    keyboardType: TextInputType.number,
-                    style: const TextStyle(color: Colors.white),
-                    decoration: decorationConstant(
-                      hintText: "Enter weight",
-                      labelText: "Weight (kg)",
-                      prefixIcon: Icons.scale,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
+        child: FutureBuilder<List<ProgressModel>>(
+          future: ProgressController.getAllProgress(),
 
-                  /// REPS
-                  TextFormField(
-                    controller: repsController,
-                    keyboardType: TextInputType.number,
-                    style: const TextStyle(color: Colors.white),
-                    decoration: decorationConstant(
-                      hintText: "Enter reps",
-                      labelText: "Reps",
-                      prefixIcon: Icons.repeat,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            }
 
-                  /// DATE
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          "Date: ${selectedDate.toString().split(" ")[0]}",
-                          style: const TextStyle(color: Colors.white),
-                        ),
-                      ),
-                      IconButton(
-                        icon: const Icon(
-                          Icons.calendar_today,
-                          color: Colors.white,
-                        ),
-                        onPressed: pickDate,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 10),
+            final data = snapshot.data ?? [];
 
-                  /// SAVE BUTTON
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green,
-                      ),
-                      onPressed: saveProgress,
-                      child: const Text(
-                        "Save Workout",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 20),
+            return ListView(
+              children: [
+                buildInputForm(),
+                const SizedBox(height: 20),
 
-            /// WORKOUT HISTORY
-            Expanded(child: buildProgressList()),
-          ],
+                if (data.isNotEmpty) ProgressChart(data: data),
+
+                const SizedBox(height: 20),
+
+                buildProgressList(data),
+              ],
+            );
+          },
         ),
       ),
     );
   }
 
-  /// WORKOUT LIST
-  Widget buildProgressList() {
-    return FutureBuilder<List<ProgressModel>>(
-      future: ProgressController.getAllProgress(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        }
-        if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return const Center(
-            child: Text(
-              "No workout history",
-              style: TextStyle(color: Colors.white),
-            ),
-          );
-        }
-        final data = snapshot.data!;
-
-        /// GROUP BY DATE
-        Map<String, List<ProgressModel>> grouped = {};
-        for (var item in data) {
-          grouped.putIfAbsent(item.date, () => []);
-          grouped[item.date]!.add(item);
-        }
-        return ListView(
-          children: grouped.entries.map((entry) {
-            return Container(
-              margin: const EdgeInsets.only(bottom: 20),
-              padding: const EdgeInsets.all(15),
-              decoration: BoxDecoration(
-                color: Colors.grey.withValues(alpha: 0.2),
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  /// DATE HEADER
-                  Text(
-                    entry.key,
-                    style: const TextStyle(
-                      color: Colors.green,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const Divider(),
-
-                  /// EXERCISE LIST
-                  ...entry.value.map((e) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 6),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            flex: 3,
-                            child: Text(
-                              e.exercise,
-                              style: const TextStyle(color: Colors.white),
-                            ),
-                          ),
-                          Expanded(
-                            child: Text(
-                              "${e.weight}kg",
-                              style: const TextStyle(color: Colors.white),
-                            ),
-                          ),
-                          Expanded(
-                            child: Text(
-                              "${e.reps} reps",
-                              style: const TextStyle(color: Colors.white),
-                            ),
-                          ),
-
-                          /// EDIT
-                          IconButton(
-                            icon: const Icon(Icons.edit, color: Colors.green),
-                            onPressed: () async {
-                              await showEditDialog(e);
-                            },
-                          ),
-
-                          /// DELETE
-                          IconButton(
-                            icon: const Icon(Icons.delete, color: Colors.red),
-                            onPressed: () async {
-                              await ProgressController.deleteProgress(e.id!);
-                              setState(() {});
-                            },
-                          ),
-                        ],
-                      ),
-                    );
-                  }).toList(),
-                ],
-              ),
-            );
-          }).toList(),
-        );
-      },
-    );
-  }
-
-  /// EDIT WORKOUT
   Future<void> showEditDialog(ProgressModel item) async {
     final exerciseEdit = TextEditingController(text: item.exercise);
     final weightEdit = TextEditingController(text: item.weight);
     final repsEdit = TextEditingController(text: item.reps);
+
     await showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text("Edit Workout"),
+          backgroundColor: Colors.black,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          title: const Text(
+            "Edit Workout",
+            style: TextStyle(color: Colors.white),
+          ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextFormField(
                 controller: exerciseEdit,
-                decoration: decorationConstant(
-                  hintText: "Exercise",
-                  labelText: "Exercise",
+                decoration: inputDecoration(
+                  hint: "Exercise",
+                  icon: Icons.fitness_center,
                 ),
               ),
               const SizedBox(height: 10),
               TextFormField(
                 controller: weightEdit,
-                decoration: decorationConstant(
-                  hintText: "Weight",
-                  labelText: "Weight",
-                ),
+                decoration: inputDecoration(hint: "Weight", icon: Icons.scale),
               ),
               const SizedBox(height: 10),
               TextFormField(
                 controller: repsEdit,
-                decoration: decorationConstant(
-                  hintText: "Reps",
-                  labelText: "Reps",
-                ),
+                decoration: inputDecoration(hint: "Reps", icon: Icons.repeat),
               ),
             ],
           ),
           actions: [
             TextButton(
-              child: const Text("Cancel"),
+              child: const Text(
+                "Cancel",
+                style: TextStyle(color: Colors.white70),
+              ),
               onPressed: () => Navigator.pop(context),
             ),
             ElevatedButton(
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
-              child: const Text("Save"),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xff6C9E56),
+              ),
+              child: const Text("Save", style: TextStyle(color: Colors.white)),
               onPressed: () async {
                 await ProgressController.updateProgress(
                   ProgressModel(
@@ -330,6 +359,7 @@ class _ProgressState extends State<Progress> {
                     date: item.date,
                   ),
                 );
+
                 Navigator.pop(context);
                 setState(() {});
               },

@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class UserPref {
   static const String userKey = "users";
   static const String loginUserKey = "loginUser";
+  static const String profileImageKey = "profileImages";
 
   /// REGISTER USER
   static Future<bool> saveUser({
@@ -15,25 +16,20 @@ class UserPref {
 
     List<String> users = prefs.getStringList(userKey) ?? [];
 
-    String u = username.trim();
-    String e = email.trim();
-    String p = password.trim();
+    /// cek email sudah ada
+    for (var user in users) {
+      Map<String, dynamic> decoded = jsonDecode(user);
 
-    /// cegah register kosong
-    if (u.isEmpty || e.isEmpty || p.isEmpty) {
-      return false;
-    }
-
-    /// cek username sudah ada atau belum
-    for (var userString in users) {
-      final user = jsonDecode(userString) as Map<String, dynamic>;
-
-      if (user["username"] == u) {
+      if (decoded["email"] == email) {
         return false;
       }
     }
 
-    Map<String, dynamic> newUser = {"username": u, "email": e, "password": p};
+    Map<String, dynamic> newUser = {
+      "username": username,
+      "email": email,
+      "password": password,
+    };
 
     users.add(jsonEncode(newUser));
 
@@ -42,7 +38,7 @@ class UserPref {
     return true;
   }
 
-  /// GET ALL USERS
+  /// GET USERS
   static Future<List<Map<String, dynamic>>> getUsers() async {
     final prefs = await SharedPreferences.getInstance();
 
@@ -51,24 +47,15 @@ class UserPref {
     return users.map((e) => jsonDecode(e) as Map<String, dynamic>).toList();
   }
 
-  /// LOGIN USER
-  static Future<bool> login(String username, String password) async {
+  /// LOGIN (EMAIL)
+  static Future<bool> login(String email, String password) async {
     final prefs = await SharedPreferences.getInstance();
-
-    String u = username.trim();
-    String p = password.trim();
-
-    /// cegah login kosong
-    if (u.isEmpty || p.isEmpty) {
-      return false;
-    }
 
     final users = await getUsers();
 
     for (var user in users) {
-      if (user["username"] == u && user["password"] == p) {
-        /// simpan username yang login
-        await prefs.setString(loginUserKey, user["username"]);
+      if (user["email"] == email && user["password"] == password) {
+        await prefs.setString(loginUserKey, email);
         return true;
       }
     }
@@ -76,20 +63,50 @@ class UserPref {
     return false;
   }
 
-  /// GET USER YANG LOGIN
+  /// GET LOGIN EMAIL
   static Future<String?> getLoginUser() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString(loginUserKey);
   }
 
-  /// CEK LOGIN STATUS
+  /// GET CURRENT USER DATA
+  static Future<Map<String, dynamic>?> getCurrentUser() async {
+    String? email = await getLoginUser();
+
+    if (email == null) return null;
+
+    final users = await getUsers();
+
+    for (var user in users) {
+      if (user["email"] == email) {
+        return user;
+      }
+    }
+
+    return null;
+  }
+
+  /// GET USERNAME FROM EMAIL
+  static Future<String?> getUsername(String email) async {
+    final users = await getUsers();
+
+    for (var user in users) {
+      if (user["email"] == email) {
+        return user["username"];
+      }
+    }
+
+    return null;
+  }
+
+  /// CHECK LOGIN
   static Future<bool> isLogin() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString(loginUserKey) != null;
   }
 
   /// LOGOUT
-  static Future<void> logoutUser() async {
+  static Future<void> logout() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove(loginUserKey);
   }
@@ -98,44 +115,60 @@ class UserPref {
   static Future<void> deleteAccount() async {
     final prefs = await SharedPreferences.getInstance();
 
-    String? loginUser = prefs.getString(loginUserKey);
+    String? email = prefs.getString(loginUserKey);
 
-    if (loginUser == null) return;
+    if (email == null) return;
 
     List<String> users = prefs.getStringList(userKey) ?? [];
 
-    users.removeWhere((userString) {
-      final user = jsonDecode(userString) as Map<String, dynamic>;
-      return user["username"] == loginUser;
+    users.removeWhere((user) {
+      Map<String, dynamic> decoded = jsonDecode(user);
+      return decoded["email"] == email;
     });
 
     await prefs.setStringList(userKey, users);
 
-    /// hapus profile image user
-    await prefs.remove("profile_$loginUser");
+    /// hapus foto profile jika ada
+    String? data = prefs.getString(profileImageKey);
+
+    if (data != null) {
+      Map<String, dynamic> images = jsonDecode(data);
+      images.remove(email);
+
+      await prefs.setString(profileImageKey, jsonEncode(images));
+    }
 
     /// logout setelah delete
     await prefs.remove(loginUserKey);
   }
 
   /// SAVE PROFILE IMAGE
-  static Future<void> saveProfileImage(String username, String path) async {
+  static Future<void> saveProfileImage(String email, String path) async {
     final prefs = await SharedPreferences.getInstance();
 
-    await prefs.setString("profile_$username", path);
+    Map<String, String> images = {};
+
+    String? data = prefs.getString(profileImageKey);
+
+    if (data != null) {
+      images = Map<String, String>.from(jsonDecode(data));
+    }
+
+    images[email] = path;
+
+    await prefs.setString(profileImageKey, jsonEncode(images));
   }
 
   /// GET PROFILE IMAGE
-  static Future<String?> getProfileImage(String username) async {
+  static Future<String?> getProfileImage(String email) async {
     final prefs = await SharedPreferences.getInstance();
 
-    return prefs.getString("profile_$username");
-  }
+    String? data = prefs.getString(profileImageKey);
 
-  /// DELETE PROFILE IMAGE
-  static Future<void> deleteProfileImage(String username) async {
-    final prefs = await SharedPreferences.getInstance();
+    if (data == null) return null;
 
-    await prefs.remove("profile_$username");
+    Map<String, dynamic> images = jsonDecode(data);
+
+    return images[email];
   }
 }

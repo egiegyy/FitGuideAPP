@@ -21,6 +21,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
         appBar: AppBar(
           backgroundColor: Colors.black,
           centerTitle: true,
+
           title: const Text(
             "Workout",
             style: TextStyle(
@@ -31,77 +32,50 @@ class _WorkoutPageState extends State<WorkoutPage> {
           ),
 
           bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(70),
+            preferredSize: const Size.fromHeight(80),
 
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
 
-              child: TabBar(
-                indicatorColor: Color(0xff6C9E56),
-                labelPadding: EdgeInsets.all(10),
-                
-                tabs: [
-                  /// EQUIPMENT TAB
-                  Tab(
-                    child: Container(
-                      height: 45,
+              /// CONTAINER WRAPPER
+              child: Container(
+                height: 50,
 
-                      decoration: BoxDecoration(
-                        // color: const Color(0xff6C9E56),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
+                decoration: BoxDecoration(
+                  color: Colors.white.withAlpha(500),
+                  borderRadius: BorderRadius.circular(30),
+                  border: Border.all(color: const Color(0xff6C9E56), width: 2),
+                ),
 
-                      child: const Center(
-                        child: Text(
-                          "Equipment",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
+                child: TabBar(
+                  indicatorSize: TabBarIndicatorSize.tab,
+
+                  /// ACTIVE TAB BACKGROUND
+                  indicator: BoxDecoration(
+                    color: const Color(0xff6C9E56),
+                    borderRadius: BorderRadius.circular(30),
                   ),
 
-                  /// PACKAGE TAB
-                  Tab(
-                    child: Container(
-                      height: 45,
+                  labelColor: Colors.white,
+                  unselectedLabelColor: const Color(0xff6C9E56),
 
-                      decoration: BoxDecoration(
-                        // color: const Color(0xff6C9E56),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-
-                      child: const Center(
-                        child: Text(
-                          "Package",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
+                  labelStyle: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
                   ),
-                ],
+
+                  tabs: const [
+                    Tab(text: "Equipment"),
+                    Tab(text: "Package"),
+                  ],
+                ),
               ),
             ),
           ),
         ),
 
         /// TAB CONTENT
-        body: TabBarView(
-          children: [
-            /// EQUIPMENT PAGE
-            Equipment(),
-
-            /// PACKAGE PAGE
-            Package(),
-          ],
-        ),
+        body: TabBarView(children: [Equipment(), Package()]),
       ),
     );
   }

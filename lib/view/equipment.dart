@@ -12,9 +12,9 @@ class Equipment extends StatefulWidget {
 
 class _EquipmentState extends State<Equipment> {
   final List<String> kategoriLatihan = [
-    "Chest Press Machine",
-    "Lat Pulldown Machine",
-    "Leg Press Machine",
+    "Chest Press",
+    "Lat Pulldown",
+    "Leg Press",
   ];
 
   final List<Widget> equipmentPages = const [
@@ -37,27 +37,25 @@ class _EquipmentState extends State<Equipment> {
             padding: const EdgeInsets.all(5),
 
             child: Container(
-              padding: EdgeInsets.all(10),
+              padding: EdgeInsets.all(20),
               height: 100,
               decoration: BoxDecoration(
-                color: Colors.grey.withAlpha(80),
+                color: Colors.white,
                 borderRadius: BorderRadius.circular(10),
               ),
 
               child: ListTile(
                 leading: Icon(
                   Icons.fitness_center,
-                  color: Colors.white,
-                  size: 40
-                  
-                  ,
+                  color: Colors.black,
+                  size: 30,
                 ),
 
                 title: Text(
                   kategoriLatihan[index],
                   style: const TextStyle(
                     color: Colors.blue,
-                    fontSize: 20,
+                    fontSize: 25,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

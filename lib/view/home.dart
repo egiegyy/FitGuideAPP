@@ -18,28 +18,50 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String username = "";
-
   List<String> routineDays = [];
 
-  int _selectedIndex = 0;
+  /// TEXT STYLE SYSTEM
+  final TextStyle pageTitle = const TextStyle(
+    fontSize: 26,
+    fontWeight: FontWeight.bold,
+    color: Colors.white,
+  );
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
+  final TextStyle sectionTitle = const TextStyle(
+    fontSize: 22,
+    fontWeight: FontWeight.bold,
+    color: Colors.blue,
+  );
 
+  final TextStyle cardTitle = const TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.bold,
+    color: Colors.blue,
+  );
+
+  final TextStyle bodyText = const TextStyle(
+    fontSize: 14,
+    color: Colors.white70,
+  );
+
+  final TextStyle buttonText = const TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.bold,
+    color: Colors.white,
+  );
+
+  /// GET USERNAME
   Future<void> getUser() async {
-    String? user = await UserPref.getLoginUser();
+    final user = await UserPref.getCurrentUser();
 
     if (!mounted) return;
 
     setState(() {
-      username = user ?? "User";
+      username = user?["username"] ?? "User";
     });
   }
 
-  /// LOAD ROUTINE FROM DATABASE
+  /// LOAD ROUTINE
   void loadRoutine() async {
     final data = await DBHelper.getRoutineDays();
 
@@ -61,100 +83,61 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.black,
 
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.white, size: 30),
+        iconTheme: const IconThemeData(color: Colors.white, size: 28),
         backgroundColor: Colors.black,
         centerTitle: true,
-        title: Text(
-          "Home",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 25,
-            color: Colors.white,
-          ),
-        ),
+        title: Text("Home", style: pageTitle),
       ),
 
       body: Padding(
-        padding: EdgeInsetsGeometry.all(20),
+        padding: const EdgeInsets.all(20),
+
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
 
             children: [
-              Text(
-                "Halo, $username",
-                style: TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blue,
-                ),
-              ),
+              /// GREETING
+              Text("Halo, $username", style: sectionTitle),
 
-              Text(
-                "today is your Push Day!",
-                style: TextStyle(fontSize: 14, color: Colors.white),
-              ),
+              Text("Today is your Push Day!", style: bodyText),
 
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
 
               /// POSTER
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-
-                child: Row(
+              SizedBox(
+                height: 200,
+                child: PageView(
                   children: [
-                    SizedBox(
-                      height: 200,
-                      width: 300,
-
-                      child: ClipRRect(
-                        borderRadius: BorderRadiusGeometry.circular(15),
-
-                        child: Image.asset(
-                          "assets/images/posterCompetition.png",
-                          fit: BoxFit.fill,
-                        ),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(15),
+                      child: Image.asset(
+                        "assets/images/posterCompetition.png",
+                        fit: BoxFit.cover,
                       ),
                     ),
-
-                    SizedBox(width: 10),
-
-                    SizedBox(
-                      height: 200,
-                      width: 300,
-
-                      child: ClipRRect(
-                        borderRadius: BorderRadiusGeometry.circular(15),
-
-                        child: Image.asset(
-                          "assets/images/posterCompetition2.png",
-                          fit: BoxFit.fill,
-                        ),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(15),
+                      child: Image.asset(
+                        "assets/images/posterCompetition2.png",
+                        fit: BoxFit.cover,
                       ),
                     ),
                   ],
                 ),
               ),
 
-              SizedBox(height: 20),
+              const SizedBox(height: 25),
 
-              /// YOUR ROUTINE
-              Text(
-                "Your routine",
-                style: TextStyle(
-                  color: Colors.blue,
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              /// ROUTINE TITLE
+              Text("Your Routine", style: sectionTitle),
 
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
 
-              /// IF ROUTINE EMPTY
               routineDays.isEmpty
                   ? Container(
                       width: double.infinity,
-                      padding: EdgeInsets.all(20),
+                      padding: const EdgeInsets.all(20),
 
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.white),
@@ -165,17 +148,16 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           Text(
                             "There is no Routine",
-                            style: TextStyle(color: Colors.white),
+                            style: bodyText.copyWith(color: Colors.white),
                             textAlign: TextAlign.center,
                           ),
 
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
 
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.green,
                             ),
-
                             onPressed: () async {
                               await Navigator.push(
                                 context,
@@ -183,35 +165,23 @@ class _HomePageState extends State<HomePage> {
                                   builder: (context) => const MyRoutine(),
                                 ),
                               );
-
-                              /// reload routine setelah user membuat routine
                               loadRoutine();
                             },
-
-                            child: Text(
-                              "Add Routine",
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
+                            child: Text("Add Routine", style: buttonText),
                           ),
                         ],
                       ),
                     )
-                  /// SHOW USER ROUTINE
                   : SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
-
                       child: Row(
                         children: routineDays.map((day) {
                           return Padding(
-                            padding: EdgeInsets.only(right: 10),
+                            padding: const EdgeInsets.only(right: 10),
 
                             child: Container(
                               width: 150,
-                              padding: EdgeInsets.all(10),
+                              padding: const EdgeInsets.all(10),
 
                               decoration: BoxDecoration(
                                 color: Colors.black,
@@ -224,15 +194,10 @@ class _HomePageState extends State<HomePage> {
                                   Text(
                                     day,
                                     textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Colors.blue,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20,
-                                    ),
+                                    style: cardTitle,
                                   ),
                                   Align(
                                     alignment: Alignment.bottomRight,
-
                                     child: TextButton(
                                       onPressed: () {
                                         Navigator.push(
@@ -243,7 +208,7 @@ class _HomePageState extends State<HomePage> {
                                           ),
                                         );
                                       },
-                                      child: Text(
+                                      child: const Text(
                                         "More",
                                         style: TextStyle(
                                           color: Colors.green,
@@ -260,43 +225,26 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
 
-              SizedBox(height: 20),
+              const SizedBox(height: 25),
 
-              /// PACKAGE EXERCISE
-              Text(
-                "Package Exercise",
-                style: TextStyle(
-                  color: Colors.blue,
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 10),
+              /// PACKAGE TITLE
+              Text("Package Exercise", style: sectionTitle),
 
-              /// PACKAGE LIST
+              const SizedBox(height: 10),
+
               ListTile(
-                contentPadding: EdgeInsets.all(5),
+                contentPadding: const EdgeInsets.all(5),
 
                 leading: ClipRRect(
-                  borderRadius: BorderRadiusGeometry.circular(10),
+                  borderRadius: BorderRadius.circular(10),
                   child: Image.asset("assets/images/ContohPushPullLeg.png"),
                 ),
-                title: Text(
-                  "Pull Workout",
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.blue,
-                  ),
-                ),
+
+                title: Text("Push Workout", style: cardTitle),
 
                 subtitle: Text(
-                  "Push Pull Leg is a workout split that groups exercises based on movement patterns: Push trains chest, shoulders, and triceps; Pull trains back and biceps; and Leg focuses on lower body muscles like thighs and glutes.",
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w300,
-                    color: Colors.white,
-                  ),
+                  "Push Pull Leg is a workout split that groups exercises based on movement patterns.",
+                  style: bodyText,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -308,7 +256,7 @@ class _HomePageState extends State<HomePage> {
                       MaterialPageRoute(builder: (context) => PushWorkout()),
                     );
                   },
-                  child: Text(
+                  child: const Text(
                     "More",
                     style: TextStyle(
                       color: Colors.green,
@@ -318,31 +266,21 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
 
-              Divider(),
+              const Divider(color: Colors.white24),
 
               ListTile(
-                contentPadding: EdgeInsets.all(5),
+                contentPadding: const EdgeInsets.all(5),
 
                 leading: ClipRRect(
-                  borderRadius: BorderRadiusGeometry.circular(10),
+                  borderRadius: BorderRadius.circular(10),
                   child: Image.asset("assets/images/ContohPushPullLeg.png"),
                 ),
-                title: Text(
-                  "Pull Workout",
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.blue,
-                  ),
-                ),
+
+                title: Text("Pull Workout", style: cardTitle),
 
                 subtitle: Text(
-                  "Push Pull Leg is a workout split that groups exercises based on movement patterns: Push trains chest, shoulders, and triceps; Pull trains back and biceps; and Leg focuses on lower body muscles like thighs and glutes.",
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w300,
-                    color: Colors.white,
-                  ),
+                  "Push Pull Leg is a workout split that groups exercises based on movement patterns.",
+                  style: bodyText,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -354,7 +292,7 @@ class _HomePageState extends State<HomePage> {
                       MaterialPageRoute(builder: (context) => PullWorkout()),
                     );
                   },
-                  child: Text(
+                  child: const Text(
                     "More",
                     style: TextStyle(
                       color: Colors.green,
@@ -364,34 +302,25 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
 
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
 
               SizedBox(
                 width: double.infinity,
-
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.green,
                   ),
-
                   onPressed: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => WorkoutPage()),
                     );
                   },
-
-                  child: Text(
-                    "See More",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                  child: Text("See More", style: buttonText),
                 ),
               ),
-              SizedBox(height: 20),
+
+              const SizedBox(height: 20),
             ],
           ),
         ),

@@ -13,13 +13,15 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
   final _formKey = GlobalKey<FormState>();
 
-  final usernameController = TextEditingController();
+  final emailController = TextEditingController();
   final passwordController = TextEditingController();
+
+  bool isPasswordVisible = false;
 
   Future<void> login() async {
     if (_formKey.currentState!.validate()) {
       bool success = await UserPref.login(
-        usernameController.text.trim(),
+        emailController.text.trim(),
         passwordController.text.trim(),
       );
 
@@ -32,7 +34,7 @@ class _SignInState extends State<SignIn> {
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Username or Password incorrect")),
+          const SnackBar(content: Text("Email or Password incorrect")),
         );
       }
     }
@@ -40,9 +42,55 @@ class _SignInState extends State<SignIn> {
 
   @override
   void dispose() {
-    usernameController.dispose();
+    emailController.dispose();
     passwordController.dispose();
     super.dispose();
+  }
+
+  /// INPUT DECORATION FUNCTION
+  InputDecoration inputDecoration({
+    required IconData icon,
+    required String hint,
+    Widget? suffixIcon,
+  }) {
+    return InputDecoration(
+      filled: true,
+      fillColor: const Color(0xFFD9D9D9),
+
+      prefixIcon: Icon(icon, color: Colors.black54),
+
+      suffixIcon: suffixIcon,
+
+      hintText: hint,
+      hintStyle: const TextStyle(color: Colors.black54),
+
+      contentPadding: const EdgeInsets.symmetric(vertical: 18, horizontal: 20),
+
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(20),
+        borderSide: BorderSide.none,
+      ),
+
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(20),
+        borderSide: BorderSide.none,
+      ),
+
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(20),
+        borderSide: BorderSide.none,
+      ),
+
+      errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(20),
+        borderSide: const BorderSide(color: Colors.red),
+      ),
+
+      focusedErrorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(20),
+        borderSide: const BorderSide(color: Colors.red),
+      ),
+    );
   }
 
   @override
@@ -70,56 +118,73 @@ class _SignInState extends State<SignIn> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const Image(image: AssetImage("assets/images/logoFitGuide.png")),
+              const SizedBox(height: 20),
 
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.grey.withOpacity(0.2),
-                  borderRadius: BorderRadius.circular(15),
-                ),
+              const Image(
+                image: AssetImage("assets/images/logoFitGuide.png"),
+                alignment: Alignment.topCenter,
+              ),
 
-                padding: const EdgeInsets.all(20),
+              const SizedBox(height: 20),
 
-                child: Form(
-                  key: _formKey,
+              Form(
+                key: _formKey,
+
+                child: Container(
+                  padding: const EdgeInsets.all(20),
+
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
 
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      /// USERNAME
+                      /// EMAIL
+                      const Text(
+                        "Email",
+                        style: TextStyle(color: Colors.white),
+                      ),
+
+                      const SizedBox(height: 5),
+
                       TextFormField(
-                        controller: usernameController,
-                        style: const TextStyle(color: Colors.white),
+                        controller: emailController,
+                        style: const TextStyle(color: Colors.black),
 
                         validator: (value) {
                           if (value == null || value.trim().isEmpty) {
-                            return "Username cannot be empty";
+                            return "Email cannot be empty";
                           }
+
+                          if (!value.contains("@gmail.com")) {
+                            return "Email is not valid";
+                          }
+
                           return null;
                         },
 
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-
-                          prefixIcon: const Icon(
-                            Icons.person,
-                            color: Colors.white,
-                          ),
-
-                          hintText: "Please input your username",
-                          hintStyle: const TextStyle(color: Colors.white),
-                          labelText: "Username",
+                        decoration: inputDecoration(
+                          icon: Icons.email_rounded,
+                          hint: "Email",
                         ),
                       ),
 
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 15),
 
                       /// PASSWORD
+                      const Text(
+                        "Password",
+                        style: TextStyle(color: Colors.white),
+                      ),
+
+                      const SizedBox(height: 5),
+
                       TextFormField(
                         controller: passwordController,
-                        obscureText: true,
-                        style: const TextStyle(color: Colors.white),
+                        obscureText: !isPasswordVisible,
+                        style: const TextStyle(color: Colors.black),
 
                         validator: (value) {
                           if (value == null || value.trim().isEmpty) {
@@ -133,42 +198,75 @@ class _SignInState extends State<SignIn> {
                           return null;
                         },
 
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
+                        decoration: inputDecoration(
+                          icon: Icons.lock_outline,
+                          hint: "Password",
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              isPasswordVisible
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: Colors.black54,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                isPasswordVisible = !isPasswordVisible;
+                              });
+                            },
                           ),
-
-                          prefixIcon: const Icon(
-                            Icons.lock,
-                            color: Colors.white,
-                          ),
-
-                          hintText: "Please input your password",
-                          hintStyle: const TextStyle(color: Colors.white),
-                          labelText: "Password",
                         ),
                       ),
 
+                      const SizedBox(height: 10),
+
+                      /// DON'T HAVE ACCOUNT
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
+                          const Text(
+                            "Don't have account? ",
+                            style: TextStyle(color: Colors.white),
+                          ),
+
                           TextButton(
-                            onPressed: () {},
+                            style: TextButton.styleFrom(
+                              padding: EdgeInsets.zero,
+                              minimumSize: Size.zero,
+                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                            ),
+
+                            onPressed: () {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const SignUp(),
+                                ),
+                              );
+                            },
+
                             child: const Text(
-                              "Forget Password?",
-                              style: TextStyle(color: Colors.blue),
+                              "Sign Up",
+                              style: TextStyle(
+                                color: Colors.green,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ],
                       ),
+                      const SizedBox(height: 20),
 
                       /// SIGN IN BUTTON
                       SizedBox(
                         width: double.infinity,
+                        height: 50,
 
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blue,
+                            backgroundColor: const Color(0xFF6AA84F),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
                           ),
 
                           onPressed: login,
@@ -176,30 +274,10 @@ class _SignInState extends State<SignIn> {
                           child: const Text(
                             "Sign In",
                             style: TextStyle(
-                              color: Colors.white,
                               fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: Colors.white,
                             ),
-                          ),
-                        ),
-                      ),
-
-                      /// SIGN UP BUTTON
-                      SizedBox(
-                        width: double.infinity,
-
-                        child: OutlinedButton(
-                          onPressed: () {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const SignUp(),
-                              ),
-                            );
-                          },
-
-                          child: const Text(
-                            "Sign Up",
-                            style: TextStyle(color: Colors.white),
                           ),
                         ),
                       ),
