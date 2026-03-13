@@ -3,6 +3,8 @@ import 'package:fitguide/controller/progress_controller.dart';
 import 'package:fitguide/model/progress_model.dart';
 import 'package:fitguide/view/progress_chart.dart';
 
+enum ChartRange { week, month, year }
+
 class Progress extends StatefulWidget {
   const Progress({super.key});
 
@@ -14,7 +16,10 @@ class _ProgressState extends State<Progress> {
   final exerciseController = TextEditingController();
   final weightController = TextEditingController();
   final repsController = TextEditingController();
+
   DateTime selectedDate = DateTime.now();
+
+  ChartRange selectedRange = ChartRange.week;
 
   InputDecoration inputDecoration({
     required String hint,
@@ -83,12 +88,57 @@ class _ProgressState extends State<Progress> {
     setState(() {});
   }
 
-  @override
-  void dispose() {
-    exerciseController.dispose();
-    weightController.dispose();
-    repsController.dispose();
-    super.dispose();
+  List<ProgressModel> filterData(List<ProgressModel> data) {
+    DateTime now = DateTime.now();
+    DateTime startDate;
+
+    switch (selectedRange) {
+      case ChartRange.week:
+        startDate = now.subtract(const Duration(days: 7));
+        break;
+      case ChartRange.month:
+        startDate = now.subtract(const Duration(days: 30));
+        break;
+      case ChartRange.year:
+        startDate = now.subtract(const Duration(days: 365));
+        break;
+    }
+
+    return data.where((item) {
+      DateTime itemDate = DateTime.parse(item.date);
+      return itemDate.isAfter(startDate);
+    }).toList();
+  }
+
+  Widget rangeButton(String text, ChartRange range) {
+    bool active = selectedRange == range;
+
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: active ? Color(0xff6C9E56) : Colors.grey[300],
+        foregroundColor: active ? Colors.white : Colors.black,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      ),
+      onPressed: () {
+        setState(() {
+          selectedRange = range;
+        });
+      },
+      child: Text(text),
+    );
+  }
+
+  Widget buildRangeSelector() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        rangeButton("7D", ChartRange.week),
+        const SizedBox(width: 10),
+        rangeButton("1M", ChartRange.month),
+        const SizedBox(width: 10),
+        rangeButton("1Y", ChartRange.year),
+      ],
+    );
   }
 
   Widget buildInputForm() {
@@ -124,7 +174,6 @@ class _ProgressState extends State<Progress> {
           ),
           const SizedBox(height: 12),
 
-          /// DATE
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
             decoration: BoxDecoration(
@@ -152,7 +201,6 @@ class _ProgressState extends State<Progress> {
 
           const SizedBox(height: 15),
 
-          /// SAVE BUTTON
           SizedBox(
             width: double.infinity,
             height: 45,
@@ -249,10 +297,17 @@ class _ProgressState extends State<Progress> {
   }
 
   @override
+  void dispose() {
+    exerciseController.dispose();
+    weightController.dispose();
+    repsController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-
       appBar: AppBar(
         backgroundColor: Colors.black,
         centerTitle: true,
@@ -265,18 +320,11 @@ class _ProgressState extends State<Progress> {
           ),
         ),
       ),
-
       body: Padding(
         padding: const EdgeInsets.all(20),
-
         child: FutureBuilder<List<ProgressModel>>(
           future: ProgressController.getAllProgress(),
-
           builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
-            }
-
             final data = snapshot.data ?? [];
 
             return ListView(
@@ -284,10 +332,13 @@ class _ProgressState extends State<Progress> {
                 buildInputForm(),
                 const SizedBox(height: 20),
 
-                if (data.isNotEmpty) ProgressChart(data: data),
+                if (data.isNotEmpty) ...[
+                  buildRangeSelector(),
+                  const SizedBox(height: 10),
+                  ProgressChart(data: filterData(data)),
+                ],
 
                 const SizedBox(height: 20),
-
                 buildProgressList(data),
               ],
             );
@@ -319,6 +370,7 @@ class _ProgressState extends State<Progress> {
             children: [
               TextFormField(
                 controller: exerciseEdit,
+                style: const TextStyle(color: Colors.black),
                 decoration: inputDecoration(
                   hint: "Exercise",
                   icon: Icons.fitness_center,
@@ -327,11 +379,13 @@ class _ProgressState extends State<Progress> {
               const SizedBox(height: 10),
               TextFormField(
                 controller: weightEdit,
+                style: const TextStyle(color: Colors.black),
                 decoration: inputDecoration(hint: "Weight", icon: Icons.scale),
               ),
               const SizedBox(height: 10),
               TextFormField(
                 controller: repsEdit,
+                style: const TextStyle(color: Colors.black),
                 decoration: inputDecoration(hint: "Reps", icon: Icons.repeat),
               ),
             ],

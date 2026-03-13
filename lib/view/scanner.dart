@@ -78,17 +78,13 @@ class _ScannerPageState extends State<ScannerPage>
 
         /// AFTER RETURN FROM PAGE
         if (!mounted) return;
-
         await Future.delayed(const Duration(milliseconds: 500));
-
         isScanning = false;
-
         controller.start();
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("Halaman alat belum tersedia")),
         );
-
         isScanning = false;
         controller.start();
       }
@@ -96,9 +92,7 @@ class _ScannerPageState extends State<ScannerPage>
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Alat tidak ditemukan di FitGuide")),
       );
-
       await Future.delayed(const Duration(milliseconds: 1200));
-
       isScanning = false;
     }
   }
@@ -107,7 +101,6 @@ class _ScannerPageState extends State<ScannerPage>
     setState(() {
       scannerStarted = true;
     });
-
     controller.start();
   }
 
@@ -136,10 +129,8 @@ class _ScannerPageState extends State<ScannerPage>
               controller: controller,
               onDetect: (BarcodeCapture capture) {
                 if (isScanning) return;
-
                 for (final barcode in capture.barcodes) {
                   final String? code = barcode.rawValue;
-
                   if (code != null) {
                     handleBarcode(code);
                     break;
