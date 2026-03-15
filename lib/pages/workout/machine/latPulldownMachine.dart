@@ -1,15 +1,15 @@
-import 'package:fitguide/view/workout/exercise/chestPress.dart';
-import 'package:fitguide/view/workout/exercise/closeGripCP.dart';
+import 'package:fitguide/pages/workout/exercise/closeGripLP.dart';
+import 'package:fitguide/pages/workout/exercise/wideGripLP.dart';
 import 'package:flutter/material.dart';
 
-class ChestPressMachine extends StatefulWidget {
-  const ChestPressMachine({super.key});
+class LatPulldownMachine extends StatefulWidget {
+  const LatPulldownMachine({super.key});
 
   @override
-  State<ChestPressMachine> createState() => _ChestPressState();
+  State<LatPulldownMachine> createState() => _LatPulldownMachineState();
 }
 
-class _ChestPressState extends State<ChestPressMachine> {
+class _LatPulldownMachineState extends State<LatPulldownMachine> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,13 +57,13 @@ class _ChestPressState extends State<ChestPressMachine> {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(18),
-                  child: Image.asset("assets/images/Chest Press Machine.png"),
+                  child: Image.asset("assets/images/Lat Pulldown Machine.png"),
                 ),
 
                 const SizedBox(height: 20),
 
                 const Text(
-                  "Chest Press Machine",
+                  "Lat Pulldown Machine",
                   style: TextStyle(
                     color: Color(0xFF66BB6A),
                     fontSize: 24,
@@ -83,7 +83,7 @@ class _ChestPressState extends State<ChestPressMachine> {
                   ),
 
                   child: const Text(
-                    "Chest Press Machine adalah alat gym untuk melatih otot dada dengan gerakan mendorong beban ke depan. Latihan ini menargetkan pectoralis, serta melibatkan bahu depan dan triceps.",
+                    "Alat gym untuk melatih otot punggung dengan gerakan menarik bar dari atas ke arah dada. Latihan ini membantu memperkuat dan membentuk punggung bagian atas. Otot utama yang dilatih adalah latissimus dorsi, dengan bantuan biceps dan bahu belakang.",
                     style: TextStyle(color: Colors.white70, fontSize: 15),
                   ),
                 ),
@@ -101,7 +101,7 @@ class _ChestPressState extends State<ChestPressMachine> {
 
                 const SizedBox(height: 20),
 
-                /// CHEST PRESS
+                /// WIDE GRIP LAT PULLDOWN
                 Container(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 12,
@@ -121,7 +121,7 @@ class _ChestPressState extends State<ChestPressMachine> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const ChestPressPage(),
+                          builder: (context) => const WideGripLatPulldownPage(),
                         ),
                       );
                     },
@@ -129,7 +129,7 @@ class _ChestPressState extends State<ChestPressMachine> {
                     leading: ClipRRect(
                       borderRadius: BorderRadius.circular(12),
                       child: Image.asset(
-                        "assets/images/Chest Press.png",
+                        "assets/images/Lat Pulldown.png",
                         width: 55,
                         height: 55,
                         fit: BoxFit.cover,
@@ -137,7 +137,7 @@ class _ChestPressState extends State<ChestPressMachine> {
                     ),
 
                     title: const Text(
-                      "Chest Press",
+                      "Wide Grip Lat Pulldown",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 18,
@@ -171,7 +171,7 @@ class _ChestPressState extends State<ChestPressMachine> {
 
                 const SizedBox(height: 15),
 
-                /// CLOSE GRIP CHEST PRESS
+                /// CLOSE GRIP LAT PULLDOWN
                 Container(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 12,
@@ -191,7 +191,8 @@ class _ChestPressState extends State<ChestPressMachine> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const CloseGripCPPage(),
+                          builder: (context) =>
+                              const CloseGripLatPulldownPage(),
                         ),
                       );
                     },
@@ -199,7 +200,7 @@ class _ChestPressState extends State<ChestPressMachine> {
                     leading: ClipRRect(
                       borderRadius: BorderRadius.circular(12),
                       child: Image.asset(
-                        "assets/images/Chest Press.png",
+                        "assets/images/Close Grip Lat Pulldown.png",
                         width: 55,
                         height: 55,
                         fit: BoxFit.cover,
@@ -207,7 +208,7 @@ class _ChestPressState extends State<ChestPressMachine> {
                     ),
 
                     title: const Text(
-                      "Close Grip Chest Press",
+                      "Close Grip Lat Pulldown",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 18,

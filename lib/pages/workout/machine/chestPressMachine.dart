@@ -1,15 +1,15 @@
-import 'package:fitguide/view/workout/exercise/closeGripLP.dart';
-import 'package:fitguide/view/workout/exercise/wideGripLP.dart';
+import 'package:fitguide/pages/workout/exercise/chestPress.dart';
+import 'package:fitguide/pages/workout/exercise/closeGripCP.dart';
 import 'package:flutter/material.dart';
 
-class LatPulldownMachine extends StatefulWidget {
-  const LatPulldownMachine({super.key});
+class ChestPressMachine extends StatefulWidget {
+  const ChestPressMachine({super.key});
 
   @override
-  State<LatPulldownMachine> createState() => _LatPulldownMachineState();
+  State<ChestPressMachine> createState() => _ChestPressState();
 }
 
-class _LatPulldownMachineState extends State<LatPulldownMachine> {
+class _ChestPressState extends State<ChestPressMachine> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,13 +57,13 @@ class _LatPulldownMachineState extends State<LatPulldownMachine> {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(18),
-                  child: Image.asset("assets/images/Lat Pulldown Machine.png"),
+                  child: Image.asset("assets/images/Chest Press Machine.png"),
                 ),
 
                 const SizedBox(height: 20),
 
                 const Text(
-                  "Lat Pulldown Machine",
+                  "Chest Press Machine",
                   style: TextStyle(
                     color: Color(0xFF66BB6A),
                     fontSize: 24,
@@ -83,7 +83,7 @@ class _LatPulldownMachineState extends State<LatPulldownMachine> {
                   ),
 
                   child: const Text(
-                    "Alat gym untuk melatih otot punggung dengan gerakan menarik bar dari atas ke arah dada. Latihan ini membantu memperkuat dan membentuk punggung bagian atas. Otot utama yang dilatih adalah latissimus dorsi, dengan bantuan biceps dan bahu belakang.",
+                    "Chest Press Machine adalah alat gym untuk melatih otot dada dengan gerakan mendorong beban ke depan. Latihan ini menargetkan pectoralis, serta melibatkan bahu depan dan triceps.",
                     style: TextStyle(color: Colors.white70, fontSize: 15),
                   ),
                 ),
@@ -101,7 +101,7 @@ class _LatPulldownMachineState extends State<LatPulldownMachine> {
 
                 const SizedBox(height: 20),
 
-                /// WIDE GRIP LAT PULLDOWN
+                /// CHEST PRESS
                 Container(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 12,
@@ -121,7 +121,7 @@ class _LatPulldownMachineState extends State<LatPulldownMachine> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const WideGripLatPulldownPage(),
+                          builder: (context) => const ChestPressPage(),
                         ),
                       );
                     },
@@ -129,7 +129,7 @@ class _LatPulldownMachineState extends State<LatPulldownMachine> {
                     leading: ClipRRect(
                       borderRadius: BorderRadius.circular(12),
                       child: Image.asset(
-                        "assets/images/Lat Pulldown.png",
+                        "assets/images/Chest Press.png",
                         width: 55,
                         height: 55,
                         fit: BoxFit.cover,
@@ -137,7 +137,7 @@ class _LatPulldownMachineState extends State<LatPulldownMachine> {
                     ),
 
                     title: const Text(
-                      "Wide Grip Lat Pulldown",
+                      "Chest Press",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 18,
@@ -171,7 +171,7 @@ class _LatPulldownMachineState extends State<LatPulldownMachine> {
 
                 const SizedBox(height: 15),
 
-                /// CLOSE GRIP LAT PULLDOWN
+                /// CLOSE GRIP CHEST PRESS
                 Container(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 12,
@@ -191,8 +191,7 @@ class _LatPulldownMachineState extends State<LatPulldownMachine> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) =>
-                              const CloseGripLatPulldownPage(),
+                          builder: (context) => const CloseGripCPPage(),
                         ),
                       );
                     },
@@ -200,7 +199,7 @@ class _LatPulldownMachineState extends State<LatPulldownMachine> {
                     leading: ClipRRect(
                       borderRadius: BorderRadius.circular(12),
                       child: Image.asset(
-                        "assets/images/Close Grip Lat Pulldown.png",
+                        "assets/images/Chest Press.png",
                         width: 55,
                         height: 55,
                         fit: BoxFit.cover,
@@ -208,7 +207,7 @@ class _LatPulldownMachineState extends State<LatPulldownMachine> {
                     ),
 
                     title: const Text(
-                      "Close Grip Lat Pulldown",
+                      "Close Grip Chest Press",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 18,

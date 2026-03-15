@@ -1,5 +1,5 @@
-import 'package:fitguide/view/workout/machine/equipment.dart';
-import 'package:fitguide/view/workout/package/package.dart';
+import 'package:fitguide/pages/workout/machine/equipment.dart';
+import 'package:fitguide/pages/workout/package/package.dart';
 import 'package:flutter/material.dart';
 
 class WorkoutPage extends StatefulWidget {

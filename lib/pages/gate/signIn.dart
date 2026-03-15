@@ -1,6 +1,6 @@
 import 'package:fitguide/database/preferance.dart';
-import 'package:fitguide/view/home/mainScreen.dart';
-import 'package:fitguide/view/gate/signUp.dart';
+import 'package:fitguide/pages/gate/signUp.dart';
+import 'package:fitguide/pages/home/mainScreen.dart';
 import 'package:flutter/material.dart';
 
 class SignIn extends StatefulWidget {
@@ -13,7 +13,7 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
   final _formKey = GlobalKey<FormState>();
 
-  final emailController = TextEditingController();
+  final usernameController = TextEditingController();
   final passwordController = TextEditingController();
 
   bool isPasswordVisible = false;
@@ -21,7 +21,7 @@ class _SignInState extends State<SignIn> {
   Future<void> login() async {
     if (_formKey.currentState!.validate()) {
       bool success = await UserPref.login(
-        emailController.text.trim(),
+        usernameController.text.trim(),
         passwordController.text.trim(),
       );
 
@@ -34,7 +34,7 @@ class _SignInState extends State<SignIn> {
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Email or Password incorrect")),
+          const SnackBar(content: Text("Username or Password incorrect")),
         );
       }
     }
@@ -42,12 +42,11 @@ class _SignInState extends State<SignIn> {
 
   @override
   void dispose() {
-    emailController.dispose();
+    usernameController.dispose();
     passwordController.dispose();
     super.dispose();
   }
 
-  /// INPUT DECORATION FUNCTION
   InputDecoration inputDecoration({
     required IconData icon,
     required String hint,
@@ -108,11 +107,14 @@ class _SignInState extends State<SignIn> {
           child: Column(
             children: [
               const SizedBox(height: 20),
+
               const Image(
                 image: AssetImage("assets/images/logoFitGuide.png"),
                 alignment: Alignment.topCenter,
               ),
+
               const SizedBox(height: 20),
+
               Form(
                 key: _formKey,
                 child: Container(
@@ -124,29 +126,29 @@ class _SignInState extends State<SignIn> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      /// EMAIL
+                      /// USERNAME
                       const Text(
-                        "Email",
+                        "Username",
                         style: TextStyle(color: Colors.white),
                       ),
+
                       const SizedBox(height: 5),
+
                       TextFormField(
-                        controller: emailController,
+                        controller: usernameController,
                         style: const TextStyle(color: Colors.black),
                         validator: (value) {
                           if (value == null || value.trim().isEmpty) {
-                            return "Email cannot be empty";
-                          }
-                          if (!value.contains("@gmail.com")) {
-                            return "Email is not valid";
+                            return "Username cannot be empty";
                           }
                           return null;
                         },
                         decoration: inputDecoration(
-                          icon: Icons.email_rounded,
-                          hint: "Email",
+                          icon: Icons.person,
+                          hint: "Username",
                         ),
                       ),
+
                       const SizedBox(height: 15),
 
                       /// PASSWORD
@@ -154,7 +156,9 @@ class _SignInState extends State<SignIn> {
                         "Password",
                         style: TextStyle(color: Colors.white),
                       ),
+
                       const SizedBox(height: 5),
+
                       TextFormField(
                         controller: passwordController,
                         obscureText: !isPasswordVisible,
@@ -186,6 +190,7 @@ class _SignInState extends State<SignIn> {
                           ),
                         ),
                       ),
+
                       const SizedBox(height: 20),
 
                       /// SIGN IN BUTTON
@@ -219,9 +224,10 @@ class _SignInState extends State<SignIn> {
                           ),
                         ),
                       ),
+
                       const SizedBox(height: 10),
 
-                      /// DON'T HAVE ACCOUNT
+                      /// SIGN UP LINK
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -253,6 +259,7 @@ class _SignInState extends State<SignIn> {
                           ),
                         ],
                       ),
+
                       const SizedBox(height: 10),
                     ],
                   ),

@@ -1,6 +1,6 @@
 import 'package:fitguide/database/preferance.dart';
-import 'package:fitguide/view/home/mainScreen.dart';
-import 'package:fitguide/view/gate/signIn.dart';
+import 'package:fitguide/pages/gate/signIn.dart';
+import 'package:fitguide/pages/home/mainScreen.dart';
 import 'package:flutter/material.dart';
 
 class Splash extends StatefulWidget {

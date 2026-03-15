@@ -1,7 +1,7 @@
+import 'package:fitguide/pages/profile/progress/progress_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:fitguide/controller/progress_controller.dart';
 import 'package:fitguide/model/progress_model.dart';
-import 'package:fitguide/view/profile/progress/progress_chart.dart';
 
 enum ChartRange { week, month, year }
 
@@ -229,14 +229,13 @@ class _ProgressState extends State<Progress> {
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
                     color: Colors.white.withAlpha(20),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: IconButton(
                     icon: const Icon(
-                      Icons.calendar_today,
+                      Icons.calendar_month_rounded,
                       color: Color(0xFF66BB6A),
                     ),
                     onPressed: pickDate,

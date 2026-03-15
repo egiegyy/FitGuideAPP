@@ -1,5 +1,5 @@
-import 'package:fitguide/view/workout/exercise/legPress.dart';
-import 'package:fitguide/view/workout/exercise/legPressCalfRaise.dart';
+import 'package:fitguide/pages/workout/exercise/legPress.dart';
+import 'package:fitguide/pages/workout/exercise/legPressCalfRaise.dart';
 import 'package:flutter/material.dart';
 
 class LegPressMachine extends StatefulWidget {

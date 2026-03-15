@@ -1,5 +1,5 @@
-import 'package:fitguide/view/workout/exercise/chestPress.dart';
-import 'package:fitguide/view/workout/exercise/closeGripCP.dart';
+import 'package:fitguide/pages/workout/exercise/chestPress.dart';
+import 'package:fitguide/pages/workout/exercise/closeGripCP.dart';
 import 'package:flutter/material.dart';
 
 class PushWorkout extends StatefulWidget {

@@ -1,9 +1,4 @@
-import 'package:fitguide/view/home/mainScreen.dart';
-import 'package:fitguide/view/home/home.dart';
-import 'package:fitguide/view/scanner.dart';
-import 'package:fitguide/view/gate/signUp.dart';
-import 'package:fitguide/view/gate/splash.dart';
-import 'package:fitguide/view/workout/workouts.dart';
+import 'package:fitguide/pages/gate/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'controller/theme_controller.dart';

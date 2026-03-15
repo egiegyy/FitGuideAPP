@@ -1,7 +1,7 @@
 import 'package:fitguide/database/sqflite.dart';
-import 'package:fitguide/view/workout/exercise/chestPress.dart';
-import 'package:fitguide/view/workout/exercise/legPress.dart';
-import 'package:fitguide/view/workout/exercise/wideGripLP.dart';
+import 'package:fitguide/pages/workout/exercise/chestPress.dart';
+import 'package:fitguide/pages/workout/exercise/legPress.dart';
+import 'package:fitguide/pages/workout/exercise/wideGripLP.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 

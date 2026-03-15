@@ -1,9 +1,9 @@
-import 'package:fitguide/view/workout/exercise/chestPress.dart';
-import 'package:fitguide/view/workout/exercise/closeGripCP.dart';
-import 'package:fitguide/view/workout/exercise/closeGripLP.dart';
-import 'package:fitguide/view/workout/exercise/legPress.dart';
-import 'package:fitguide/view/workout/exercise/legPressCalfRaise.dart';
-import 'package:fitguide/view/workout/exercise/wideGripLP.dart';
+import 'package:fitguide/pages/workout/exercise/chestPress.dart';
+import 'package:fitguide/pages/workout/exercise/closeGripCP.dart';
+import 'package:fitguide/pages/workout/exercise/closeGripLP.dart';
+import 'package:fitguide/pages/workout/exercise/legPress.dart';
+import 'package:fitguide/pages/workout/exercise/legPressCalfRaise.dart';
+import 'package:fitguide/pages/workout/exercise/wideGripLP.dart';
 
 class ExerciseItem {
   final String name;

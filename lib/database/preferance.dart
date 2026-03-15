@@ -1,5 +1,7 @@
+
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:fitguide/database/sqflite.dart';
 
 class UserPref {
   static const String userKey = "users";
@@ -55,7 +57,12 @@ class UserPref {
 
     for (var user in users) {
       if (user["email"] == email && user["password"] == password) {
+
+        /// reset database supaya user sebelumnya tidak terbawa
+        await DBHelper.resetDB();
+
         await prefs.setString(loginUserKey, email);
+
         return true;
       }
     }
@@ -108,6 +115,10 @@ class UserPref {
   /// LOGOUT
   static Future<void> logout() async {
     final prefs = await SharedPreferences.getInstance();
+
+    /// reset database ketika logout
+    await DBHelper.resetDB();
+
     await prefs.remove(loginUserKey);
   }
 
@@ -138,7 +149,9 @@ class UserPref {
       await prefs.setString(profileImageKey, jsonEncode(images));
     }
 
-    /// logout setelah delete
+    /// reset database setelah delete
+    await DBHelper.resetDB();
+
     await prefs.remove(loginUserKey);
   }
 

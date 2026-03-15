@@ -1,28 +1,47 @@
+import 'package:fitguide/database/preferance.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DBHelper {
   static Database? _db;
 
+  /// RESET DATABASE (dipanggil saat login / logout)
+  static Future<void> resetDB() async {
+    if (_db != null) {
+      await _db!.close();
+      _db = null;
+    }
+  }
+
   /// GET DATABASE INSTANCE
   static Future<Database> db() async {
-    if (_db != null) return _db!;
+    if (_db != null) {
+      return _db!;
+    }
+
     _db = await _initDb();
     return _db!;
   }
 
-  /// INIT DATABASE
+  /// INIT DATABASE (DATABASE PER USER)
   static Future<Database> _initDb() async {
-    final dbPath = await getDatabasesPath();
-    final path = join(dbPath, 'fitguide.db');
+    final email = await UserPref.getLoginUser();
 
-    return await openDatabase(
+    if (email == null) {
+      throw Exception("User not logged in. Database cannot be initialized.");
+    }
+
+    final dbPath = await getDatabasesPath();
+
+    /// database unik berdasarkan email user
+    final path = join(dbPath, 'fitguide_${email.replaceAll("@", "_")}.db');
+
+    final database = await openDatabase(
       path,
       version: 4,
 
-      /// FIRST CREATE DATABASE
       onCreate: (db, version) async {
-        /// TABLE PROGRESS (WORKOUT LOG)
+        /// PROGRESS TABLE
         await db.execute('''
         CREATE TABLE progress (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -33,7 +52,7 @@ class DBHelper {
         )
         ''');
 
-        /// TABLE ROUTINE
+        /// ROUTINE TABLE
         await db.execute('''
         CREATE TABLE routine (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -42,7 +61,7 @@ class DBHelper {
         )
         ''');
 
-        /// TABLE EQUIPMENT (FOR SCANNER)
+        /// EQUIPMENT TABLE
         await db.execute('''
         CREATE TABLE equipment (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -55,7 +74,7 @@ class DBHelper {
         )
         ''');
 
-        /// SAMPLE EQUIPMENT
+        /// SAMPLE DATA
         await db.insert('equipment', {
           'barcode': 'LAT001',
           'name': 'Lat Pulldown',
@@ -75,7 +94,6 @@ class DBHelper {
         });
       },
 
-      /// DATABASE MIGRATION
       onUpgrade: (db, oldVersion, newVersion) async {
         if (oldVersion < 2) {
           await db.execute('''
@@ -101,7 +119,6 @@ class DBHelper {
           ''');
         }
 
-        /// MIGRATION TO NEW PROGRESS STRUCTURE
         if (oldVersion < 4) {
           await db.execute('DROP TABLE IF EXISTS progress');
 
@@ -117,6 +134,8 @@ class DBHelper {
         }
       },
     );
+
+    return database;
   }
 
   /// CHECK EQUIPMENT BY BARCODE
@@ -174,21 +193,6 @@ class DBHelper {
     return result.map((e) => e['day'] as String).toList();
   }
 
-  /// GET EXERCISE PREVIEW
-  static Future<List<String>> getRoutineExercisePreview(String day) async {
-    final db = await DBHelper.db();
-
-    final result = await db.query(
-      'routine',
-      columns: ['exercise'],
-      where: 'day = ?',
-      whereArgs: [day],
-      limit: 2,
-    );
-
-    return result.map((e) => e['exercise'] as String).toList();
-  }
-
   /// DELETE ROUTINE
   static Future<int> deleteRoutine(int id) async {
     final db = await DBHelper.db();
@@ -196,20 +200,24 @@ class DBHelper {
     return await db.delete('routine', where: 'id = ?', whereArgs: [id]);
   }
 
-  /// PROGRESS FUNCTIONS
-
+  /// INSERT PROGRESS
   static Future<int> insertProgress(Map<String, dynamic> data) async {
     final db = await DBHelper.db();
+
     return await db.insert('progress', data);
   }
 
+  /// GET PROGRESS
   static Future<List<Map<String, dynamic>>> getProgress() async {
     final db = await DBHelper.db();
-    return await db.query('progress', orderBy: "date DESC");
+
+    return await db.query('progress', orderBy: "date ASC");
   }
 
+  /// DELETE PROGRESS
   static Future<int> deleteProgress(int id) async {
     final db = await DBHelper.db();
+
     return await db.delete('progress', where: 'id = ?', whereArgs: [id]);
   }
 }

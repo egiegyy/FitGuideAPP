@@ -1,11 +1,11 @@
 import 'dart:io';
 import 'package:fitguide/database/preferance.dart';
 import 'package:fitguide/database/sqflite.dart';
-import 'package:fitguide/view/profile/routine/routine.dart';
-import 'package:fitguide/view/profile/progress/progress.dart';
-import 'package:fitguide/view/profile/setting.dart';
-import 'package:fitguide/view/gate/signIn.dart';
-import 'package:fitguide/view/gate/signUp.dart';
+import 'package:fitguide/pages/gate/signIn.dart';
+import 'package:fitguide/pages/gate/signUp.dart';
+import 'package:fitguide/pages/profile/progress/progress.dart';
+import 'package:fitguide/pages/profile/routine/routine.dart';
+import 'package:fitguide/pages/profile/setting.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 

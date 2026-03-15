@@ -1,5 +1,5 @@
 import 'package:fitguide/database/sqflite.dart';
-import 'package:fitguide/view/profile/routine/add_exercise.dart';
+import 'package:fitguide/pages/profile/routine/add_exercise.dart';
 import 'package:flutter/material.dart';
 import 'routine_day.dart';
 

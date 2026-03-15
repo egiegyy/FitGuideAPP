@@ -9,11 +9,11 @@ class ProgressController {
     await db.insert('progress', progress.toMap());
   }
 
-  /// GET ALL WORKOUT PROGRESS (LATEST FIRST)
+  /// GET ALL WORKOUT PROGRESS (OLDEST FIRST FOR CHART)
   static Future<List<ProgressModel>> getAllProgress() async {
     final db = await DBHelper.db();
 
-    final results = await db.query('progress', orderBy: "date DESC");
+    final results = await db.query('progress', orderBy: "date ASC");
 
     return results.map((e) => ProgressModel.fromMap(e)).toList();
   }

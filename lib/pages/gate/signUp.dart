@@ -1,5 +1,5 @@
 import 'package:fitguide/database/preferance.dart';
-import 'package:fitguide/view/gate/signIn.dart';
+import 'package:fitguide/pages/gate/signIn.dart';
 import 'package:flutter/material.dart';
 
 class SignUp extends StatefulWidget {

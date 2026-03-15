@@ -1,16 +1,15 @@
-import 'package:fitguide/view/workout/exercise/chestPress.dart';
-import 'package:fitguide/view/workout/exercise/legPress.dart';
-import 'package:fitguide/view/workout/exercise/wideGripLP.dart';
+import 'package:fitguide/pages/workout/exercise/closeGripLP.dart';
+import 'package:fitguide/pages/workout/exercise/wideGripLP.dart';
 import 'package:flutter/material.dart';
 
-class FullBodyWorkout extends StatefulWidget {
-  const FullBodyWorkout({super.key});
+class PullWorkout extends StatefulWidget {
+  const PullWorkout({super.key});
 
   @override
-  State<FullBodyWorkout> createState() => _FullBodyWorkoutState();
+  State<PullWorkout> createState() => _PullWorkoutState();
 }
 
-class _FullBodyWorkoutState extends State<FullBodyWorkout> {
+class _PullWorkoutState extends State<PullWorkout> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,8 +17,8 @@ class _FullBodyWorkoutState extends State<FullBodyWorkout> {
 
       appBar: AppBar(
         elevation: 0,
-        centerTitle: true,
         backgroundColor: Colors.black,
+        centerTitle: true,
         title: const Text(
           "Package",
           style: TextStyle(
@@ -74,7 +73,7 @@ class _FullBodyWorkoutState extends State<FullBodyWorkout> {
 
                 /// TITLE
                 const Text(
-                  "Full Body Workout",
+                  "Pull Workout",
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -98,7 +97,7 @@ class _FullBodyWorkoutState extends State<FullBodyWorkout> {
 
                 const Divider(color: Colors.white24),
 
-                /// CHEST PRESS
+                /// CLOSE GRIP LAT PULLDOWN
                 Container(
                   decoration: BoxDecoration(
                     color: Colors.white.withOpacity(0.05),
@@ -120,7 +119,7 @@ class _FullBodyWorkoutState extends State<FullBodyWorkout> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8),
                         child: Image.asset(
-                          "assets/images/Chest Press.png",
+                          "assets/images/Close Grip Lat Pulldown.png",
                           width: 45,
                           height: 45,
                           fit: BoxFit.cover,
@@ -129,7 +128,7 @@ class _FullBodyWorkoutState extends State<FullBodyWorkout> {
                     ),
 
                     title: const Text(
-                      "Chest Press",
+                      "Close Grip Lat Pulldown",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 18,
@@ -142,7 +141,7 @@ class _FullBodyWorkoutState extends State<FullBodyWorkout> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => ChestPressPage(),
+                            builder: (context) => CloseGripLatPulldownPage(),
                           ),
                         );
                       },
@@ -154,7 +153,6 @@ class _FullBodyWorkoutState extends State<FullBodyWorkout> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        backgroundColor: Colors.transparent,
                       ),
                       child: Ink(
                         decoration: const BoxDecoration(
@@ -233,95 +231,6 @@ class _FullBodyWorkoutState extends State<FullBodyWorkout> {
                           context,
                           MaterialPageRoute(
                             builder: (context) => WideGripLatPulldownPage(),
-                          ),
-                        );
-                      },
-                      style: TextButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 18,
-                          vertical: 8,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                      ),
-                      child: Ink(
-                        decoration: const BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              Color(0xFF2E7D32),
-                              Color(0xFF66BB6A),
-                            ],
-                          ),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(20),
-                          ),
-                        ),
-                        child: const Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 18,
-                            vertical: 8,
-                          ),
-                          child: Text(
-                            "More",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-
-                const SizedBox(height: 12),
-
-                /// LEG PRESS
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.05),
-                    border: Border.all(color: Colors.white24),
-                    borderRadius: BorderRadius.circular(18),
-                  ),
-                  child: ListTile(
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 14,
-                      vertical: 6,
-                    ),
-
-                    leading: Container(
-                      padding: const EdgeInsets.all(6),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.08),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(8),
-                        child: Image.asset(
-                          "assets/images/Leg Press.png",
-                          width: 45,
-                          height: 45,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-
-                    title: const Text(
-                      "Leg Press",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-
-                    trailing: TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => LegPressPage(),
                           ),
                         );
                       },

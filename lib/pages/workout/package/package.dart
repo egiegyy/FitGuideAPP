@@ -1,7 +1,7 @@
-import 'package:fitguide/view/workout/package/fullbodyworkout.dart';
-import 'package:fitguide/view/workout/package/legworkout.dart';
-import 'package:fitguide/view/workout/package/pullworkout.dart';
-import 'package:fitguide/view/workout/package/pushworkout.dart';
+import 'package:fitguide/pages/workout/package/fullbodyworkout.dart';
+import 'package:fitguide/pages/workout/package/legworkout.dart';
+import 'package:fitguide/pages/workout/package/pullworkout.dart';
+import 'package:fitguide/pages/workout/package/pushworkout.dart';
 import 'package:flutter/material.dart';
 
 class Package extends StatelessWidget {

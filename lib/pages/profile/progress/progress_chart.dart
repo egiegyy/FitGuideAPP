@@ -13,17 +13,24 @@ class ProgressChart extends StatelessWidget {
       return const SizedBox();
     }
 
+    /// SORT DATA BY DATE (OLD → NEW)
+    final sortedData = [...data];
+    sortedData.sort((a, b) => a.date.compareTo(b.date));
+
     /// convert weight ke double
-    List<double> weights = data
+    List<double> weights = sortedData
         .map((e) => double.tryParse(e.weight) ?? 0)
         .toList();
 
     /// cari personal record
     double pr = weights.reduce((a, b) => a > b ? a : b);
 
+    /// generate chart spots
     List<FlSpot> spots = [];
-    for (int i = 0; i < data.length; i++) {
-      spots.add(FlSpot(i.toDouble(), double.tryParse(data[i].weight) ?? 0));
+    for (int i = 0; i < sortedData.length; i++) {
+      spots.add(
+        FlSpot(i.toDouble(), double.tryParse(sortedData[i].weight) ?? 0),
+      );
     }
 
     return Container(
@@ -73,13 +80,14 @@ class ProgressChart extends StatelessWidget {
                 reservedSize: 35,
                 getTitlesWidget: (value, meta) {
                   int index = value.toInt();
-                  if (index >= data.length) {
+                  if (index >= sortedData.length) {
                     return const SizedBox();
                   }
+
                   return Padding(
                     padding: const EdgeInsets.only(top: 8),
                     child: Text(
-                      data[index].date.substring(5),
+                      sortedData[index].date.substring(5),
                       style: const TextStyle(
                         fontSize: 10,
                         color: Colors.white70,
@@ -104,7 +112,8 @@ class ProgressChart extends StatelessWidget {
               dotData: FlDotData(
                 show: true,
                 getDotPainter: (spot, percent, barData, index) {
-                  double weight = double.tryParse(data[index].weight) ?? 0;
+                  double weight =
+                      double.tryParse(sortedData[index].weight) ?? 0;
 
                   /// highlight PR
                   if (weight == pr) {
@@ -115,6 +124,7 @@ class ProgressChart extends StatelessWidget {
                       strokeColor: Colors.white,
                     );
                   }
+
                   return FlDotCirclePainter(
                     radius: 4,
                     color: const Color(0xFF2E7D32),

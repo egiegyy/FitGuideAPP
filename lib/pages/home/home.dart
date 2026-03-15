@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'package:fitguide/database/preferance.dart';
 import 'package:fitguide/database/sqflite.dart';
-import 'package:fitguide/view/profile/routine/routine.dart';
-import 'package:fitguide/view/profile/routine/routine_day.dart';
-import 'package:fitguide/view/workout/package/pullworkout.dart';
-import 'package:fitguide/view/workout/package/pushworkout.dart';
-import 'package:fitguide/view/workout/workouts.dart';
+import 'package:fitguide/pages/profile/routine/routine.dart';
+import 'package:fitguide/pages/profile/routine/routine_day.dart';
+import 'package:fitguide/pages/workout/package/pullworkout.dart';
+import 'package:fitguide/pages/workout/package/pushworkout.dart';
+import 'package:fitguide/pages/workout/workouts.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -336,7 +336,7 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       _packageTile(
                         context,
-                        "Push Workout",
+                        "Push Work out",
                         const PushWorkout(),
                       ),
 

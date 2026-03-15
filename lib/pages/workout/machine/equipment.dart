@@ -1,6 +1,6 @@
-import 'package:fitguide/view/workout/machine/chestPressMachine.dart';
-import 'package:fitguide/view/workout/machine/latPulldownMachine.dart';
-import 'package:fitguide/view/workout/machine/legPressMachine.dart';
+import 'package:fitguide/pages/workout/machine/chestPressMachine.dart';
+import 'package:fitguide/pages/workout/machine/latPulldownMachine.dart';
+import 'package:fitguide/pages/workout/machine/legPressMachine.dart';
 import 'package:flutter/material.dart';
 
 class Equipment extends StatefulWidget {
