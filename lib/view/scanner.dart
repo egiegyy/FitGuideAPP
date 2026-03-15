@@ -1,7 +1,7 @@
 import 'package:fitguide/database/sqflite.dart';
-import 'package:fitguide/view/exercise/chestPress.dart';
-import 'package:fitguide/view/exercise/legPress.dart';
-import 'package:fitguide/view/exercise/wideGripLP.dart';
+import 'package:fitguide/view/workout/exercise/chestPress.dart';
+import 'package:fitguide/view/workout/exercise/legPress.dart';
+import 'package:fitguide/view/workout/exercise/wideGripLP.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
@@ -23,7 +23,6 @@ class _ScannerPageState extends State<ScannerPage>
 
   static const double scanSize = 280;
 
-  /// ROUTER MAP MACHINE PAGE
   final Map<String, WidgetBuilder> machineRoutes = {
     "lat_pulldown": (context) => const WideGripLatPulldownPage(),
     "leg_press": (context) => const LegPressPage(),
@@ -53,7 +52,6 @@ class _ScannerPageState extends State<ScannerPage>
     super.dispose();
   }
 
-  /// HANDLE BARCODE
   Future<void> handleBarcode(String code) async {
     if (isScanning) return;
 
@@ -64,21 +62,20 @@ class _ScannerPageState extends State<ScannerPage>
     if (!mounted) return;
 
     if (equipment != null) {
-      /// STOP CAMERA
       await controller.stop();
 
       final pageId = equipment['page'];
 
       if (machineRoutes.containsKey(pageId)) {
-        /// NAVIGATE TO MACHINE PAGE
         await Navigator.push(
           context,
           MaterialPageRoute(builder: machineRoutes[pageId]!),
         );
 
-        /// AFTER RETURN FROM PAGE
         if (!mounted) return;
+
         await Future.delayed(const Duration(milliseconds: 500));
+
         isScanning = false;
         controller.start();
       } else {
@@ -107,151 +104,218 @@ class _ScannerPageState extends State<ScannerPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      extendBodyBehindAppBar: true,
+
       appBar: AppBar(
-        iconTheme: const IconThemeData(color: Colors.white, size: 30),
-        backgroundColor: Colors.black,
+        iconTheme: const IconThemeData(color: Colors.white, size: 28),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
         centerTitle: true,
         title: const Text(
           "Scanner",
           style: TextStyle(
-            fontSize: 20,
+            fontSize: 22,
             fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
         ),
       ),
-      body: Stack(
-        children: [
-          /// CAMERA VIEW
-          if (scannerStarted)
-            MobileScanner(
-              controller: controller,
-              onDetect: (BarcodeCapture capture) {
-                if (isScanning) return;
-                for (final barcode in capture.barcodes) {
-                  final String? code = barcode.rawValue;
-                  if (code != null) {
-                    handleBarcode(code);
-                    break;
+
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color(0xFF000000),
+              Color(0xFF0A0F0A),
+              Color(0xFF101810),
+              Color(0xFF000000),
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
+
+        child: Stack(
+          children: [
+            /// CAMERA
+            if (scannerStarted)
+              MobileScanner(
+                controller: controller,
+                onDetect: (BarcodeCapture capture) {
+                  if (isScanning) return;
+
+                  for (final barcode in capture.barcodes) {
+                    final String? code = barcode.rawValue;
+
+                    if (code != null) {
+                      handleBarcode(code);
+                      break;
+                    }
                   }
-                }
-              },
-            ),
-
-          /// INTRO SCREEN
-          if (!scannerStarted)
-            Center(
-              child: ElevatedButton(
-                onPressed: startScanner,
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 30,
-                    vertical: 15,
-                  ),
-                  backgroundColor: Colors.green,
-                ),
-                child: const Text(
-                  "Start Scan",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                    fontSize: 18,
-                  ),
-                ),
+                },
               ),
-            ),
 
-          /// DARK OVERLAY
-          if (scannerStarted)
-            ColorFiltered(
-              colorFilter: ColorFilter.mode(
-                Colors.black.withOpacity(0.7),
-                BlendMode.srcOut,
-              ),
-              child: Stack(
-                children: [
-                  Container(
-                    decoration: const BoxDecoration(
-                      color: Colors.black,
-                      backgroundBlendMode: BlendMode.dstOut,
-                    ),
+            /// INTRO SCREEN
+            if (!scannerStarted)
+              Center(
+                child: Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 30),
+                  padding: const EdgeInsets.all(30),
+
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.05),
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: Colors.white24),
                   ),
 
-                  Center(
-                    child: Container(
-                      width: scanSize,
-                      height: scanSize,
-                      decoration: BoxDecoration(
-                        color: Colors.transparent,
-                        borderRadius: BorderRadius.circular(20),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(
+                        Icons.qr_code_scanner,
+                        size: 70,
+                        color: Colors.green,
                       ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
 
-          /// SCANNER FRAME
-          if (scannerStarted)
-            Center(
-              child: SizedBox(
-                width: scanSize,
-                height: scanSize,
-                child: Stack(
-                  children: [
-                    ..._buildCorners(),
+                      const SizedBox(height: 20),
 
-                    /// SCAN LINE
-                    AnimatedBuilder(
-                      animation: _animation,
-                      builder: (_, __) {
-                        return Positioned(
-                          top: _animation.value,
-                          left: 0,
-                          right: 0,
-                          child: Container(
-                            height: 2,
-                            decoration: const BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: [
-                                  Colors.transparent,
-                                  Colors.blue,
-                                  Colors.transparent,
-                                ],
-                              ),
+                      const Text(
+                        "Scan Gym Equipment",
+                        style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+
+                      const SizedBox(height: 10),
+
+                      const Text(
+                        "Scan the barcode on the gym machine to see workout guidance.",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.white70),
+                      ),
+
+                      const SizedBox(height: 25),
+
+                      InkWell(
+                        onTap: startScanner,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 35,
+                            vertical: 14,
+                          ),
+                          decoration: BoxDecoration(
+                            gradient: const LinearGradient(
+                              colors: [Color(0xFF2E7D32), Color(0xFF66BB6A)],
+                            ),
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: const Text(
+                            "Start Scan",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                              color: Colors.white,
                             ),
                           ),
-                        );
-                      },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+            /// OVERLAY
+            if (scannerStarted)
+              ColorFiltered(
+                colorFilter: ColorFilter.mode(
+                  Colors.black.withOpacity(0.75),
+                  BlendMode.srcOut,
+                ),
+                child: Stack(
+                  children: [
+                    Container(
+                      decoration: const BoxDecoration(
+                        color: Colors.black,
+                        backgroundBlendMode: BlendMode.dstOut,
+                      ),
                     ),
 
-                    const Center(
-                      child: Icon(
-                        Icons.camera_alt_rounded,
-                        color: Colors.blue,
-                        size: 40,
+                    Center(
+                      child: Container(
+                        width: scanSize,
+                        height: scanSize,
+                        decoration: BoxDecoration(
+                          color: Colors.transparent,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
                       ),
                     ),
                   ],
                 ),
               ),
-            ),
 
-          /// TEXT
-          if (scannerStarted)
-            const Positioned(
-              bottom: 100,
-              left: 0,
-              right: 0,
-              child: Center(
-                child: Text(
-                  "Scan Barcode",
-                  style: TextStyle(color: Colors.blue, fontSize: 18),
+            /// SCAN FRAME
+            if (scannerStarted)
+              Center(
+                child: SizedBox(
+                  width: scanSize,
+                  height: scanSize,
+                  child: Stack(
+                    children: [
+                      ..._buildCorners(),
+
+                      AnimatedBuilder(
+                        animation: _animation,
+                        builder: (_, __) {
+                          return Positioned(
+                            top: _animation.value,
+                            left: 0,
+                            right: 0,
+                            child: Container(
+                              height: 3,
+                              decoration: const BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [
+                                    Colors.transparent,
+                                    Colors.green,
+                                    Colors.transparent,
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+
+                      const Center(
+                        child: Icon(
+                          Icons.qr_code,
+                          color: Colors.green,
+                          size: 45,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-        ],
+
+            /// TEXT
+            if (scannerStarted)
+              const Positioned(
+                bottom: 120,
+                left: 0,
+                right: 0,
+                child: Center(
+                  child: Text(
+                    "Align barcode inside the frame",
+                    style: TextStyle(color: Colors.green, fontSize: 18),
+                  ),
+                ),
+              ),
+          ],
+        ),
       ),
     );
   }
@@ -269,8 +333,8 @@ class _ScannerPageState extends State<ScannerPage>
           height: cornerSize,
           decoration: const BoxDecoration(
             border: Border(
-              top: BorderSide(color: Colors.blue, width: thickness),
-              left: BorderSide(color: Colors.blue, width: thickness),
+              top: BorderSide(color: Colors.green, width: thickness),
+              left: BorderSide(color: Colors.green, width: thickness),
             ),
           ),
         ),
@@ -284,8 +348,8 @@ class _ScannerPageState extends State<ScannerPage>
           height: cornerSize,
           decoration: const BoxDecoration(
             border: Border(
-              top: BorderSide(color: Colors.blue, width: thickness),
-              right: BorderSide(color: Colors.blue, width: thickness),
+              top: BorderSide(color: Colors.green, width: thickness),
+              right: BorderSide(color: Colors.green, width: thickness),
             ),
           ),
         ),
@@ -299,8 +363,8 @@ class _ScannerPageState extends State<ScannerPage>
           height: cornerSize,
           decoration: const BoxDecoration(
             border: Border(
-              bottom: BorderSide(color: Colors.blue, width: thickness),
-              left: BorderSide(color: Colors.blue, width: thickness),
+              bottom: BorderSide(color: Colors.green, width: thickness),
+              left: BorderSide(color: Colors.green, width: thickness),
             ),
           ),
         ),
@@ -314,8 +378,8 @@ class _ScannerPageState extends State<ScannerPage>
           height: cornerSize,
           decoration: const BoxDecoration(
             border: Border(
-              bottom: BorderSide(color: Colors.blue, width: thickness),
-              right: BorderSide(color: Colors.blue, width: thickness),
+              bottom: BorderSide(color: Colors.green, width: thickness),
+              right: BorderSide(color: Colors.green, width: thickness),
             ),
           ),
         ),
