@@ -1,6 +1,6 @@
 import 'package:fitguide/pages/home/home.dart';
 import 'package:fitguide/pages/profile/profile.dart';
-import 'package:fitguide/pages/scaanner/scanner.dart';
+import 'package:fitguide/pages/scanner/scanner.dart';
 import 'package:fitguide/pages/workout/workouts.dart';
 import 'package:flutter/material.dart';
 

@@ -170,9 +170,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 await db.delete("progress"); //hapus kolom
                 await db.delete("routine");
                 await UserPref.deleteAccount(); //hapus akun
-
-                /// RESET DB INSTANCE
-                await DBHelper.resetDB();
+                await DBHelper.resetDB(); //reset db
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (context) => const SignUp()),
