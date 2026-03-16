@@ -16,11 +16,8 @@ class _ProgressState extends State<Progress> {
   final exerciseController = TextEditingController();
   final weightController = TextEditingController();
   final repsController = TextEditingController();
-
   DateTime selectedDate = DateTime.now();
-
   ChartRange selectedRange = ChartRange.week;
-
   InputDecoration inputDecoration({
     required String hint,
     required IconData icon,
@@ -79,27 +76,22 @@ class _ProgressState extends State<Progress> {
       ).showSnackBar(const SnackBar(content: Text("All fields are required")));
       return;
     }
-
     final progress = ProgressModel(
       exercise: exerciseController.text,
       weight: weightController.text,
       reps: repsController.text,
       date: selectedDate.toString().split(" ")[0],
     );
-
     await ProgressController.insertProgress(progress);
-
     exerciseController.clear();
     weightController.clear();
     repsController.clear();
 
     setState(() {});
   }
-
   List<ProgressModel> filterData(List<ProgressModel> data) {
     DateTime now = DateTime.now();
     DateTime startDate;
-
     switch (selectedRange) {
       case ChartRange.week:
         startDate = now.subtract(const Duration(days: 7));
@@ -111,16 +103,13 @@ class _ProgressState extends State<Progress> {
         startDate = now.subtract(const Duration(days: 365));
         break;
     }
-
     return data.where((item) {
       DateTime itemDate = DateTime.parse(item.date);
       return itemDate.isAfter(startDate);
     }).toList();
   }
-
   Widget rangeButton(String text, ChartRange range) {
     bool active = selectedRange == range;
-
     return ElevatedButton(
       style:
           ElevatedButton.styleFrom(
@@ -175,7 +164,6 @@ class _ProgressState extends State<Progress> {
       ],
     );
   }
-
   Widget buildInputForm() {
     return Container(
       padding: const EdgeInsets.all(20),
@@ -244,9 +232,7 @@ class _ProgressState extends State<Progress> {
               ],
             ),
           ),
-
           const SizedBox(height: 15),
-
           SizedBox(
             width: double.infinity,
             height: 45,
@@ -280,15 +266,12 @@ class _ProgressState extends State<Progress> {
       ),
     );
   }
-
   Widget buildProgressList(List<ProgressModel> data) {
     Map<String, List<ProgressModel>> grouped = {};
-
     for (var item in data) {
       grouped.putIfAbsent(item.date, () => []);
       grouped[item.date]!.add(item);
     }
-
     return Column(
       children: grouped.entries.map((entry) {
         return Container(
@@ -375,7 +358,6 @@ class _ProgressState extends State<Progress> {
     repsController.dispose();
     super.dispose();
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -399,7 +381,6 @@ class _ProgressState extends State<Progress> {
               future: ProgressController.getAllProgress(),
               builder: (context, snapshot) {
                 final data = snapshot.data ?? [];
-
                 return ListView(
                   children: [
                     const Center(
@@ -412,18 +393,14 @@ class _ProgressState extends State<Progress> {
                         ),
                       ),
                     ),
-
                     const SizedBox(height: 20),
-
                     buildInputForm(),
                     const SizedBox(height: 20),
-
                     if (data.isNotEmpty) ...[
                       buildRangeSelector(),
                       const SizedBox(height: 10),
                       ProgressChart(data: filterData(data)),
                     ],
-
                     const SizedBox(height: 20),
                     buildProgressList(data),
                   ],
@@ -440,7 +417,6 @@ class _ProgressState extends State<Progress> {
     final exerciseEdit = TextEditingController(text: item.exercise);
     final weightEdit = TextEditingController(text: item.weight);
     final repsEdit = TextEditingController(text: item.reps);
-
     await showDialog(
       context: context,
       builder: (context) {
@@ -508,7 +484,6 @@ class _ProgressState extends State<Progress> {
                     date: item.date,
                   ),
                 );
-
                 Navigator.pop(context);
                 setState(() {});
               },

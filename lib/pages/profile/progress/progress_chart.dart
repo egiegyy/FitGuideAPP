@@ -32,7 +32,6 @@ class ProgressChart extends StatelessWidget {
         FlSpot(i.toDouble(), double.tryParse(sortedData[i].weight) ?? 0),
       );
     }
-
     return Container(
       height: 220,
       padding: const EdgeInsets.all(20),
@@ -118,7 +117,7 @@ class ProgressChart extends StatelessWidget {
                   /// highlight PR
                   if (weight == pr) {
                     return FlDotCirclePainter(
-                      radius: 5,
+                      radius: 3,
                       color: const Color(0xFF66BB6A),
                       strokeWidth: 2,
                       strokeColor: Colors.white,

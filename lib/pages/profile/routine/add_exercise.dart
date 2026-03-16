@@ -4,17 +4,13 @@ import 'exercise_list.dart';
 
 class AddExercisePage extends StatefulWidget {
   final String day;
-
   const AddExercisePage({super.key, required this.day});
-
   @override
   State<AddExercisePage> createState() => _AddExercisePageState();
 }
-
 class _AddExercisePageState extends State<AddExercisePage> {
   Future addExercise(String exercise) async {
     final result = await DBHelper.insertRoutine(widget.day, exercise);
-
     if (result == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -29,16 +25,13 @@ class _AddExercisePageState extends State<AddExercisePage> {
           backgroundColor: Colors.green,
         ),
       );
-
       setState(() {});
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-
       appBar: AppBar(
         backgroundColor: Colors.black,
         centerTitle: true,
@@ -52,7 +45,6 @@ class _AddExercisePageState extends State<AddExercisePage> {
           ),
         ),
       ),
-
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -71,7 +63,6 @@ class _AddExercisePageState extends State<AddExercisePage> {
           itemCount: allExercises.length,
           itemBuilder: (context, index) {
             final exercise = allExercises[index];
-
             return Container(
               margin: const EdgeInsets.only(bottom: 14),
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
@@ -82,7 +73,6 @@ class _AddExercisePageState extends State<AddExercisePage> {
               ),
               child: ListTile(
                 contentPadding: EdgeInsets.zero,
-
                 leading: ClipRRect(
                   borderRadius: BorderRadius.circular(12),
                   child: Image.asset(
@@ -92,7 +82,6 @@ class _AddExercisePageState extends State<AddExercisePage> {
                     fit: BoxFit.cover,
                   ),
                 ),
-
                 title: Text(
                   exercise.name,
                   style: const TextStyle(
@@ -101,7 +90,6 @@ class _AddExercisePageState extends State<AddExercisePage> {
                     fontSize: 16,
                   ),
                 ),
-
                 trailing: Container(
                   decoration: BoxDecoration(
                     color: Colors.white.withAlpha(20),

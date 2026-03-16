@@ -18,46 +18,36 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   String username = "";
   List<String> routineDays = [];
-
   final PageController _controller = PageController();
   int currentPage = 0;
-
   Timer? timer;
-
   final TextStyle pageTitle = const TextStyle(
     fontSize: 24,
     fontWeight: FontWeight.bold,
     color: Colors.white,
   );
-
   final TextStyle sectionTitle = const TextStyle(
     fontSize: 22,
     fontWeight: FontWeight.bold,
     color: Colors.white,
   );
-
   final TextStyle cardTitle = const TextStyle(
     fontSize: 18,
     fontWeight: FontWeight.bold,
     color: Colors.white,
   );
-
   final TextStyle bodyText = const TextStyle(
     fontSize: 14,
     color: Colors.white70,
   );
-
   final TextStyle buttonText = const TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.bold,
     color: Colors.white,
   );
-
   Future<void> getUser() async {
     final user = await UserPref.getCurrentUser();
-
     if (!mounted) return;
-
     setState(() {
       username = user?["username"] ?? "User";
     });
@@ -65,9 +55,7 @@ class _HomePageState extends State<HomePage> {
 
   void loadRoutine() async {
     final data = await DBHelper.getRoutineDays();
-
     if (!mounted) return;
-
     setState(() {
       routineDays = data;
     });
@@ -113,7 +101,6 @@ class _HomePageState extends State<HomePage> {
       context,
       MaterialPageRoute(builder: (context) => RoutineDayPage(day: day)),
     );
-
     loadRoutine();
   }
 
@@ -121,7 +108,6 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.white, size: 28),
         backgroundColor: Colors.black.withOpacity(0.6),
@@ -129,7 +115,6 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
         title: Text("Home", style: pageTitle),
       ),
-
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -143,10 +128,8 @@ class _HomePageState extends State<HomePage> {
             end: Alignment.bottomRight,
           ),
         ),
-
         child: Padding(
           padding: const EdgeInsets.all(20),
-
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -166,7 +149,6 @@ class _HomePageState extends State<HomePage> {
                     Text("Let's be better 1% everyday!"),
                   ],
                 ),
-
                 const SizedBox(height: 30),
 
                 /// BANNER
@@ -197,7 +179,6 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
                 ),
-
                 const SizedBox(height: 10),
 
                 /// DOT INDICATOR
@@ -222,14 +203,11 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
-
                 const SizedBox(height: 25),
 
                 /// ROUTINE
                 Text("Your Routine", style: sectionTitle),
-
                 const SizedBox(height: 10),
-
                 routineDays.isEmpty
                     ? Container(
                         width: double.infinity,
@@ -318,14 +296,11 @@ class _HomePageState extends State<HomePage> {
                           }).toList(),
                         ),
                       ),
-
                 const SizedBox(height: 25),
 
                 /// PACKAGE
                 Text("Package Exercise", style: sectionTitle),
-
                 const SizedBox(height: 10),
-
                 Container(
                   decoration: BoxDecoration(
                     color: Colors.white.withOpacity(0.05),
@@ -339,13 +314,11 @@ class _HomePageState extends State<HomePage> {
                         "Push Work out",
                         const PushWorkout(),
                       ),
-
                       Container(
                         margin: const EdgeInsets.symmetric(vertical: 10),
                         height: 1,
                         color: Colors.white24,
                       ),
-
                       _packageTile(
                         context,
                         "Pull Workout",
@@ -354,9 +327,7 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
                 ),
-
                 const SizedBox(height: 10),
-
                 SizedBox(
                   width: double.infinity,
                   child: Container(
@@ -386,7 +357,6 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
-
                 const SizedBox(height: 20),
               ],
             ),
@@ -399,7 +369,6 @@ class _HomePageState extends State<HomePage> {
   Widget _packageTile(BuildContext context, String title, Widget page) {
     return ListTile(
       contentPadding: const EdgeInsets.all(8),
-
       leading: Container(
         padding: const EdgeInsets.all(6),
         decoration: BoxDecoration(
@@ -411,16 +380,13 @@ class _HomePageState extends State<HomePage> {
           child: Image.asset("assets/images/ContohPushPullLeg.png"),
         ),
       ),
-
       title: Text(title, style: cardTitle),
-
       subtitle: Text(
         "Push Pull Leg is a workout split that groups exercises based on movement patterns.",
         style: bodyText,
         maxLines: 2,
         overflow: TextOverflow.ellipsis,
       ),
-
       trailing: TextButton(
         onPressed: () {
           Navigator.push(

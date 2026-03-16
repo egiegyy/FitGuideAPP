@@ -18,7 +18,6 @@ class DBHelper {
     if (_db != null) {
       return _db!;
     }
-
     _db = await _initDb();
     return _db!;
   }
@@ -26,16 +25,13 @@ class DBHelper {
   /// INIT DATABASE (DATABASE PER USER)
   static Future<Database> _initDb() async {
     final email = await UserPref.getLoginUser();
-
     if (email == null) {
       throw Exception("User not logged in. Database cannot be initialized.");
     }
-
     final dbPath = await getDatabasesPath();
 
     /// database unik berdasarkan email user
     final path = join(dbPath, 'fitguide_${email.replaceAll("@", "_")}.db');
-
     final database = await openDatabase(
       path,
       version: 4,
@@ -74,7 +70,7 @@ class DBHelper {
         )
         ''');
 
-        /// SAMPLE DATA
+        /// SAMPLE DATA BARCODE
         await db.insert('equipment', {
           'barcode': 'LAT001',
           'name': 'Lat Pulldown',
@@ -143,60 +139,50 @@ class DBHelper {
     String barcode,
   ) async {
     final db = await DBHelper.db();
-
     final result = await db.query(
       'equipment',
       where: 'barcode = ?',
       whereArgs: [barcode],
       limit: 1,
     );
-
     if (result.isNotEmpty) {
       return result.first;
     }
-
     return null;
   }
 
   /// INSERT ROUTINE (PREVENT DUPLICATE)
   static Future<int?> insertRoutine(String day, String exercise) async {
     final db = await DBHelper.db();
-
     final exist = await db.query(
       'routine',
       where: 'day = ? AND exercise = ?',
       whereArgs: [day, exercise],
     );
-
     if (exist.isNotEmpty) {
       return null;
     }
-
     return await db.insert('routine', {'day': day, 'exercise': exercise});
   }
 
   /// GET ROUTINE BY DAY
   static Future<List<Map<String, dynamic>>> getRoutineByDay(String day) async {
     final db = await DBHelper.db();
-
     return await db.query('routine', where: 'day = ?', whereArgs: [day]);
   }
 
   /// GET ALL ROUTINE DAYS
   static Future<List<String>> getRoutineDays() async {
     final db = await DBHelper.db();
-
     final result = await db.rawQuery(
       "SELECT DISTINCT day FROM routine ORDER BY id ASC",
     );
-
     return result.map((e) => e['day'] as String).toList();
   }
 
   /// DELETE ROUTINE
   static Future<int> deleteRoutine(int id) async {
     final db = await DBHelper.db();
-
     return await db.delete('routine', where: 'id = ?', whereArgs: [id]);
   }
 

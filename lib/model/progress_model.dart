@@ -26,7 +26,7 @@ class ProgressModel {
     };
   }
 
-  /// Convert Map (from database) to object
+  /// Convert Map to object
   factory ProgressModel.fromMap(Map<String, dynamic> map) {
     return ProgressModel(
       id: map['id'],
@@ -37,10 +37,10 @@ class ProgressModel {
     );
   }
 
-  /// Convert object to JSON
+  /// ini object to JSON
   String toJson() => json.encode(toMap());
 
-  /// Convert JSON to object
+  /// ini JSON to object
   factory ProgressModel.fromJson(String source) =>
       ProgressModel.fromMap(json.decode(source));
 }

@@ -19,13 +19,9 @@ class _SplashState extends State<Splash> {
 
   void autoLogin() async {
     await Future.delayed(const Duration(seconds: 3));
-
     bool isLogin = await UserPref.isLogin();
-
     print("Login Status : $isLogin");
-
     if (!mounted) return;
-
     if (isLogin) {
       Navigator.pushReplacement(
         context,
@@ -43,9 +39,7 @@ class _SplashState extends State<Splash> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Center(
-        child: Image.asset("assets/images/logoFitGuide.png"),
-      ),
+      body: Center(child: Image.asset("assets/images/logoFitGuide.png")),
     );
   }
 }

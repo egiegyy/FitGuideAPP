@@ -403,7 +403,6 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
-
   Widget buildMenuTile({
     required IconData icon,
     required String title,

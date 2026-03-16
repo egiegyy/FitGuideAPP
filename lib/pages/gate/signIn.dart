@@ -12,21 +12,16 @@ class SignIn extends StatefulWidget {
 
 class _SignInState extends State<SignIn> {
   final _formKey = GlobalKey<FormState>();
-
-  final usernameController = TextEditingController();
+  final emailController = TextEditingController();
   final passwordController = TextEditingController();
-
   bool isPasswordVisible = false;
-
   Future<void> login() async {
     if (_formKey.currentState!.validate()) {
       bool success = await UserPref.login(
-        usernameController.text.trim(),
+        emailController.text.trim(),
         passwordController.text.trim(),
       );
-
       if (!mounted) return;
-
       if (success) {
         Navigator.pushReplacement(
           context,
@@ -34,7 +29,7 @@ class _SignInState extends State<SignIn> {
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Username or Password incorrect")),
+          const SnackBar(content: Text("Email or Password incorrect")),
         );
       }
     }
@@ -42,7 +37,7 @@ class _SignInState extends State<SignIn> {
 
   @override
   void dispose() {
-    usernameController.dispose();
+    emailController.dispose();
     passwordController.dispose();
     super.dispose();
   }
@@ -100,7 +95,6 @@ class _SignInState extends State<SignIn> {
           ),
         ),
       ),
-
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: SingleChildScrollView(
@@ -112,9 +106,7 @@ class _SignInState extends State<SignIn> {
                 image: AssetImage("assets/images/logoFitGuide.png"),
                 alignment: Alignment.topCenter,
               ),
-
               const SizedBox(height: 20),
-
               Form(
                 key: _formKey,
                 child: Container(
@@ -126,29 +118,28 @@ class _SignInState extends State<SignIn> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      /// USERNAME
                       const Text(
-                        "Username",
+                        "Email",
                         style: TextStyle(color: Colors.white),
                       ),
-
                       const SizedBox(height: 5),
-
                       TextFormField(
-                        controller: usernameController,
+                        controller: emailController,
                         style: const TextStyle(color: Colors.black),
                         validator: (value) {
                           if (value == null || value.trim().isEmpty) {
-                            return "Username cannot be empty";
+                            return "Email cannot be empty";
+                          }
+                          if (!value.contains("@gmail.com")) {
+                            return "Email is not valid";
                           }
                           return null;
                         },
                         decoration: inputDecoration(
-                          icon: Icons.person,
-                          hint: "Username",
+                          icon: Icons.email_rounded,
+                          hint: "Email",
                         ),
                       ),
-
                       const SizedBox(height: 15),
 
                       /// PASSWORD
@@ -156,9 +147,7 @@ class _SignInState extends State<SignIn> {
                         "Password",
                         style: TextStyle(color: Colors.white),
                       ),
-
                       const SizedBox(height: 5),
-
                       TextFormField(
                         controller: passwordController,
                         obscureText: !isPasswordVisible,
@@ -190,7 +179,6 @@ class _SignInState extends State<SignIn> {
                           ),
                         ),
                       ),
-
                       const SizedBox(height: 20),
 
                       /// SIGN IN BUTTON
@@ -224,7 +212,6 @@ class _SignInState extends State<SignIn> {
                           ),
                         ),
                       ),
-
                       const SizedBox(height: 10),
 
                       /// SIGN UP LINK
@@ -259,7 +246,6 @@ class _SignInState extends State<SignIn> {
                           ),
                         ],
                       ),
-
                       const SizedBox(height: 10),
                     ],
                   ),

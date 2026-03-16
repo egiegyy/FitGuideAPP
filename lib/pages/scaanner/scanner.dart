@@ -17,31 +17,24 @@ class _ScannerPageState extends State<ScannerPage>
   late final AnimationController _animationController;
   late final Animation<double> _animation;
   final MobileScannerController controller = MobileScannerController();
-
   bool isScanning = false;
   bool scannerStarted = false;
-
   static const double scanSize = 280;
-
   final Map<String, WidgetBuilder> machineRoutes = {
     "lat_pulldown": (context) => const WideGripLatPulldownPage(),
     "leg_press": (context) => const LegPressPage(),
     "chest_press": (context) => const ChestPressPage(),
   };
-
   @override
   void initState() {
     super.initState();
-
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 2),
     );
-
     _animation = Tween<double>(begin: 0, end: scanSize).animate(
       CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
     );
-
     _animationController.repeat(reverse: true);
   }
 
@@ -54,28 +47,19 @@ class _ScannerPageState extends State<ScannerPage>
 
   Future<void> handleBarcode(String code) async {
     if (isScanning) return;
-
     isScanning = true;
-
     final equipment = await DBHelper.getEquipmentByBarcode(code);
-
     if (!mounted) return;
-
     if (equipment != null) {
       await controller.stop();
-
       final pageId = equipment['page'];
-
       if (machineRoutes.containsKey(pageId)) {
         await Navigator.push(
           context,
           MaterialPageRoute(builder: machineRoutes[pageId]!),
         );
-
         if (!mounted) return;
-
         await Future.delayed(const Duration(milliseconds: 500));
-
         isScanning = false;
         controller.start();
       } else {
@@ -105,7 +89,6 @@ class _ScannerPageState extends State<ScannerPage>
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.white, size: 28),
         backgroundColor: Colors.transparent,
@@ -120,7 +103,6 @@ class _ScannerPageState extends State<ScannerPage>
           ),
         ),
       ),
-
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -134,7 +116,6 @@ class _ScannerPageState extends State<ScannerPage>
             end: Alignment.bottomRight,
           ),
         ),
-
         child: Stack(
           children: [
             /// CAMERA
@@ -187,17 +168,13 @@ class _ScannerPageState extends State<ScannerPage>
                           color: Colors.white,
                         ),
                       ),
-
                       const SizedBox(height: 10),
-
                       const Text(
                         "Scan the barcode on the gym machine to see workout guidance.",
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.white70),
                       ),
-
                       const SizedBox(height: 25),
-
                       InkWell(
                         onTap: startScanner,
                         child: Container(
@@ -241,7 +218,6 @@ class _ScannerPageState extends State<ScannerPage>
                         backgroundBlendMode: BlendMode.dstOut,
                       ),
                     ),
-
                     Center(
                       child: Container(
                         width: scanSize,
@@ -288,7 +264,6 @@ class _ScannerPageState extends State<ScannerPage>
                           );
                         },
                       ),
-
                       const Center(
                         child: Icon(
                           Icons.qr_code,
@@ -339,7 +314,6 @@ class _ScannerPageState extends State<ScannerPage>
           ),
         ),
       ),
-
       Positioned(
         top: 0,
         right: 0,
@@ -354,7 +328,6 @@ class _ScannerPageState extends State<ScannerPage>
           ),
         ),
       ),
-
       Positioned(
         bottom: 0,
         left: 0,
@@ -369,7 +342,6 @@ class _ScannerPageState extends State<ScannerPage>
           ),
         ),
       ),
-
       Positioned(
         bottom: 0,
         right: 0,

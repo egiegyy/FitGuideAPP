@@ -76,36 +76,27 @@ class _SignUpState extends State<SignUp> {
     return InputDecoration(
       filled: true,
       fillColor: const Color(0xFFD9D9D9),
-
       prefixIcon: Icon(icon, color: Colors.black54),
-
       suffixIcon: suffixIcon,
-
       hintText: hint,
       hintStyle: const TextStyle(color: Colors.black54),
-
       contentPadding: const EdgeInsets.symmetric(vertical: 18, horizontal: 20),
-
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(20),
         borderSide: BorderSide.none,
       ),
-
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(20),
         borderSide: BorderSide.none,
       ),
-
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(20),
         borderSide: BorderSide.none,
       ),
-
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(20),
         borderSide: const BorderSide(color: Colors.red),
       ),
-
       focusedErrorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(20),
         borderSide: const BorderSide(color: Colors.red),
@@ -117,7 +108,6 @@ class _SignUpState extends State<SignUp> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.white, size: 30),
         backgroundColor: Colors.black,
@@ -131,32 +121,26 @@ class _SignUpState extends State<SignUp> {
           ),
         ),
       ),
-
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: SingleChildScrollView(
           child: Column(
             children: [
               const SizedBox(height: 20),
-
               const Image(
                 image: AssetImage("assets/images/logoFitGuide.png"),
                 alignment: Alignment.topCenter,
               ),
-
               const SizedBox(height: 20),
-
               Form(
                 key: _formKey,
 
                 child: Container(
                   padding: const EdgeInsets.all(20),
-
                   decoration: BoxDecoration(
                     color: Colors.white.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(20),
                   ),
-
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -165,26 +149,21 @@ class _SignUpState extends State<SignUp> {
                         "Username",
                         style: TextStyle(color: Colors.white),
                       ),
-
                       const SizedBox(height: 5),
-
                       TextFormField(
                         controller: usernameController,
                         style: const TextStyle(color: Colors.black),
-
                         validator: (value) {
                           if (value == null || value.trim().isEmpty) {
                             return "Username cannot be empty";
                           }
                           return null;
                         },
-
                         decoration: inputDecoration(
                           icon: Icons.person,
                           hint: "Username",
                         ),
                       ),
-
                       const SizedBox(height: 15),
 
                       /// EMAIL
@@ -192,9 +171,7 @@ class _SignUpState extends State<SignUp> {
                         "Email",
                         style: TextStyle(color: Colors.white),
                       ),
-
                       const SizedBox(height: 5),
-
                       TextFormField(
                         controller: emailController,
                         style: const TextStyle(color: Colors.black),
@@ -210,13 +187,11 @@ class _SignUpState extends State<SignUp> {
 
                           return null;
                         },
-
                         decoration: inputDecoration(
                           icon: Icons.email_rounded,
                           hint: "Email",
                         ),
                       ),
-
                       const SizedBox(height: 15),
 
                       /// PASSWORD
@@ -224,9 +199,7 @@ class _SignUpState extends State<SignUp> {
                         "Password",
                         style: TextStyle(color: Colors.white),
                       ),
-
                       const SizedBox(height: 5),
-
                       TextFormField(
                         controller: passwordController,
                         obscureText: !isPasswordVisible,
@@ -243,7 +216,6 @@ class _SignUpState extends State<SignUp> {
 
                           return null;
                         },
-
                         decoration: inputDecoration(
                           icon: Icons.lock,
                           hint: "Password",
@@ -262,7 +234,6 @@ class _SignUpState extends State<SignUp> {
                           ),
                         ),
                       ),
-
                       const SizedBox(height: 15),
 
                       /// CONFIRM PASSWORD
@@ -270,9 +241,7 @@ class _SignUpState extends State<SignUp> {
                         "Confirm Password",
                         style: TextStyle(color: Colors.white),
                       ),
-
                       const SizedBox(height: 5),
-
                       TextFormField(
                         controller: confirmPasswordController,
                         obscureText: !isConfirmPasswordVisible,
@@ -309,7 +278,6 @@ class _SignUpState extends State<SignUp> {
                           ),
                         ),
                       ),
-
                       const SizedBox(height: 20),
 
                       /// SIGN UP BUTTON
