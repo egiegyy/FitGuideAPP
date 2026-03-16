@@ -166,12 +166,13 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             TextButton(
               onPressed: () async {
-                await UserPref.deleteAccount();
-
-                final db = await DBHelper.db();
-                await db.delete("progress");
+                final db = await DBHelper.db(); //ambil database
+                await db.delete("progress"); //hapus kolom
                 await db.delete("routine");
+                await UserPref.deleteAccount(); //hapus akun
 
+                /// RESET DB INSTANCE
+                await DBHelper.resetDB();
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (context) => const SignUp()),
@@ -403,6 +404,7 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
+
   Widget buildMenuTile({
     required IconData icon,
     required String title,
