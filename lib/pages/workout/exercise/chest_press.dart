@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 
-class LegPressCalfRaisePage extends StatefulWidget {
-  const LegPressCalfRaisePage({super.key});
-
+class ChestPressPage extends StatefulWidget {
+  const ChestPressPage({super.key});
   @override
-  State<LegPressCalfRaisePage> createState() => _LegPressCalfRaisePageState();
+  State<ChestPressPage> createState() => _ChestPressPageState();
 }
 
-class _LegPressCalfRaisePageState extends State<LegPressCalfRaisePage> {
+class _ChestPressPageState extends State<ChestPressPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,10 +28,9 @@ class _LegPressCalfRaisePageState extends State<LegPressCalfRaisePage> {
           Padding(
             padding: EdgeInsets.only(right: 16),
             child: Icon(Icons.search_rounded, color: Colors.white, size: 28),
-          )
+          ),
         ],
       ),
-
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -46,14 +44,12 @@ class _LegPressCalfRaisePageState extends State<LegPressCalfRaisePage> {
             end: Alignment.bottomRight,
           ),
         ),
-
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
                 /// IMAGE
                 Container(
                   width: double.infinity,
@@ -66,24 +62,22 @@ class _LegPressCalfRaisePageState extends State<LegPressCalfRaisePage> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(18),
                     child: Image.asset(
-                      "assets/images/Leg Press Calf Raise.png",
+                      "assets/images/animations/chest_press_animation.gif",
                       fit: BoxFit.contain,
                     ),
                   ),
                 ),
-
                 const SizedBox(height: 20),
 
                 /// TITLE
                 const Text(
-                  "Leg Press Calf Raise",
+                  "Chest Press",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 26,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-
                 const SizedBox(height: 16),
 
                 /// INFO
@@ -96,34 +90,37 @@ class _LegPressCalfRaisePageState extends State<LegPressCalfRaisePage> {
                   ),
                   child: const Column(
                     children: [
-                      _InfoRow(label: "Alat", value: "Leg Press Machine"),
-                      SizedBox(height: 10),
-                      _InfoRow(label: "Kategori", value: "Legs"),
-                      SizedBox(height: 10),
-                      _InfoRow(label: "Level", value: "Intermediate"),
+                      _InfoRow(
+                        label: "Equipment",
+                        value: "Chest Press Machine",
+                      ),
                       SizedBox(height: 10),
                       _InfoRow(
-                        label: "Repetisi",
-                        value: "3–4 set × 12–15 repetisi",
+                        label: "Category",
+                        value: "Push / Upper / Full Body",
+                      ),
+                      SizedBox(height: 10),
+                      _InfoRow(label: "Level", value: "Beginner"),
+                      SizedBox(height: 10),
+                      _InfoRow(
+                        label: "Repetitions",
+                        value: "3 sets × 10–12 reps",
                       ),
                     ],
                   ),
                 ),
-
                 const SizedBox(height: 25),
 
                 /// DESCRIPTION
                 const Text(
-                  "Deskripsi",
+                  "Description",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-
                 const SizedBox(height: 10),
-
                 Container(
                   padding: const EdgeInsets.all(14),
                   decoration: BoxDecoration(
@@ -132,7 +129,7 @@ class _LegPressCalfRaisePageState extends State<LegPressCalfRaisePage> {
                     borderRadius: BorderRadius.circular(18),
                   ),
                   child: const Text(
-                    "Leg press calf raise adalah variasi latihan betis menggunakan mesin leg press. Gerakan ini fokus pada otot gastrocnemius dan soleus yang berperan dalam kekuatan dan stabilitas pergelangan kaki.",
+                    "The chest press is a fundamental exercise used to train the chest (pectoral), front shoulder (anterior deltoid), and triceps muscles. This machine provides stability, making it ideal for beginners who want to learn pushing movement patterns without needing to balance weights like with a barbell or dumbbell.",
                     style: TextStyle(
                       fontSize: 15,
                       height: 1.6,
@@ -140,21 +137,18 @@ class _LegPressCalfRaisePageState extends State<LegPressCalfRaisePage> {
                     ),
                   ),
                 ),
-
                 const SizedBox(height: 25),
 
                 /// HOW TO USE
                 const Text(
-                  "Cara penggunaan",
+                  "How to Use",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-
                 const SizedBox(height: 10),
-
                 Container(
                   padding: const EdgeInsets.all(14),
                   decoration: BoxDecoration(
@@ -165,27 +159,26 @@ class _LegPressCalfRaisePageState extends State<LegPressCalfRaisePage> {
                   child: const Column(
                     children: [
                       _StepText(
-                        "Duduk di mesin leg press dan letakkan bagian depan kaki di platform.",
+                        "Sit on the chest press machine and adjust the seat height so that the handles are aligned with the middle of your chest.",
                       ),
                       _StepText(
-                        "Pastikan tumit berada sedikit di luar platform agar dapat bergerak bebas.",
+                        "Keep your back and head against the backrest to maintain a stable posture.",
                       ),
                       _StepText(
-                        "Dorong platform menggunakan ujung kaki hingga tumit terangkat.",
+                        "Grip the handles with both hands, then push forward until your arms are nearly straight.",
                       ),
                       _StepText(
-                        "Rasakan kontraksi otot betis di bagian atas gerakan.",
+                        "Avoid locking your elbows completely to keep your joints safe.",
                       ),
                       _StepText(
-                        "Turunkan tumit perlahan sampai otot betis terasa teregang.",
+                        "Slowly return the handles to the starting position while maintaining control.",
                       ),
                       _StepText(
-                        "Ulangi gerakan dengan tempo yang stabil dan terkontrol.",
+                        "Repeat the movement with a steady and controlled tempo.",
                       ),
                     ],
                   ),
                 ),
-
                 const SizedBox(height: 40),
               ],
             ),
@@ -199,9 +192,7 @@ class _LegPressCalfRaisePageState extends State<LegPressCalfRaisePage> {
 class _InfoRow extends StatelessWidget {
   final String label;
   final String value;
-
   const _InfoRow({required this.label, required this.value});
-
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -232,9 +223,7 @@ class _InfoRow extends StatelessWidget {
 
 class _StepText extends StatelessWidget {
   final String text;
-
   const _StepText(this.text);
-
   @override
   Widget build(BuildContext context) {
     return Padding(

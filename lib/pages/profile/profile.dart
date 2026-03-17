@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'package:fitguide/database/preferance.dart';
 import 'package:fitguide/database/sqflite.dart';
-import 'package:fitguide/pages/gate/signIn.dart';
-import 'package:fitguide/pages/gate/signUp.dart';
+import 'package:fitguide/pages/gate/sign_in.dart';
+import 'package:fitguide/pages/gate/sign_up.dart';
 import 'package:fitguide/pages/profile/progress/progress.dart';
 import 'package:fitguide/pages/profile/routine/routine.dart';
 import 'package:fitguide/pages/profile/setting.dart';

@@ -1,6 +1,6 @@
 import 'package:fitguide/database/preferance.dart';
-import 'package:fitguide/pages/gate/signUp.dart';
-import 'package:fitguide/pages/home/mainScreen.dart';
+import 'package:fitguide/pages/gate/sign_up.dart';
+import 'package:fitguide/pages/home/main_screen.dart';
 import 'package:flutter/material.dart';
 
 class SignIn extends StatefulWidget {
@@ -103,7 +103,7 @@ class _SignInState extends State<SignIn> {
               const SizedBox(height: 20),
 
               const Image(
-                image: AssetImage("assets/images/logoFitGuide.png"),
+                image: AssetImage("assets/images/logo_fitguide.png"),
                 alignment: Alignment.topCenter,
               ),
               const SizedBox(height: 20),

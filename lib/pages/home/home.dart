@@ -3,8 +3,8 @@ import 'package:fitguide/database/preferance.dart';
 import 'package:fitguide/database/sqflite.dart';
 import 'package:fitguide/pages/profile/routine/routine.dart';
 import 'package:fitguide/pages/profile/routine/routine_day.dart';
-import 'package:fitguide/pages/workout/package/pullworkout.dart';
-import 'package:fitguide/pages/workout/package/pushworkout.dart';
+import 'package:fitguide/pages/workout/package/pull_workout.dart';
+import 'package:fitguide/pages/workout/package/push_workout.dart';
 import 'package:fitguide/pages/workout/workouts.dart';
 import 'package:flutter/material.dart';
 
@@ -165,14 +165,14 @@ class _HomePageState extends State<HomePage> {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(18),
                         child: Image.asset(
-                          "assets/images/posterCompetition.png",
+                          "assets/images/banners/body_builder.png",
                           fit: BoxFit.cover,
                         ),
                       ),
                       ClipRRect(
                         borderRadius: BorderRadius.circular(18),
                         child: Image.asset(
-                          "assets/images/posterCompetition2.png",
+                          "assets/images/banners/trail_run.png",
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -377,7 +377,7 @@ class _HomePageState extends State<HomePage> {
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10),
-          child: Image.asset("assets/images/ContohPushPullLeg.png"),
+          child: Image.asset("assets/images/exercises/push/profile_push.png"),
         ),
       ),
       title: Text(title, style: cardTitle),

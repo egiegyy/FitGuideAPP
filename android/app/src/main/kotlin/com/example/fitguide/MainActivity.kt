@@ -1,4 +1,4 @@
-package com.example.fitguide
+package com.egiegyy.fitguide
 
 import io.flutter.embedding.android.FlutterActivity
 

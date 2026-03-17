@@ -30,7 +30,7 @@ class _CloseGripCPPageState extends State<CloseGripCPPage> {
           Padding(
             padding: EdgeInsets.only(right: 16),
             child: Icon(Icons.search_rounded, color: Colors.white, size: 28),
-          )
+          ),
         ],
       ),
 
@@ -54,7 +54,6 @@ class _CloseGripCPPageState extends State<CloseGripCPPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
                 /// IMAGE
                 Container(
                   width: double.infinity,
@@ -67,7 +66,7 @@ class _CloseGripCPPageState extends State<CloseGripCPPage> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(18),
                     child: Image.asset(
-                      "assets/images/Close Grip Chest Press.png",
+                      "assets/images/exercises/push/close_grip_chest_press.png",
                       fit: BoxFit.contain,
                     ),
                   ),
@@ -97,15 +96,18 @@ class _CloseGripCPPageState extends State<CloseGripCPPage> {
                   ),
                   child: const Column(
                     children: [
-                      _InfoRow(label: "Alat", value: "Chest Press Machine"),
+                      _InfoRow(
+                        label: "Equipment",
+                        value: "Chest Press Machine",
+                      ),
                       SizedBox(height: 10),
-                      _InfoRow(label: "Kategori", value: "Push"),
+                      _InfoRow(label: "Category", value: "Push"),
                       SizedBox(height: 10),
                       _InfoRow(label: "Level", value: "Intermediate"),
                       SizedBox(height: 10),
                       _InfoRow(
-                        label: "Repetisi",
-                        value: "3–4 set × 8–12 repetisi",
+                        label: "Repetitions",
+                        value: "3–4 sets × 8–12 reps",
                       ),
                     ],
                   ),
@@ -115,7 +117,7 @@ class _CloseGripCPPageState extends State<CloseGripCPPage> {
 
                 /// DESCRIPTION
                 const Text(
-                  "Deskripsi",
+                  "Description",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 22,
@@ -133,7 +135,7 @@ class _CloseGripCPPageState extends State<CloseGripCPPage> {
                     borderRadius: BorderRadius.circular(18),
                   ),
                   child: const Text(
-                    "Variasi close grip chest press menggunakan posisi tangan yang lebih sempit untuk meningkatkan fokus pada otot triceps dan bagian dalam dada. Gerakan ini cocok untuk pengguna yang sudah terbiasa dengan chest press standar dan ingin menambah variasi latihan dorongan.",
+                    "The close grip chest press variation uses a narrower hand position to increase focus on the triceps and inner chest muscles. This movement is suitable for users who are already familiar with the standard chest press and want to add variation to their pushing workouts.",
                     style: TextStyle(
                       fontSize: 15,
                       height: 1.6,
@@ -146,7 +148,7 @@ class _CloseGripCPPageState extends State<CloseGripCPPage> {
 
                 /// HOW TO USE
                 const Text(
-                  "Cara penggunaan",
+                  "How to Use",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 22,
@@ -166,22 +168,22 @@ class _CloseGripCPPageState extends State<CloseGripCPPage> {
                   child: const Column(
                     children: [
                       _StepText(
-                        "Duduk di mesin chest press dengan posisi punggung menempel pada sandaran.",
+                        "Sit on the chest press machine with your back firmly against the backrest.",
                       ),
                       _StepText(
-                        "Pegang handle dengan posisi tangan lebih sempit dari lebar bahu.",
+                        "Hold the handles with a grip narrower than shoulder width.",
                       ),
                       _StepText(
-                        "Dorong handle ke depan sambil menjaga siku tetap dekat dengan tubuh.",
+                        "Push the handles forward while keeping your elbows close to your body.",
                       ),
                       _StepText(
-                        "Tahan sebentar saat lengan hampir lurus untuk meningkatkan kontraksi otot.",
+                        "Pause briefly when your arms are nearly straight to maximize muscle contraction.",
                       ),
                       _StepText(
-                        "Turunkan handle kembali secara perlahan ke posisi awal dengan kontrol.",
+                        "Slowly return the handles to the starting position with control.",
                       ),
                       _StepText(
-                        "Jaga pernapasan tetap stabil selama melakukan gerakan.",
+                        "Maintain steady breathing throughout the movement.",
                       ),
                     ],
                   ),

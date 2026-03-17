@@ -1,5 +1,5 @@
-import 'package:fitguide/pages/workout/exercise/legPress.dart';
-import 'package:fitguide/pages/workout/exercise/legPressCalfRaise.dart';
+import 'package:fitguide/pages/workout/exercise/leg_press.dart';
+import 'package:fitguide/pages/workout/exercise/leg_press_calf_raise.dart';
 import 'package:flutter/material.dart';
 
 class LegWorkout extends StatefulWidget {
@@ -63,7 +63,7 @@ class _LegWorkoutState extends State<LegWorkout> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(18),
                     child: Image.asset(
-                      "assets/images/ContohPushPullLeg.png",
+                      "assets/images/exercises/leg/profile_leg.png",
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -119,7 +119,7 @@ class _LegWorkoutState extends State<LegWorkout> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8),
                         child: Image.asset(
-                          "assets/images/Leg Press.png",
+                          "assets/images/exercises/leg/leg_press.png",
                           width: 45,
                           height: 45,
                           fit: BoxFit.cover,
@@ -208,7 +208,7 @@ class _LegWorkoutState extends State<LegWorkout> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8),
                         child: Image.asset(
-                          "assets/images/Leg Press.png",
+                          "assets/images/exercises/leg/leg_press_calf_raise.png",
                           width: 45,
                           height: 45,
                           fit: BoxFit.cover,

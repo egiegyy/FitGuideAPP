@@ -1,15 +1,15 @@
-import 'package:fitguide/pages/workout/exercise/closeGripLP.dart';
-import 'package:fitguide/pages/workout/exercise/wideGripLP.dart';
+import 'package:fitguide/pages/workout/exercise/chest_press.dart';
+import 'package:fitguide/pages/workout/exercise/close_grip_chest_press.dart';
 import 'package:flutter/material.dart';
 
-class PullWorkout extends StatefulWidget {
-  const PullWorkout({super.key});
+class PushWorkout extends StatefulWidget {
+  const PushWorkout({super.key});
 
   @override
-  State<PullWorkout> createState() => _PullWorkoutState();
+  State<PushWorkout> createState() => _PushWorkoutState();
 }
 
-class _PullWorkoutState extends State<PullWorkout> {
+class _PushWorkoutState extends State<PushWorkout> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +49,6 @@ class _PullWorkoutState extends State<PullWorkout> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
                 /// HEADER IMAGE
                 Container(
                   alignment: Alignment.topLeft,
@@ -60,10 +59,11 @@ class _PullWorkoutState extends State<PullWorkout> {
                     border: Border.all(color: Colors.white24),
                     borderRadius: BorderRadius.circular(18),
                   ),
+
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(18),
                     child: Image.asset(
-                      "assets/images/ContohPushPullLeg.png",
+                      "assets/images/exercises/push/profile_push.png",
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -73,7 +73,7 @@ class _PullWorkoutState extends State<PullWorkout> {
 
                 /// TITLE
                 const Text(
-                  "Pull Workout",
+                  "Push Workout",
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -97,7 +97,7 @@ class _PullWorkoutState extends State<PullWorkout> {
 
                 const Divider(color: Colors.white24),
 
-                /// CLOSE GRIP LAT PULLDOWN
+                /// CHEST PRESS
                 Container(
                   decoration: BoxDecoration(
                     color: Colors.white.withOpacity(0.05),
@@ -119,7 +119,7 @@ class _PullWorkoutState extends State<PullWorkout> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8),
                         child: Image.asset(
-                          "assets/images/Close Grip Lat Pulldown.png",
+                          "assets/images/exercises/push/chest_press.png",
                           width: 45,
                           height: 45,
                           fit: BoxFit.cover,
@@ -128,7 +128,7 @@ class _PullWorkoutState extends State<PullWorkout> {
                     ),
 
                     title: const Text(
-                      "Close Grip Lat Pulldown",
+                      "Chest Press",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 18,
@@ -141,7 +141,7 @@ class _PullWorkoutState extends State<PullWorkout> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => CloseGripLatPulldownPage(),
+                            builder: (context) => ChestPressPage(),
                           ),
                         );
                       },
@@ -157,14 +157,9 @@ class _PullWorkoutState extends State<PullWorkout> {
                       child: Ink(
                         decoration: const BoxDecoration(
                           gradient: LinearGradient(
-                            colors: [
-                              Color(0xFF2E7D32),
-                              Color(0xFF66BB6A),
-                            ],
+                            colors: [Color(0xFF2E7D32), Color(0xFF66BB6A)],
                           ),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(20),
-                          ),
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
                         ),
                         child: const Padding(
                           padding: EdgeInsets.symmetric(
@@ -186,7 +181,7 @@ class _PullWorkoutState extends State<PullWorkout> {
 
                 const SizedBox(height: 12),
 
-                /// WIDE GRIP LAT PULLDOWN
+                /// CLOSE GRIP CHEST PRESS
                 Container(
                   decoration: BoxDecoration(
                     color: Colors.white.withOpacity(0.05),
@@ -208,7 +203,7 @@ class _PullWorkoutState extends State<PullWorkout> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8),
                         child: Image.asset(
-                          "assets/images/Lat Pulldown.png",
+                          "assets/images/exercises/push/close_grip_chest_press.png",
                           width: 45,
                           height: 45,
                           fit: BoxFit.cover,
@@ -217,7 +212,7 @@ class _PullWorkoutState extends State<PullWorkout> {
                     ),
 
                     title: const Text(
-                      "Wide Grip Lat Pulldown",
+                      "Close Grip Chest Press",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 18,
@@ -230,7 +225,7 @@ class _PullWorkoutState extends State<PullWorkout> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => WideGripLatPulldownPage(),
+                            builder: (context) => CloseGripCPPage(),
                           ),
                         );
                       },
@@ -246,14 +241,9 @@ class _PullWorkoutState extends State<PullWorkout> {
                       child: Ink(
                         decoration: const BoxDecoration(
                           gradient: LinearGradient(
-                            colors: [
-                              Color(0xFF2E7D32),
-                              Color(0xFF66BB6A),
-                            ],
+                            colors: [Color(0xFF2E7D32), Color(0xFF66BB6A)],
                           ),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(20),
-                          ),
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
                         ),
                         child: const Padding(
                           padding: EdgeInsets.symmetric(

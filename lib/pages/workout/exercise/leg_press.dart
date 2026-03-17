@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 
-class CloseGripLatPulldownPage extends StatefulWidget {
-  const CloseGripLatPulldownPage({super.key});
+class LegPressPage extends StatefulWidget {
+  const LegPressPage({super.key});
 
   @override
-  State<CloseGripLatPulldownPage> createState() =>
-      _CloseGripLatPulldownPageState();
+  State<LegPressPage> createState() => _LegPressPageState();
 }
 
-class _CloseGripLatPulldownPageState extends State<CloseGripLatPulldownPage> {
+class _LegPressPageState extends State<LegPressPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-
       appBar: AppBar(
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.white, size: 28),
@@ -31,7 +29,7 @@ class _CloseGripLatPulldownPageState extends State<CloseGripLatPulldownPage> {
           Padding(
             padding: EdgeInsets.only(right: 16),
             child: Icon(Icons.search_rounded, color: Colors.white, size: 28),
-          )
+          ),
         ],
       ),
 
@@ -55,7 +53,6 @@ class _CloseGripLatPulldownPageState extends State<CloseGripLatPulldownPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
                 /// IMAGE
                 Container(
                   width: double.infinity,
@@ -68,7 +65,7 @@ class _CloseGripLatPulldownPageState extends State<CloseGripLatPulldownPage> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(18),
                     child: Image.asset(
-                      "assets/images/Close Grip Lat Pulldown.png",
+                      "assets/images/animations/leg_press_animation.gif",
                       fit: BoxFit.contain,
                     ),
                   ),
@@ -78,7 +75,7 @@ class _CloseGripLatPulldownPageState extends State<CloseGripLatPulldownPage> {
 
                 /// TITLE
                 const Text(
-                  "Close Grip Lat Pulldown",
+                  "Leg Press",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 26,
@@ -98,15 +95,18 @@ class _CloseGripLatPulldownPageState extends State<CloseGripLatPulldownPage> {
                   ),
                   child: const Column(
                     children: [
-                      _InfoRow(label: "Alat", value: "Lat Pulldown Machine"),
-                      SizedBox(height: 10),
-                      _InfoRow(label: "Kategori", value: "Pull"),
-                      SizedBox(height: 10),
-                      _InfoRow(label: "Level", value: "Intermediate"),
+                      _InfoRow(label: "Equipment", value: "Leg Press Machine"),
                       SizedBox(height: 10),
                       _InfoRow(
-                        label: "Repetisi",
-                        value: "3–4 set × 8–12 repetisi",
+                        label: "Category",
+                        value: "Legs / Lower / Full Body",
+                      ),
+                      SizedBox(height: 10),
+                      _InfoRow(label: "Level", value: "Beginner"),
+                      SizedBox(height: 10),
+                      _InfoRow(
+                        label: "Repetitions",
+                        value: "3 sets × 10–15 reps",
                       ),
                     ],
                   ),
@@ -116,7 +116,7 @@ class _CloseGripLatPulldownPageState extends State<CloseGripLatPulldownPage> {
 
                 /// DESCRIPTION
                 const Text(
-                  "Deskripsi",
+                  "Description",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 22,
@@ -134,7 +134,7 @@ class _CloseGripLatPulldownPageState extends State<CloseGripLatPulldownPage> {
                     borderRadius: BorderRadius.circular(18),
                   ),
                   child: const Text(
-                    "Close grip lat pulldown menggunakan pegangan yang lebih sempit untuk memberikan fokus lebih pada bagian tengah punggung dan biceps. Variasi ini juga meningkatkan rentang gerakan sehingga membantu memperkuat kontrol otot punggung.",
+                    "The leg press is a fundamental exercise for training the quadriceps, hamstrings, and glutes. This machine provides high stability, allowing users—especially beginners—to lift heavier loads compared to squats.",
                     style: TextStyle(
                       fontSize: 15,
                       height: 1.6,
@@ -147,7 +147,7 @@ class _CloseGripLatPulldownPageState extends State<CloseGripLatPulldownPage> {
 
                 /// HOW TO USE
                 const Text(
-                  "Cara penggunaan",
+                  "How to Use",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 22,
@@ -167,22 +167,20 @@ class _CloseGripLatPulldownPageState extends State<CloseGripLatPulldownPage> {
                   child: const Column(
                     children: [
                       _StepText(
-                        "Duduk di mesin lat pulldown dengan paha terkunci di bawah bantalan.",
+                        "Sit or lie on the leg press machine with your back firmly against the backrest.",
                       ),
                       _StepText(
-                        "Pegang handle dengan posisi tangan lebih sempit atau menggunakan pegangan khusus.",
+                        "Place both feet on the platform at shoulder-width distance.",
+                      ),
+                      _StepText("Release the safety locks if available."),
+                      _StepText(
+                        "Push the platform with your legs until your knees are almost fully extended.",
                       ),
                       _StepText(
-                        "Tarik handle ke arah dada sambil menjaga punggung tetap tegak.",
+                        "Do not lock your knees to protect your joints.",
                       ),
                       _StepText(
-                        "Pastikan siku bergerak ke bawah dan sedikit ke belakang.",
-                      ),
-                      _StepText(
-                        "Tahan sebentar saat handle mendekati dada untuk kontraksi maksimal.",
-                      ),
-                      _StepText(
-                        "Kembalikan handle perlahan ke posisi awal.",
+                        "Lower the platform slowly until your knees form approximately a 90-degree angle.",
                       ),
                     ],
                   ),

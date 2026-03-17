@@ -1,7 +1,7 @@
-import 'package:fitguide/pages/workout/package/fullbodyworkout.dart';
-import 'package:fitguide/pages/workout/package/legworkout.dart';
-import 'package:fitguide/pages/workout/package/pullworkout.dart';
-import 'package:fitguide/pages/workout/package/pushworkout.dart';
+import 'package:fitguide/pages/workout/package/fullbody_workout.dart';
+import 'package:fitguide/pages/workout/package/leg_workout.dart';
+import 'package:fitguide/pages/workout/package/pull_workout.dart';
+import 'package:fitguide/pages/workout/package/push_workout.dart';
 import 'package:flutter/material.dart';
 
 class Package extends StatelessWidget {
@@ -28,7 +28,7 @@ class Package extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
           ),
           child: Image.asset(
-            "assets/images/Leg Press.png",
+            "assets/images/profile_fullbody.png",
             width: 40,
             height: 40,
           ),

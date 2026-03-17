@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class LegPressPage extends StatefulWidget {
-  const LegPressPage({super.key});
+class WideGripLatPulldownPage extends StatefulWidget {
+  const WideGripLatPulldownPage({super.key});
 
   @override
-  State<LegPressPage> createState() => _LegPressPageState();
+  State<WideGripLatPulldownPage> createState() => _WideGripWideGripLPState();
 }
 
-class _LegPressPageState extends State<LegPressPage> {
+class _WideGripWideGripLPState extends State<WideGripLatPulldownPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +29,7 @@ class _LegPressPageState extends State<LegPressPage> {
           Padding(
             padding: EdgeInsets.only(right: 16),
             child: Icon(Icons.search_rounded, color: Colors.white, size: 28),
-          )
+          ),
         ],
       ),
 
@@ -53,7 +53,6 @@ class _LegPressPageState extends State<LegPressPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
                 /// IMAGE
                 Container(
                   width: double.infinity,
@@ -66,7 +65,7 @@ class _LegPressPageState extends State<LegPressPage> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(18),
                     child: Image.asset(
-                      "assets/images/animation/leg_press_animation.gif",
+                      "assets/images/animations/lat_pulldown_animation.gif",
                       fit: BoxFit.contain,
                     ),
                   ),
@@ -76,7 +75,7 @@ class _LegPressPageState extends State<LegPressPage> {
 
                 /// TITLE
                 const Text(
-                  "Leg Press",
+                  "Wide Grip Lat Pulldown",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 26,
@@ -96,18 +95,21 @@ class _LegPressPageState extends State<LegPressPage> {
                   ),
                   child: const Column(
                     children: [
-                      _InfoRow(label: "Alat", value: "Leg Press Machine"),
+                      _InfoRow(
+                        label: "Equipment",
+                        value: "Lat Pulldown Machine",
+                      ),
                       SizedBox(height: 10),
                       _InfoRow(
-                        label: "Kategori",
-                        value: "Legs / Lower / Full Body",
+                        label: "Category",
+                        value: "Pull / Upper / Full Body",
                       ),
                       SizedBox(height: 10),
                       _InfoRow(label: "Level", value: "Beginner"),
                       SizedBox(height: 10),
                       _InfoRow(
-                        label: "Repetisi",
-                        value: "3 set × 10–15 repetisi",
+                        label: "Repetitions",
+                        value: "3 sets × 10–12 reps",
                       ),
                     ],
                   ),
@@ -117,7 +119,7 @@ class _LegPressPageState extends State<LegPressPage> {
 
                 /// DESCRIPTION
                 const Text(
-                  "Deskripsi",
+                  "Description",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 22,
@@ -135,7 +137,7 @@ class _LegPressPageState extends State<LegPressPage> {
                     borderRadius: BorderRadius.circular(18),
                   ),
                   child: const Text(
-                    "Leg press adalah latihan dasar untuk melatih otot paha depan (quadriceps), paha belakang (hamstring), dan glutes. Mesin ini memberikan stabilitas yang tinggi sehingga memungkinkan pengguna mengangkat beban yang lebih besar dibandingkan squat bagi pemula.",
+                    "The wide grip lat pulldown targets the back muscles, especially the latissimus dorsi, while also engaging the shoulders and biceps as supporting muscles. This movement mimics the pull-up pattern but with adjustable resistance, making it suitable for beginners.",
                     style: TextStyle(
                       fontSize: 15,
                       height: 1.6,
@@ -148,7 +150,7 @@ class _LegPressPageState extends State<LegPressPage> {
 
                 /// HOW TO USE
                 const Text(
-                  "Cara penggunaan",
+                  "How to Use",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 22,
@@ -168,22 +170,22 @@ class _LegPressPageState extends State<LegPressPage> {
                   child: const Column(
                     children: [
                       _StepText(
-                        "Duduk atau berbaring pada mesin leg press dengan punggung menempel pada sandaran.",
+                        "Sit on the lat pulldown machine and secure your thighs under the pads to prevent your body from lifting.",
                       ),
                       _StepText(
-                        "Letakkan kedua kaki di platform dengan jarak selebar bahu.",
+                        "Grip the bar with your hands wider than shoulder width.",
                       ),
                       _StepText(
-                        "Lepaskan pengunci mesin jika ada.",
+                        "Pull the bar down toward your upper chest while keeping your chest open and your back upright.",
                       ),
                       _StepText(
-                        "Dorong platform dengan kaki hingga lutut hampir lurus.",
+                        "Focus on pulling with your back muscles rather than just your arms.",
                       ),
                       _StepText(
-                        "Jangan mengunci lutut untuk menjaga keamanan sendi.",
+                        "Pause briefly when the bar is close to your chest.",
                       ),
                       _StepText(
-                        "Turunkan platform perlahan sampai lutut membentuk sudut sekitar 90 derajat.",
+                        "Slowly release the bar back to the starting position with control.",
                       ),
                     ],
                   ),

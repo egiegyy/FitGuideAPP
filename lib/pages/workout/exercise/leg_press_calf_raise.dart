@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 
-class ChestPressPage extends StatefulWidget {
-  const ChestPressPage({super.key});
+class LegPressCalfRaisePage extends StatefulWidget {
+  const LegPressCalfRaisePage({super.key});
 
   @override
-  State<ChestPressPage> createState() => _ChestPressPageState();
+  State<LegPressCalfRaisePage> createState() => _LegPressCalfRaisePageState();
 }
 
-class _ChestPressPageState extends State<ChestPressPage> {
+class _LegPressCalfRaisePageState extends State<LegPressCalfRaisePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-
       appBar: AppBar(
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.white, size: 28),
@@ -66,7 +65,7 @@ class _ChestPressPageState extends State<ChestPressPage> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(18),
                     child: Image.asset(
-                      "assets/images/animation/chest_press_animation.gif",
+                      "assets/images/exercises/leg/leg_press_calf_raise.png",
                       fit: BoxFit.contain,
                     ),
                   ),
@@ -76,7 +75,7 @@ class _ChestPressPageState extends State<ChestPressPage> {
 
                 /// TITLE
                 const Text(
-                  "Chest Press",
+                  "Leg Press Calf Raise",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 26,
@@ -96,18 +95,15 @@ class _ChestPressPageState extends State<ChestPressPage> {
                   ),
                   child: const Column(
                     children: [
-                      _InfoRow(label: "Alat", value: "Chest Press Machine"),
+                      _InfoRow(label: "Equipment", value: "Leg Press Machine"),
+                      SizedBox(height: 10),
+                      _InfoRow(label: "Category", value: "Legs"),
+                      SizedBox(height: 10),
+                      _InfoRow(label: "Level", value: "Intermediate"),
                       SizedBox(height: 10),
                       _InfoRow(
-                        label: "Kategori",
-                        value: "Push / Upper / Full Body",
-                      ),
-                      SizedBox(height: 10),
-                      _InfoRow(label: "Level", value: "Beginner"),
-                      SizedBox(height: 10),
-                      _InfoRow(
-                        label: "Repetisi",
-                        value: "3 set × 10–12 repetisi",
+                        label: "Repetitions",
+                        value: "3–4 sets × 12–15 reps",
                       ),
                     ],
                   ),
@@ -117,7 +113,7 @@ class _ChestPressPageState extends State<ChestPressPage> {
 
                 /// DESCRIPTION
                 const Text(
-                  "Deskripsi",
+                  "Description",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 22,
@@ -135,7 +131,7 @@ class _ChestPressPageState extends State<ChestPressPage> {
                     borderRadius: BorderRadius.circular(18),
                   ),
                   child: const Text(
-                    "Chest press adalah latihan dasar untuk melatih otot dada (pectoralis), bahu depan, dan triceps. Mesin ini membantu menjaga stabilitas sehingga cocok untuk pemula yang ingin belajar pola gerakan mendorong tanpa harus menyeimbangkan beban seperti pada barbell atau dumbbell.",
+                    "The leg press calf raise is a calf exercise variation performed using a leg press machine. This movement targets the gastrocnemius and soleus muscles, which play an important role in ankle strength and stability.",
                     style: TextStyle(
                       fontSize: 15,
                       height: 1.6,
@@ -148,7 +144,7 @@ class _ChestPressPageState extends State<ChestPressPage> {
 
                 /// HOW TO USE
                 const Text(
-                  "Cara penggunaan",
+                  "How to Use",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 22,
@@ -168,21 +164,23 @@ class _ChestPressPageState extends State<ChestPressPage> {
                   child: const Column(
                     children: [
                       _StepText(
-                        "Duduk di mesin chest press dan atur tinggi kursi sehingga pegangan berada sejajar dengan bagian tengah dada.",
+                        "Sit on the leg press machine and place the balls of your feet on the platform.",
                       ),
                       _StepText(
-                        "Tempelkan punggung dan kepala pada sandaran untuk menjaga postur tetap stabil.",
+                        "Ensure your heels are slightly off the platform to allow full movement.",
                       ),
                       _StepText(
-                        "Pegang handle dengan kedua tangan, lalu dorong ke depan sampai lengan hampir lurus.",
+                        "Push the platform using your toes until your heels are lifted.",
                       ),
                       _StepText(
-                        "Jangan mengunci siku sepenuhnya agar sendi tetap aman.",
+                        "Feel the contraction in your calf muscles at the top of the movement.",
                       ),
                       _StepText(
-                        "Kembalikan handle secara perlahan ke posisi awal sambil mengontrol gerakan.",
+                        "Lower your heels slowly until you feel a stretch in your calves.",
                       ),
-                      _StepText("Ulangi gerakan dengan tempo yang stabil."),
+                      _StepText(
+                        "Repeat the movement with a steady and controlled tempo.",
+                      ),
                     ],
                   ),
                 ),

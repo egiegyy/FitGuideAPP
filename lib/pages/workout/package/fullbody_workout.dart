@@ -1,7 +1,6 @@
-
-import 'package:fitguide/pages/workout/exercise/chestPress.dart';
-import 'package:fitguide/pages/workout/exercise/legPress.dart';
-import 'package:fitguide/pages/workout/exercise/wideGripLP.dart';
+import 'package:fitguide/pages/workout/exercise/chest_press.dart';
+import 'package:fitguide/pages/workout/exercise/leg_press.dart';
+import 'package:fitguide/pages/workout/exercise/lat_pulldown.dart';
 import 'package:flutter/material.dart';
 
 class FullBodyWorkout extends StatefulWidget {
@@ -51,7 +50,6 @@ class _FullBodyWorkoutState extends State<FullBodyWorkout> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
                 /// HEADER IMAGE
                 Container(
                   alignment: Alignment.topLeft,
@@ -65,7 +63,7 @@ class _FullBodyWorkoutState extends State<FullBodyWorkout> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(18),
                     child: Image.asset(
-                      "assets/images/ContohPushPullLeg.png",
+                      "assets/images/profile_fullbody.png",
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -121,7 +119,7 @@ class _FullBodyWorkoutState extends State<FullBodyWorkout> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8),
                         child: Image.asset(
-                          "assets/images/Chest Press.png",
+                          "assets/images/exercises/push/chest_press.png",
                           width: 45,
                           height: 45,
                           fit: BoxFit.cover,
@@ -160,14 +158,9 @@ class _FullBodyWorkoutState extends State<FullBodyWorkout> {
                       child: Ink(
                         decoration: const BoxDecoration(
                           gradient: LinearGradient(
-                            colors: [
-                              Color(0xFF2E7D32),
-                              Color(0xFF66BB6A),
-                            ],
+                            colors: [Color(0xFF2E7D32), Color(0xFF66BB6A)],
                           ),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(20),
-                          ),
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
                         ),
                         child: const Padding(
                           padding: EdgeInsets.symmetric(
@@ -211,7 +204,7 @@ class _FullBodyWorkoutState extends State<FullBodyWorkout> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8),
                         child: Image.asset(
-                          "assets/images/Lat Pulldown.png",
+                          "assets/images/exercises/pull/lat_pulldown.png",
                           width: 45,
                           height: 45,
                           fit: BoxFit.cover,
@@ -220,7 +213,7 @@ class _FullBodyWorkoutState extends State<FullBodyWorkout> {
                     ),
 
                     title: const Text(
-                      "Wide Grip Lat Pulldown",
+                      "Lat Pulldown",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 18,
@@ -249,14 +242,9 @@ class _FullBodyWorkoutState extends State<FullBodyWorkout> {
                       child: Ink(
                         decoration: const BoxDecoration(
                           gradient: LinearGradient(
-                            colors: [
-                              Color(0xFF2E7D32),
-                              Color(0xFF66BB6A),
-                            ],
+                            colors: [Color(0xFF2E7D32), Color(0xFF66BB6A)],
                           ),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(20),
-                          ),
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
                         ),
                         child: const Padding(
                           padding: EdgeInsets.symmetric(
@@ -300,7 +288,7 @@ class _FullBodyWorkoutState extends State<FullBodyWorkout> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8),
                         child: Image.asset(
-                          "assets/images/Leg Press.png",
+                          "assets/images/exercises/leg/leg_press.png",
                           width: 45,
                           height: 45,
                           fit: BoxFit.cover,
@@ -338,14 +326,9 @@ class _FullBodyWorkoutState extends State<FullBodyWorkout> {
                       child: Ink(
                         decoration: const BoxDecoration(
                           gradient: LinearGradient(
-                            colors: [
-                              Color(0xFF2E7D32),
-                              Color(0xFF66BB6A),
-                            ],
+                            colors: [Color(0xFF2E7D32), Color(0xFF66BB6A)],
                           ),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(20),
-                          ),
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
                         ),
                         child: const Padding(
                           padding: EdgeInsets.symmetric(

@@ -1,15 +1,15 @@
-import 'package:fitguide/pages/workout/exercise/legPress.dart';
-import 'package:fitguide/pages/workout/exercise/legPressCalfRaise.dart';
+import 'package:fitguide/pages/workout/exercise/close_grip_lat_pulldown.dart';
+import 'package:fitguide/pages/workout/exercise/lat_pulldown.dart';
 import 'package:flutter/material.dart';
 
-class LegPressMachine extends StatefulWidget {
-  const LegPressMachine({super.key});
+class LatPulldownMachine extends StatefulWidget {
+  const LatPulldownMachine({super.key});
 
   @override
-  State<LegPressMachine> createState() => _LegPressMachineState();
+  State<LatPulldownMachine> createState() => _LatPulldownMachineState();
 }
 
-class _LegPressMachineState extends State<LegPressMachine> {
+class _LatPulldownMachineState extends State<LatPulldownMachine> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,13 +57,15 @@ class _LegPressMachineState extends State<LegPressMachine> {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(18),
-                  child: Image.asset("assets/images/Leg Press Machine.png"),
+                  child: Image.asset(
+                    "assets/images/exercises/pull/lat_pulldown_machine.png",
+                  ),
                 ),
 
                 const SizedBox(height: 20),
 
                 const Text(
-                  "Leg Press Machine",
+                  "Lat Pulldown Machine",
                   style: TextStyle(
                     color: Color(0xFF66BB6A),
                     fontSize: 24,
@@ -83,7 +85,7 @@ class _LegPressMachineState extends State<LegPressMachine> {
                   ),
 
                   child: const Text(
-                    "Alat gym untuk melatih kekuatan otot kaki dengan gerakan mendorong beban menggunakan kaki pada posisi duduk atau setengah berbaring. Latihan ini menargetkan quadriceps sebagai otot utama, serta melibatkan glutes dan hamstrings sebagai otot pendukung.",
+                    "A gym tool for training back muscles by pulling a bar from above toward the chest. This exercise helps strengthen and tone the upper back. The main muscles worked are the latissimus dorsi, with assistance from the biceps and rear shoulders.",
                     style: TextStyle(color: Colors.white70, fontSize: 15),
                   ),
                 ),
@@ -101,7 +103,7 @@ class _LegPressMachineState extends State<LegPressMachine> {
 
                 const SizedBox(height: 20),
 
-                /// LEG PRESS
+                /// WIDE GRIP LAT PULLDOWN
                 Container(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 12,
@@ -121,7 +123,7 @@ class _LegPressMachineState extends State<LegPressMachine> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const LegPressPage(),
+                          builder: (context) => const WideGripLatPulldownPage(),
                         ),
                       );
                     },
@@ -129,7 +131,7 @@ class _LegPressMachineState extends State<LegPressMachine> {
                     leading: ClipRRect(
                       borderRadius: BorderRadius.circular(12),
                       child: Image.asset(
-                        "assets/images/Leg Press.png",
+                        "assets/images/exercises/pull/lat_pulldown.png",
                         width: 55,
                         height: 55,
                         fit: BoxFit.cover,
@@ -137,7 +139,7 @@ class _LegPressMachineState extends State<LegPressMachine> {
                     ),
 
                     title: const Text(
-                      "Leg Press",
+                      "Wide Grip Lat Pulldown",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 18,
@@ -171,7 +173,7 @@ class _LegPressMachineState extends State<LegPressMachine> {
 
                 const SizedBox(height: 15),
 
-                /// LEG PRESS CALF RAISE
+                /// CLOSE GRIP LAT PULLDOWN
                 Container(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 12,
@@ -191,7 +193,8 @@ class _LegPressMachineState extends State<LegPressMachine> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const LegPressCalfRaisePage(),
+                          builder: (context) =>
+                              const CloseGripLatPulldownPage(),
                         ),
                       );
                     },
@@ -199,7 +202,7 @@ class _LegPressMachineState extends State<LegPressMachine> {
                     leading: ClipRRect(
                       borderRadius: BorderRadius.circular(12),
                       child: Image.asset(
-                        "assets/images/Leg Press.png",
+                        "assets/images/exercises/pull/close_grip_lat_pulldown.png",
                         width: 55,
                         height: 55,
                         fit: BoxFit.cover,
@@ -207,7 +210,7 @@ class _LegPressMachineState extends State<LegPressMachine> {
                     ),
 
                     title: const Text(
-                      "Leg Press Calf Raise",
+                      "Close Grip Lat Pulldown",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 18,

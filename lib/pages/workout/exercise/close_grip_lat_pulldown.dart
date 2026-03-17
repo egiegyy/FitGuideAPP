@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 
-class WideGripLatPulldownPage extends StatefulWidget {
-  const WideGripLatPulldownPage({super.key});
+class CloseGripLatPulldownPage extends StatefulWidget {
+  const CloseGripLatPulldownPage({super.key});
 
   @override
-  State<WideGripLatPulldownPage> createState() => _WideGripWideGripLPState();
+  State<CloseGripLatPulldownPage> createState() =>
+      _CloseGripLatPulldownPageState();
 }
 
-class _WideGripWideGripLPState extends State<WideGripLatPulldownPage> {
+class _CloseGripLatPulldownPageState extends State<CloseGripLatPulldownPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
+
       appBar: AppBar(
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.white, size: 28),
@@ -65,7 +67,7 @@ class _WideGripWideGripLPState extends State<WideGripLatPulldownPage> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(18),
                     child: Image.asset(
-                      "assets/images/animation/lat_pulldown_animation.gif",
+                      "assets/images/exercises/pull/close_grip_lat_pulldown.png",
                       fit: BoxFit.contain,
                     ),
                   ),
@@ -75,7 +77,7 @@ class _WideGripWideGripLPState extends State<WideGripLatPulldownPage> {
 
                 /// TITLE
                 const Text(
-                  "Wide Grip Lat Pulldown",
+                  "Close Grip Lat Pulldown",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 26,
@@ -95,18 +97,18 @@ class _WideGripWideGripLPState extends State<WideGripLatPulldownPage> {
                   ),
                   child: const Column(
                     children: [
-                      _InfoRow(label: "Alat", value: "Lat Pulldown Machine"),
-                      SizedBox(height: 10),
                       _InfoRow(
-                        label: "Kategori",
-                        value: "Pull / Upper / Full Body",
+                        label: "Equipment",
+                        value: "Lat Pulldown Machine",
                       ),
                       SizedBox(height: 10),
-                      _InfoRow(label: "Level", value: "Beginner"),
+                      _InfoRow(label: "Category", value: "Pull"),
+                      SizedBox(height: 10),
+                      _InfoRow(label: "Level", value: "Intermediate"),
                       SizedBox(height: 10),
                       _InfoRow(
-                        label: "Repetisi",
-                        value: "3 set × 10–12 repetisi",
+                        label: "Repetitions",
+                        value: "3–4 sets × 8–12 reps",
                       ),
                     ],
                   ),
@@ -116,7 +118,7 @@ class _WideGripWideGripLPState extends State<WideGripLatPulldownPage> {
 
                 /// DESCRIPTION
                 const Text(
-                  "Deskripsi",
+                  "Description",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 22,
@@ -134,7 +136,7 @@ class _WideGripWideGripLPState extends State<WideGripLatPulldownPage> {
                     borderRadius: BorderRadius.circular(18),
                   ),
                   child: const Text(
-                    "Wide grip lat pulldown melatih otot punggung terutama latissimus dorsi, serta melibatkan otot bahu dan biceps sebagai otot pendukung. Gerakan ini meniru pola pull-up tetapi dengan beban yang dapat diatur sehingga cocok untuk pemula.",
+                    "The close grip lat pulldown uses a narrower grip to place greater emphasis on the middle back and biceps. This variation also increases the range of motion, helping improve muscle control in the back.",
                     style: TextStyle(
                       fontSize: 15,
                       height: 1.6,
@@ -147,7 +149,7 @@ class _WideGripWideGripLPState extends State<WideGripLatPulldownPage> {
 
                 /// HOW TO USE
                 const Text(
-                  "Cara penggunaan",
+                  "How to Use",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 22,
@@ -167,20 +169,22 @@ class _WideGripWideGripLPState extends State<WideGripLatPulldownPage> {
                   child: const Column(
                     children: [
                       _StepText(
-                        "Duduk di mesin lat pulldown dan pastikan paha terkunci dengan bantalan agar tubuh tidak terangkat.",
+                        "Sit on the lat pulldown machine with your thighs secured under the pads.",
                       ),
                       _StepText(
-                        "Pegang bar dengan posisi tangan lebih lebar dari bahu.",
+                        "Hold the handle with a narrower grip or use a close-grip attachment.",
                       ),
                       _StepText(
-                        "Tarik bar ke bawah menuju dada bagian atas sambil menjaga dada terbuka dan punggung tetap tegak.",
+                        "Pull the handle down toward your chest while keeping your back upright.",
                       ),
                       _StepText(
-                        "Fokus menarik dengan otot punggung, bukan hanya dengan tangan.",
+                        "Ensure your elbows move downward and slightly backward.",
                       ),
-                      _StepText("Tahan sebentar ketika bar mendekati dada."),
                       _StepText(
-                        "Lepaskan bar perlahan kembali ke posisi awal dengan kontrol.",
+                        "Pause briefly when the handle is near your chest for maximum contraction.",
+                      ),
+                      _StepText(
+                        "Slowly return the handle to the starting position.",
                       ),
                     ],
                   ),

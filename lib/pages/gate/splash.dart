@@ -1,6 +1,6 @@
 import 'package:fitguide/database/preferance.dart';
-import 'package:fitguide/pages/gate/signIn.dart';
-import 'package:fitguide/pages/home/mainScreen.dart';
+import 'package:fitguide/pages/gate/sign_in.dart';
+import 'package:fitguide/pages/home/main_screen.dart';
 import 'package:flutter/material.dart';
 
 class Splash extends StatefulWidget {
@@ -39,7 +39,7 @@ class _SplashState extends State<Splash> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Center(child: Image.asset("assets/images/logoFitGuide.png")),
+      body: Center(child: Image.asset("assets/images/logo_fitguide.png")),
     );
   }
 }

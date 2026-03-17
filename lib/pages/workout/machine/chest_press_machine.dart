@@ -1,5 +1,5 @@
-import 'package:fitguide/pages/workout/exercise/chestPress.dart';
-import 'package:fitguide/pages/workout/exercise/closeGripCP.dart';
+import 'package:fitguide/pages/workout/exercise/chest_press.dart';
+import 'package:fitguide/pages/workout/exercise/close_grip_chest_press.dart';
 import 'package:flutter/material.dart';
 
 class ChestPressMachine extends StatefulWidget {
@@ -57,7 +57,9 @@ class _ChestPressState extends State<ChestPressMachine> {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(18),
-                  child: Image.asset("assets/images/Chest Press Machine.png"),
+                  child: Image.asset(
+                    "assets/images/exercises/push/chest_press_machine.png",
+                  ),
                 ),
 
                 const SizedBox(height: 20),
@@ -83,7 +85,7 @@ class _ChestPressState extends State<ChestPressMachine> {
                   ),
 
                   child: const Text(
-                    "Chest Press Machine adalah alat gym untuk melatih otot dada dengan gerakan mendorong beban ke depan. Latihan ini menargetkan pectoralis, serta melibatkan bahu depan dan triceps.",
+                    "The Chest Press Machine is a piece of gym equipment that trains the chest muscles by pushing weights forward. This exercise targets the pectoralis major, as well as engaging the anterior shoulders and triceps.",
                     style: TextStyle(color: Colors.white70, fontSize: 15),
                   ),
                 ),
@@ -129,7 +131,7 @@ class _ChestPressState extends State<ChestPressMachine> {
                     leading: ClipRRect(
                       borderRadius: BorderRadius.circular(12),
                       child: Image.asset(
-                        "assets/images/Chest Press.png",
+                        "assets/images/exercises/push/chest_press.png",
                         width: 55,
                         height: 55,
                         fit: BoxFit.cover,
@@ -199,7 +201,7 @@ class _ChestPressState extends State<ChestPressMachine> {
                     leading: ClipRRect(
                       borderRadius: BorderRadius.circular(12),
                       child: Image.asset(
-                        "assets/images/Chest Press.png",
+                        "assets/images/exercises/push/close_grip_chest_press.png",
                         width: 55,
                         height: 55,
                         fit: BoxFit.cover,

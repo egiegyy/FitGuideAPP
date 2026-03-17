@@ -1,15 +1,15 @@
-import 'package:fitguide/pages/workout/exercise/chestPress.dart';
-import 'package:fitguide/pages/workout/exercise/closeGripCP.dart';
+import 'package:fitguide/pages/workout/exercise/close_grip_lat_pulldown.dart';
+import 'package:fitguide/pages/workout/exercise/lat_pulldown.dart';
 import 'package:flutter/material.dart';
 
-class PushWorkout extends StatefulWidget {
-  const PushWorkout({super.key});
+class PullWorkout extends StatefulWidget {
+  const PullWorkout({super.key});
 
   @override
-  State<PushWorkout> createState() => _PushWorkoutState();
+  State<PullWorkout> createState() => _PullWorkoutState();
 }
 
-class _PushWorkoutState extends State<PushWorkout> {
+class _PullWorkoutState extends State<PullWorkout> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,11 +59,10 @@ class _PushWorkoutState extends State<PushWorkout> {
                     border: Border.all(color: Colors.white24),
                     borderRadius: BorderRadius.circular(18),
                   ),
-
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(18),
                     child: Image.asset(
-                      "assets/images/ContohPushPullLeg.png",
+                      "assets/images/exercises/pull/profile_pull.png",
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -73,7 +72,7 @@ class _PushWorkoutState extends State<PushWorkout> {
 
                 /// TITLE
                 const Text(
-                  "Push Workout",
+                  "Pull Workout",
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -97,7 +96,7 @@ class _PushWorkoutState extends State<PushWorkout> {
 
                 const Divider(color: Colors.white24),
 
-                /// CHEST PRESS
+                /// CLOSE GRIP LAT PULLDOWN
                 Container(
                   decoration: BoxDecoration(
                     color: Colors.white.withOpacity(0.05),
@@ -119,7 +118,7 @@ class _PushWorkoutState extends State<PushWorkout> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8),
                         child: Image.asset(
-                          "assets/images/Chest Press.png",
+                          "assets/images/exercises/push/close_grip_chest_press.png",
                           width: 45,
                           height: 45,
                           fit: BoxFit.cover,
@@ -128,7 +127,7 @@ class _PushWorkoutState extends State<PushWorkout> {
                     ),
 
                     title: const Text(
-                      "Chest Press",
+                      "Close Grip Lat Pulldown",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 18,
@@ -141,7 +140,7 @@ class _PushWorkoutState extends State<PushWorkout> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => ChestPressPage(),
+                            builder: (context) => CloseGripLatPulldownPage(),
                           ),
                         );
                       },
@@ -181,7 +180,7 @@ class _PushWorkoutState extends State<PushWorkout> {
 
                 const SizedBox(height: 12),
 
-                /// CLOSE GRIP CHEST PRESS
+                /// WIDE GRIP LAT PULLDOWN
                 Container(
                   decoration: BoxDecoration(
                     color: Colors.white.withOpacity(0.05),
@@ -203,7 +202,7 @@ class _PushWorkoutState extends State<PushWorkout> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8),
                         child: Image.asset(
-                          "assets/images/Chest Press.png",
+                          "assets/images/exercises/pull/lat_pulldown.png",
                           width: 45,
                           height: 45,
                           fit: BoxFit.cover,
@@ -212,7 +211,7 @@ class _PushWorkoutState extends State<PushWorkout> {
                     ),
 
                     title: const Text(
-                      "Close Grip Chest Press",
+                      "Lat Pulldown",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 18,
@@ -225,7 +224,7 @@ class _PushWorkoutState extends State<PushWorkout> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => CloseGripCPPage(),
+                            builder: (context) => WideGripLatPulldownPage(),
                           ),
                         );
                       },
@@ -262,9 +261,7 @@ class _PushWorkoutState extends State<PushWorkout> {
                     ),
                   ),
                 ),
-
                 const SizedBox(height: 12),
-
                 const Divider(color: Colors.white24),
               ],
             ),
