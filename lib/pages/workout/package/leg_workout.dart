@@ -49,14 +49,13 @@ class _LegWorkoutState extends State<LegWorkout> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
                 /// HEADER IMAGE
                 Container(
                   alignment: Alignment.topLeft,
                   height: 150,
                   width: 150,
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.05),
+                    color: Colors.white.withValues(alpha: 0.05),
                     border: Border.all(color: Colors.white24),
                     borderRadius: BorderRadius.circular(18),
                   ),
@@ -100,7 +99,7 @@ class _LegWorkoutState extends State<LegWorkout> {
                 /// LEG PRESS
                 Container(
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.05),
+                    color: Colors.white.withValues(alpha: 0.05),
                     border: Border.all(color: Colors.white24),
                     borderRadius: BorderRadius.circular(18),
                   ),
@@ -113,7 +112,7 @@ class _LegWorkoutState extends State<LegWorkout> {
                     leading: Container(
                       padding: const EdgeInsets.all(6),
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.08),
+                        color: Colors.white.withValues(alpha: 0.08),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: ClipRRect(
@@ -157,14 +156,9 @@ class _LegWorkoutState extends State<LegWorkout> {
                       child: Ink(
                         decoration: const BoxDecoration(
                           gradient: LinearGradient(
-                            colors: [
-                              Color(0xFF2E7D32),
-                              Color(0xFF66BB6A),
-                            ],
+                            colors: [Color(0xFF2E7D32), Color(0xFF66BB6A)],
                           ),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(20),
-                          ),
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
                         ),
                         child: const Padding(
                           padding: EdgeInsets.symmetric(
@@ -189,7 +183,7 @@ class _LegWorkoutState extends State<LegWorkout> {
                 /// LEG PRESS CALF RAISE
                 Container(
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.05),
+                    color: Colors.white.withValues(alpha: 0.05),
                     border: Border.all(color: Colors.white24),
                     borderRadius: BorderRadius.circular(18),
                   ),
@@ -202,7 +196,7 @@ class _LegWorkoutState extends State<LegWorkout> {
                     leading: Container(
                       padding: const EdgeInsets.all(6),
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.08),
+                        color: Colors.white.withValues(alpha: 0.08),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: ClipRRect(
@@ -246,14 +240,9 @@ class _LegWorkoutState extends State<LegWorkout> {
                       child: Ink(
                         decoration: const BoxDecoration(
                           gradient: LinearGradient(
-                            colors: [
-                              Color(0xFF2E7D32),
-                              Color(0xFF66BB6A),
-                            ],
+                            colors: [Color(0xFF2E7D32), Color(0xFF66BB6A)],
                           ),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(20),
-                          ),
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
                         ),
                         child: const Padding(
                           padding: EdgeInsets.symmetric(

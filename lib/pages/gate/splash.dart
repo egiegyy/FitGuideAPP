@@ -20,7 +20,7 @@ class _SplashState extends State<Splash> {
   void autoLogin() async {
     await Future.delayed(const Duration(seconds: 3));
     bool isLogin = await UserPref.isLogin();
-    print("Login Status : $isLogin");
+    debugPrint("Login Status : $isLogin");
     if (!mounted) return;
     if (isLogin) {
       Navigator.pushReplacement(

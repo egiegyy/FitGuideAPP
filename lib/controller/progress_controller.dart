@@ -1,5 +1,5 @@
 import 'package:fitguide/database/sqflite.dart';
-import 'package:fitguide/model/progress_model.dart';
+import 'package:fitguide/firebase/model/progress_model.dart';
 
 class ProgressController {
   /// INSERT WORKOUT PROGRESS
@@ -14,6 +14,7 @@ class ProgressController {
     final results = await db.query('progress', orderBy: "date ASC");
     return results.map((e) => ProgressModel.fromMap(e)).toList();
   }
+
   /// UPDATE WORKOUT PROGRESS
   static Future<int> updateProgress(ProgressModel progress) async {
     final db = await DBHelper.db();

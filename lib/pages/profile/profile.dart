@@ -1,8 +1,9 @@
 import 'dart:io';
 import 'package:fitguide/database/preferance.dart';
-import 'package:fitguide/database/sqflite.dart';
 import 'package:fitguide/pages/gate/sign_in.dart';
 import 'package:fitguide/pages/gate/sign_up.dart';
+import 'package:fitguide/firebase/services/auth_service.dart';
+import 'package:fitguide/database/sqflite.dart';
 import 'package:fitguide/pages/profile/progress/progress.dart';
 import 'package:fitguide/pages/profile/routine/routine.dart';
 import 'package:fitguide/pages/profile/setting.dart';
@@ -36,6 +37,14 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Future getUser() async {
+    final currentUser = await AuthService.getCurrentUser();
+    if (currentUser != null) {
+      setState(() {
+        username = currentUser.username;
+      });
+      return;
+    }
+
     String? user = await UserPref.getLoginUser();
 
     setState(() {
@@ -123,26 +132,44 @@ class _ProfilePageState extends State<ProfilePage> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text("Logout"),
-          content: const Text("Apakah anda yakin ingin keluar?"),
+          backgroundColor: const Color(0xFF1B5E20),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          title: const Text(
+            "Logout",
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+            ),
+          ),
+          content: const Text(
+            "Apakah anda yakin ingin keluar?",
+            style: TextStyle(color: Colors.white70, fontSize: 16),
+          ),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: const Text("Tidak"),
+              child: const Text(
+                "Tidak",
+                style: TextStyle(color: Colors.greenAccent),
+              ),
             ),
             TextButton(
               onPressed: () async {
-                await UserPref.logout();
+                await AuthService.signOut();
 
+                if (!context.mounted) return;
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (context) => const SignIn()),
                   (route) => false,
                 );
               },
-              child: const Text("Ya"),
+              child: const Text("Ya", style: TextStyle(color: Colors.red)),
             ),
           ],
         );
@@ -155,14 +182,31 @@ class _ProfilePageState extends State<ProfilePage> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text("Delete Account"),
-          content: const Text("Apakah anda yakin ingin menghapus akun?"),
+          backgroundColor: const Color(0xFF1B5E20),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          title: const Text(
+            "Delete Account",
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+            ),
+          ),
+          content: const Text(
+            "Apakah anda yakin ingin menghapus akun?",
+            style: TextStyle(color: Colors.white70, fontSize: 16),
+          ),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: const Text("Tidak"),
+              child: const Text(
+                "Tidak",
+                style: TextStyle(color: Colors.greenAccent),
+              ),
             ),
             TextButton(
               onPressed: () async {
@@ -171,13 +215,14 @@ class _ProfilePageState extends State<ProfilePage> {
                 await db.delete("routine");
                 await UserPref.deleteAccount(); //hapus akun
                 await DBHelper.resetDB(); //reset db
+                if (!context.mounted) return;
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (context) => const SignUp()),
                   (route) => false,
                 );
               },
-              child: const Text("Ya"),
+              child: const Text("Ya", style: TextStyle(color: Colors.red)),
             ),
           ],
         );
@@ -204,201 +249,204 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
       ),
 
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Color(0xFF000000),
-              Color(0xFF0A0F0A),
-              Color(0xFF101810),
-              Color(0xFF000000),
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-        ),
-
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(20, 100, 20, 20),
-
-            child: Column(
-              children: [
-                /// PROFILE PHOTO
-                Stack(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: const Color(0xFF66BB6A),
-                          width: 2,
-                        ),
-                      ),
-                      child: CircleAvatar(
-                        radius: 55,
-                        backgroundColor: Colors.grey[900],
-                        backgroundImage: profileImage != null
-                            ? FileImage(profileImage!)
-                            : null,
-                        child: profileImage == null
-                            ? const Icon(
-                                Icons.person,
-                                size: 60,
-                                color: Colors.white,
-                              )
-                            : null,
-                      ),
-                    ),
-
-                    Positioned(
-                      bottom: 0,
-                      right: 0,
-                      child: GestureDetector(
-                        onTap: chooseImageSource,
-                        child: Container(
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Color(0xFF2E7D32),
-                          ),
-                          padding: const EdgeInsets.all(8),
-                          child: const Icon(
-                            Icons.camera_alt,
-                            size: 18,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-
-                const SizedBox(height: 15),
-
-                /// USERNAME
-                Text(
-                  username,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-
-                const SizedBox(height: 30),
-
-                /// PROGRESS & ROUTINE BUTTON
-                Row(
-                  children: [
-                    /// PROGRESS
-                    Expanded(
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const Progress(),
-                            ),
-                          );
-                        },
-                        child: Container(
-                          height: 110,
-                          decoration: BoxDecoration(
-                            gradient: const LinearGradient(
-                              colors: [Color(0xFF2E7D32), Color(0xFF66BB6A)],
-                            ),
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: const Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.trending_up,
-                                color: Colors.white,
-                                size: 35,
-                              ),
-                              SizedBox(height: 8),
-                              Text(
-                                "Progress",
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-
-                    const SizedBox(width: 15),
-
-                    /// ROUTINE
-                    Expanded(
-                      child: InkWell(
-                        onTap: () async {
-                          await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const MyRoutine(),
-                            ),
-                          );
-                          loadRoutine();
-                        },
-                        child: Container(
-                          height: 110,
-                          decoration: BoxDecoration(
-                            gradient: const LinearGradient(
-                              colors: [Color(0xFF2E7D32), Color(0xFF66BB6A)],
-                            ),
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: const Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.view_list,
-                                color: Colors.white,
-                                size: 35,
-                              ),
-                              SizedBox(height: 8),
-                              Text(
-                                "Routine",
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-
-                const SizedBox(height: 30),
-
-                /// SETTINGS
-                buildMenuTile(
-                  icon: Icons.settings_rounded,
-                  title: "Settings",
-                  onTap: settingButton,
-                ),
-
-                const SizedBox(height: 10),
-
-                buildMenuTile(
-                  icon: Icons.logout_rounded,
-                  title: "Logout",
-                  onTap: logoutDialog,
-                ),
-
-                const SizedBox(height: 10),
-
-                buildMenuTile(
-                  icon: Icons.delete,
-                  title: "Delete Account",
-                  onTap: deleteAccountDialog,
-                ),
-              ],
+      body: Stack(
+        children: [
+          Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Color(0xFF000000),
+                  Color(0xFF0A0F0A),
+                  Color(0xFF101810),
+                  Color(0xFF000000),
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
             ),
           ),
-        ),
+          SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(20, 100, 20, 20),
+
+              child: Column(
+                children: [
+                  /// PROFILE PHOTO
+                  Stack(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: const Color(0xFF66BB6A),
+                            width: 2,
+                          ),
+                        ),
+                        child: CircleAvatar(
+                          radius: 55,
+                          backgroundColor: Colors.grey[900],
+                          backgroundImage: profileImage != null
+                              ? FileImage(profileImage!)
+                              : null,
+                          child: profileImage == null
+                              ? const Icon(
+                                  Icons.person,
+                                  size: 60,
+                                  color: Colors.white,
+                                )
+                              : null,
+                        ),
+                      ),
+
+                      Positioned(
+                        bottom: 0,
+                        right: 0,
+                        child: GestureDetector(
+                          onTap: chooseImageSource,
+                          child: Container(
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Color(0xFF2E7D32),
+                            ),
+                            padding: const EdgeInsets.all(8),
+                            child: const Icon(
+                              Icons.camera_alt,
+                              size: 18,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  const SizedBox(height: 15),
+
+                  /// USERNAME
+                  Text(
+                    username,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+
+                  const SizedBox(height: 30),
+
+                  /// PROGRESS & ROUTINE BUTTON
+                  Row(
+                    children: [
+                      /// PROGRESS
+                      Expanded(
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const Progress(),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            height: 110,
+                            decoration: BoxDecoration(
+                              gradient: const LinearGradient(
+                                colors: [Color(0xFF2E7D32), Color(0xFF66BB6A)],
+                              ),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: const Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.trending_up,
+                                  color: Colors.white,
+                                  size: 35,
+                                ),
+                                SizedBox(height: 8),
+                                Text(
+                                  "Progress",
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      const SizedBox(width: 15),
+
+                      /// ROUTINE
+                      Expanded(
+                        child: InkWell(
+                          onTap: () async {
+                            await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const MyRoutine(),
+                              ),
+                            );
+                            loadRoutine();
+                          },
+                          child: Container(
+                            height: 110,
+                            decoration: BoxDecoration(
+                              gradient: const LinearGradient(
+                                colors: [Color(0xFF2E7D32), Color(0xFF66BB6A)],
+                              ),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: const Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.view_list,
+                                  color: Colors.white,
+                                  size: 35,
+                                ),
+                                SizedBox(height: 8),
+                                Text(
+                                  "Routine",
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  const SizedBox(height: 30),
+
+                  /// SETTINGS
+                  buildMenuTile(
+                    icon: Icons.settings_rounded,
+                    title: "Settings",
+                    onTap: settingButton,
+                  ),
+
+                  const SizedBox(height: 10),
+
+                  buildMenuTile(
+                    icon: Icons.logout_rounded,
+                    title: "Logout",
+                    onTap: logoutDialog,
+                  ),
+
+                  const SizedBox(height: 10),
+
+                  buildMenuTile(
+                    icon: Icons.delete,
+                    title: "Delete Account",
+                    onTap: deleteAccountDialog,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -8,9 +8,11 @@ class AddExercisePage extends StatefulWidget {
   @override
   State<AddExercisePage> createState() => _AddExercisePageState();
 }
+
 class _AddExercisePageState extends State<AddExercisePage> {
   Future addExercise(String exercise) async {
     final result = await DBHelper.insertRoutine(widget.day, exercise);
+    if (!mounted) return;
     if (result == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -28,6 +30,7 @@ class _AddExercisePageState extends State<AddExercisePage> {
       setState(() {});
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
