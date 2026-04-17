@@ -14,6 +14,7 @@ class ProgressController {
     final results = await db.query('progress', orderBy: "date ASC");
     return results.map((e) => ProgressModel.fromMap(e)).toList();
   }
+
   /// UPDATE WORKOUT PROGRESS
   static Future<int> updateProgress(ProgressModel progress) async {
     final db = await DBHelper.db();

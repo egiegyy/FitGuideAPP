@@ -1,6 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fitguide/pages/gate/sign_in.dart';
-import 'package:fitguide/pages/home/main_screen.dart';
 import 'package:fitguide/firebase/services/auth_service.dart';
 import 'package:fitguide/utils/animation_utils.dart';
 import 'package:fitguide/utils/ui_components.dart';
@@ -45,6 +43,7 @@ class _SignUpState extends State<SignUp> {
 
         if (!mounted) return;
         await AuthService.signOut();
+        if (!mounted) return;
         UIComponents.showSuccessSnackBar(
           context,
           "Registrasi berhasil. Silakan masuk untuk melanjutkan.",

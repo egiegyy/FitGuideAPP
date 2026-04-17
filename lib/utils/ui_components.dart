@@ -14,7 +14,7 @@ class UIComponents {
         child,
         if (isLoading)
           Container(
-            color: Colors.black.withOpacity(0.5),
+            color: Colors.black.withValues(alpha: 0.5),
             child: Center(
               child: AnimationUtils.fadeIn(
                 child: Container(
@@ -24,7 +24,7 @@ class UIComponents {
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.3),
+                        color: Colors.black.withValues(alpha: 0.3),
                         blurRadius: 10,
                         spreadRadius: 5,
                       ),
@@ -143,7 +143,7 @@ class UIComponents {
             borderRadius: BorderRadius.circular(30),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.1),
+                color: Colors.black.withValues(alpha: 0.1),
                 blurRadius: 8,
                 offset: const Offset(0, 4),
               ),
@@ -303,7 +303,7 @@ class UIComponents {
     return AnimationUtils.fadeIn(
       child: Card(
         elevation: elevation ?? 4,
-        color: color ?? Colors.white.withOpacity(0.1),
+        color: color ?? Colors.white.withValues(alpha: 0.1),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         child: Padding(
           padding: padding ?? const EdgeInsets.all(16),

@@ -24,6 +24,7 @@ class _RoutineDayPageState extends State<RoutineDayPage> {
   Future loadRoutine() async {
     final data = await DBHelper.getRoutineByDay(widget.day);
 
+    if (!mounted) return;
     setState(() {
       exercises = data;
     });
@@ -44,6 +45,7 @@ class _RoutineDayPageState extends State<RoutineDayPage> {
       MaterialPageRoute(builder: (_) => AddExercisePage(day: widget.day)),
     );
 
+    if (!mounted) return;
     loadRoutine();
   }
 
@@ -90,10 +92,7 @@ class _RoutineDayPageState extends State<RoutineDayPage> {
                     ? const Center(
                         child: Text(
                           "No Exercise Yet",
-                          style: TextStyle(
-                            color: Colors.white70,
-                            fontSize: 16,
-                          ),
+                          style: TextStyle(color: Colors.white70, fontSize: 16),
                         ),
                       )
                     : ListView.builder(
@@ -182,11 +181,7 @@ class _RoutineDayPageState extends State<RoutineDayPage> {
                   ),
                   child: const Column(
                     children: [
-                      Icon(
-                        Icons.add,
-                        color: Color(0xFF66BB6A),
-                        size: 28,
-                      ),
+                      Icon(Icons.add, color: Color(0xFF66BB6A), size: 28),
                     ],
                   ),
                 ),

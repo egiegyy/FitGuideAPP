@@ -113,17 +113,12 @@ class _ProgressState extends State<Progress> {
   Widget rangeButton(String text, ChartRange range) {
     bool active = selectedRange == range;
     return ElevatedButton(
-      style:
-          ElevatedButton.styleFrom(
-            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
-            backgroundColor: Colors.transparent,
-            shadowColor: Colors.transparent,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),
-          ).copyWith(
-            backgroundColor: MaterialStateProperty.all(Colors.transparent),
-          ),
+      style: ElevatedButton.styleFrom(
+        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+        backgroundColor: Colors.transparent,
+        shadowColor: Colors.transparent,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      ).copyWith(backgroundColor: WidgetStateProperty.all(Colors.transparent)),
       onPressed: () {
         setState(() {
           selectedRange = range;
@@ -347,7 +342,7 @@ class _ProgressState extends State<Progress> {
                     ],
                   ),
                 );
-              }).toList(),
+              }),
             ],
           ),
         );
@@ -489,6 +484,7 @@ class _ProgressState extends State<Progress> {
                     date: item.date,
                   ),
                 );
+                if (!mounted) return;
                 Navigator.pop(context);
                 setState(() {});
               },

@@ -52,6 +52,7 @@ class _ScannerPageState extends State<ScannerPage>
     if (!mounted) return;
     if (equipment != null) {
       await controller.stop();
+      if (!mounted) return;
       final pageId = equipment['page'];
       if (machineRoutes.containsKey(pageId)) {
         await Navigator.push(
@@ -144,7 +145,7 @@ class _ScannerPageState extends State<ScannerPage>
                   padding: const EdgeInsets.all(30),
 
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.05),
+                    color: Colors.white.withValues(alpha: 0.05),
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(color: Colors.white24),
                   ),
@@ -207,7 +208,7 @@ class _ScannerPageState extends State<ScannerPage>
             if (scannerStarted)
               ColorFiltered(
                 colorFilter: ColorFilter.mode(
-                  Colors.black.withOpacity(0.75),
+                  Colors.black.withValues(alpha: 0.75),
                   BlendMode.srcOut,
                 ),
                 child: Stack(
@@ -244,7 +245,7 @@ class _ScannerPageState extends State<ScannerPage>
 
                       AnimatedBuilder(
                         animation: _animation,
-                        builder: (_, __) {
+                        builder: (_, child) {
                           return Positioned(
                             top: _animation.value,
                             left: 0,

@@ -129,7 +129,7 @@ class DBHelper {
           ''');
         }
       },
-    );              
+    );
 
     return database;
   }

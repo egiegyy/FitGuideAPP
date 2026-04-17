@@ -55,7 +55,7 @@ class _PullWorkoutState extends State<PullWorkout> {
                   height: 150,
                   width: 150,
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.05),
+                    color: Colors.white.withValues(alpha: 0.05),
                     border: Border.all(color: Colors.white24),
                     borderRadius: BorderRadius.circular(18),
                   ),
@@ -99,7 +99,7 @@ class _PullWorkoutState extends State<PullWorkout> {
                 /// CLOSE GRIP LAT PULLDOWN
                 Container(
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.05),
+                    color: Colors.white.withValues(alpha: 0.05),
                     border: Border.all(color: Colors.white24),
                     borderRadius: BorderRadius.circular(18),
                   ),
@@ -112,7 +112,7 @@ class _PullWorkoutState extends State<PullWorkout> {
                     leading: Container(
                       padding: const EdgeInsets.all(6),
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.08),
+                        color: Colors.white.withValues(alpha: 0.08),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: ClipRRect(
@@ -183,7 +183,7 @@ class _PullWorkoutState extends State<PullWorkout> {
                 /// WIDE GRIP LAT PULLDOWN
                 Container(
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.05),
+                    color: Colors.white.withValues(alpha: 0.05),
                     border: Border.all(color: Colors.white24),
                     borderRadius: BorderRadius.circular(18),
                   ),
@@ -196,7 +196,7 @@ class _PullWorkoutState extends State<PullWorkout> {
                     leading: Container(
                       padding: const EdgeInsets.all(6),
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.08),
+                        color: Colors.white.withValues(alpha: 0.08),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: ClipRRect(

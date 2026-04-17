@@ -162,6 +162,7 @@ class _ProfilePageState extends State<ProfilePage> {
               onPressed: () async {
                 await AuthService.signOut();
 
+                if (!context.mounted) return;
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (context) => const SignIn()),
@@ -214,6 +215,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 await db.delete("routine");
                 await UserPref.deleteAccount(); //hapus akun
                 await DBHelper.resetDB(); //reset db
+                if (!context.mounted) return;
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (context) => const SignUp()),

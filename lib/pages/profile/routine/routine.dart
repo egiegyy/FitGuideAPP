@@ -22,6 +22,7 @@ class _MyRoutineState extends State<MyRoutine> {
   Future loadDays() async {
     final data = await DBHelper.getRoutineDays();
 
+    if (!mounted) return;
     setState(() {
       days = data;
     });
@@ -76,12 +77,14 @@ class _MyRoutineState extends State<MyRoutine> {
       },
     );
 
+    if (!mounted) return;
     if (day != null) {
       await Navigator.push(
         context,
         MaterialPageRoute(builder: (_) => AddExercisePage(day: day)),
       );
 
+      if (!mounted) return;
       loadDays();
     }
   }
@@ -92,6 +95,7 @@ class _MyRoutineState extends State<MyRoutine> {
       MaterialPageRoute(builder: (_) => RoutineDayPage(day: day)),
     );
 
+    if (!mounted) return;
     loadDays();
   }
 
