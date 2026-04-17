@@ -18,6 +18,7 @@ class _SignInState extends State<SignIn> {
   final passwordController = TextEditingController();
   bool isPasswordVisible = false;
   bool isLoading = false;
+
   Future<void> login() async {
     if (_formKey.currentState!.validate()) {
       setState(() => isLoading = true);
@@ -29,7 +30,9 @@ class _SignInState extends State<SignIn> {
         );
 
         if (!mounted) return;
-        context.go('/home');
+        if (FirebaseAuth.instance.currentUser != null) {
+          context.go('/home');
+        }
       } on FirebaseAuthException catch (e) {
         if (!mounted) return;
         String message = "Email atau password salah";
@@ -46,6 +49,29 @@ class _SignInState extends State<SignIn> {
         if (mounted) {
           setState(() => isLoading = false);
         }
+      }
+    }
+  }
+
+  Future<void> loginWithGoogle() async {
+    setState(() => isLoading = true);
+
+    try {
+      final user = await AuthService.signInWithGoogle();
+
+      if (!mounted) return;
+      if (user != null) {
+        context.go('/home');
+      }
+    } catch (_) {
+      if (!mounted) return;
+      UIComponents.showErrorSnackBar(
+        context,
+        "Terjadi kesalahan saat login Google",
+      );
+    } finally {
+      if (mounted) {
+        setState(() => isLoading = false);
       }
     }
   }
@@ -156,6 +182,16 @@ class _SignInState extends State<SignIn> {
                                 text: "Sign In",
                                 onPressed: login,
                                 isLoading: isLoading,
+                              ),
+                              const SizedBox(height: 10),
+                              SizedBox(
+                                width: double.infinity,
+                                height: 50,
+                                child: ElevatedButton.icon(
+                                  onPressed: isLoading ? null : loginWithGoogle,
+                                  icon: const Icon(Icons.login),
+                                  label: const Text("Login with Google"),
+                                ),
                               ),
                               const SizedBox(height: 10),
 

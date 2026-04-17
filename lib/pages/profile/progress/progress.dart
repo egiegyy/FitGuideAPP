@@ -475,6 +475,7 @@ class _ProgressState extends State<Progress> {
               ),
               child: const Text("Save", style: TextStyle(color: Colors.white)),
               onPressed: () async {
+                final navigator = Navigator.of(context);
                 await ProgressController.updateProgress(
                   ProgressModel(
                     id: item.id,
@@ -485,7 +486,7 @@ class _ProgressState extends State<Progress> {
                   ),
                 );
                 if (!mounted) return;
-                Navigator.pop(context);
+                navigator.pop();
                 setState(() {});
               },
             ),
