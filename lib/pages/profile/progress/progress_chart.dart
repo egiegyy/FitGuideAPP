@@ -1,6 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:fitguide/firebase/model/progress_model.dart';
+import 'package:fitguide/model/progress_model.dart';
 
 class ProgressChart extends StatelessWidget {
   final List<ProgressModel> data;

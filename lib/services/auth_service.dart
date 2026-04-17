@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fitguide/firebase/services/models/user_firebase_model.dart';
-import 'package:fitguide/firebase/services/firebase_service.dart';
+import 'package:fitguide/services/models/user_firebase_model.dart';
+import 'package:fitguide/services/firebase_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 

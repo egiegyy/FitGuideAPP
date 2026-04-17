@@ -1,5 +1,5 @@
 import 'package:fitguide/database/sqflite.dart';
-import 'package:fitguide/firebase/model/progress_model.dart';
+import 'package:fitguide/model/progress_model.dart';
 
 class ProgressController {
   /// INSERT WORKOUT PROGRESS

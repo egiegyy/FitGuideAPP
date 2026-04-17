@@ -1,5 +1,5 @@
-import 'package:fitguide/firebase/services/models/student_firebase_model.dart';
-import 'package:fitguide/firebase/services/firebase_service.dart';
+import 'package:fitguide/services/models/student_firebase_model.dart';
+import 'package:fitguide/services/firebase_service.dart';
 import 'package:flutter/material.dart';
 
 class StudentFormPage extends StatefulWidget {

@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fitguide/firebase/services/auth_service.dart';
+import 'package:fitguide/services/auth_service.dart';
 import 'package:fitguide/utils/animation_utils.dart';
 import 'package:fitguide/utils/ui_components.dart';
 import 'package:flutter/material.dart';

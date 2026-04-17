@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:fitguide/database/preferance.dart';
 import 'package:fitguide/pages/gate/sign_in.dart';
 import 'package:fitguide/pages/gate/sign_up.dart';
-import 'package:fitguide/firebase/services/auth_service.dart';
+import 'package:fitguide/services/auth_service.dart';
 import 'package:fitguide/database/sqflite.dart';
 import 'package:fitguide/pages/profile/progress/progress.dart';
 import 'package:fitguide/pages/profile/routine/routine.dart';

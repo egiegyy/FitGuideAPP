@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:fitguide/firebase_options.dart';
+import 'package:fitguide/services/one_signal_services.dart';
 import 'package:fitguide/utils/router.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -9,6 +10,12 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initializeDateFormatting('id_ID');
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  
+  try {
+    setupOneSignal();
+  } catch (e) {
+    // debugPrint('OneSignal setup error: $e');
+  }
   runApp(const MyApp());
 }
 

@@ -1,7 +1,7 @@
 import 'package:fitguide/pages/profile/progress/progress_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:fitguide/controller/progress_controller.dart';
-import 'package:fitguide/firebase/model/progress_model.dart';
+import 'package:fitguide/model/progress_model.dart';
 
 enum ChartRange { week, month, year }
 
