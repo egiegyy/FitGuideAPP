@@ -1,15 +1,15 @@
-import 'package:fitguide/pages/gate/splash.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:fitguide/firebase_options.dart';
+import 'package:fitguide/utils/router.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'controller/theme_controller.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:animations/animations.dart';
 
-void main() {
-  runApp(
-    ChangeNotifierProvider(
-      create: (_) => ThemeController(),
-      child: const MyApp(),
-    ),
-  );
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await initializeDateFormatting('id_ID');
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -17,44 +17,51 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeController = Provider.of<ThemeController>(context);
-
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      title: 'FitGuide',
-
-      /// GLOBAL THEME MODE
-      themeMode: themeController.themeMode,
-
-      /// LIGHT MODE
+      title: 'FitGuide Firebase',
       theme: ThemeData(
-        brightness: Brightness.light,
-        scaffoldBackgroundColor: Colors.white,
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.black,
-          foregroundColor: Colors.white,
-          centerTitle: true,
+        primarySwatch: Colors.green,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+        dialogTheme: DialogThemeData(
+          backgroundColor: const Color(0xFF1B5E20),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          titleTextStyle: const TextStyle(
+            color: Colors.white,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+          contentTextStyle: const TextStyle(
+            color: Colors.white70,
+            fontSize: 16,
+          ),
         ),
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xff6C9E56)),
+        textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(foregroundColor: Colors.greenAccent),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.green,
+            foregroundColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+          ),
+        ),
+        pageTransitionsTheme: const PageTransitionsTheme(
+          builders: {
+            TargetPlatform.android: SharedAxisPageTransitionsBuilder(
+              transitionType: SharedAxisTransitionType.horizontal,
+            ),
+            TargetPlatform.iOS: SharedAxisPageTransitionsBuilder(
+              transitionType: SharedAxisTransitionType.horizontal,
+            ),
+          },
+        ),
       ),
-
-      /// DARK MODE
-      darkTheme: ThemeData(
-        brightness: Brightness.dark,
-        scaffoldBackgroundColor: Colors.black,
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.black,
-          foregroundColor: Colors.white,
-          centerTitle: true,
-        ),
-
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xff6C9E56),
-          brightness: Brightness.dark,
-        ),
-      ),
-
-      home: Splash(),
+      routerConfig: AppRouter.router,
     );
   }
 }

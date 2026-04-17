@@ -17,7 +17,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
 
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.transparent,
+          backgroundColor: Colors.black,
           elevation: 0,
 
           /// FIX garis putih
@@ -45,7 +45,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
                 height: 50,
 
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.06),
+                  color: const Color(0xFF1B1B1B),
                   borderRadius: BorderRadius.circular(30),
                   border: Border.all(color: Colors.white24),
                 ),
@@ -63,6 +63,8 @@ class _WorkoutPageState extends State<WorkoutPage> {
                     borderRadius: BorderRadius.circular(30),
                   ),
 
+                  dividerColor: Colors.transparent,
+
                   labelColor: Colors.white,
                   unselectedLabelColor: Colors.white70,
 
@@ -70,6 +72,8 @@ class _WorkoutPageState extends State<WorkoutPage> {
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
                   ),
+
+                  isScrollable: false,
 
                   tabs: const [
                     Tab(text: "Equipment"),
@@ -81,21 +85,24 @@ class _WorkoutPageState extends State<WorkoutPage> {
           ),
         ),
 
-        body: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Color(0xFF000000),
-                Color(0xFF0A0F0A),
-                Color(0xFF101810),
-                Color(0xFF000000),
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
+        body: Stack(
+          children: [
+            Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Color(0xFF000000),
+                    Color(0xFF0A0F0A),
+                    Color(0xFF101810),
+                    Color(0xFF000000),
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+              ),
             ),
-          ),
-
-          child: const TabBarView(children: [Equipment(), Package()]),
+            const TabBarView(children: [Equipment(), Package()]),
+          ],
         ),
       ),
     );

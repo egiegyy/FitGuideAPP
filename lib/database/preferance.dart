@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fitguide/database/sqflite.dart';
@@ -57,7 +56,6 @@ class UserPref {
 
     for (var user in users) {
       if (user["email"] == email && user["password"] == password) {
-
         /// reset database supaya user sebelumnya tidak terbawa
         await DBHelper.resetDB();
 
@@ -91,6 +89,12 @@ class UserPref {
     }
 
     return null;
+  }
+
+  /// SAVE LOGIN EMAIL
+  static Future<void> saveLoginUser(String email) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(loginUserKey, email);
   }
 
   /// GET USERNAME FROM EMAIL

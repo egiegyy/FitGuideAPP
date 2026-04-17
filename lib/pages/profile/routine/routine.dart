@@ -53,13 +53,13 @@ class _MyRoutineState extends State<MyRoutine> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          backgroundColor: Colors.black,
+          backgroundColor: const Color(0xFF1B5E20),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(18),
           ),
           title: const Text(
             "Select Day",
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           ),
           content: Column(
             mainAxisSize: MainAxisSize.min,

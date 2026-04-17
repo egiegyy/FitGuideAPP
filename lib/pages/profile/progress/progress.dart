@@ -1,7 +1,7 @@
 import 'package:fitguide/pages/profile/progress/progress_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:fitguide/controller/progress_controller.dart';
-import 'package:fitguide/model/progress_model.dart';
+import 'package:fitguide/firebase/model/progress_model.dart';
 
 enum ChartRange { week, month, year }
 
@@ -89,6 +89,7 @@ class _ProgressState extends State<Progress> {
 
     setState(() {});
   }
+
   List<ProgressModel> filterData(List<ProgressModel> data) {
     DateTime now = DateTime.now();
     DateTime startDate;
@@ -108,6 +109,7 @@ class _ProgressState extends State<Progress> {
       return itemDate.isAfter(startDate);
     }).toList();
   }
+
   Widget rangeButton(String text, ChartRange range) {
     bool active = selectedRange == range;
     return ElevatedButton(
@@ -164,6 +166,7 @@ class _ProgressState extends State<Progress> {
       ],
     );
   }
+
   Widget buildInputForm() {
     return Container(
       padding: const EdgeInsets.all(20),
@@ -266,6 +269,7 @@ class _ProgressState extends State<Progress> {
       ),
     );
   }
+
   Widget buildProgressList(List<ProgressModel> data) {
     Map<String, List<ProgressModel>> grouped = {};
     for (var item in data) {
@@ -358,6 +362,7 @@ class _ProgressState extends State<Progress> {
     repsController.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -421,13 +426,13 @@ class _ProgressState extends State<Progress> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          backgroundColor: Colors.black,
+          backgroundColor: const Color(0xFF1B5E20),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(18),
           ),
           title: const Text(
             "Edit Workout",
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
@@ -458,7 +463,7 @@ class _ProgressState extends State<Progress> {
             TextButton(
               child: const Text(
                 "Cancel",
-                style: TextStyle(color: Colors.white70),
+                style: TextStyle(color: Colors.greenAccent),
               ),
               onPressed: () => Navigator.pop(context),
             ),
@@ -468,7 +473,7 @@ class _ProgressState extends State<Progress> {
                   horizontal: 18,
                   vertical: 8,
                 ),
-                backgroundColor: const Color(0xFF2E7D32),
+                backgroundColor: Colors.green,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
