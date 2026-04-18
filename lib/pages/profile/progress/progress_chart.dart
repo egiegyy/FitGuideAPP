@@ -1,6 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:fitguide/model/progress_model.dart';
+import 'package:intl/intl.dart';
 
 class ProgressChart extends StatelessWidget {
   final List<ProgressModel> data;
@@ -17,21 +18,22 @@ class ProgressChart extends StatelessWidget {
     final sortedData = [...data];
     sortedData.sort((a, b) => a.date.compareTo(b.date));
 
-    /// convert weight ke double
-    List<double> weights = sortedData
-        .map((e) => double.tryParse(e.weight) ?? 0)
-        .toList();
-
-    /// cari personal record
-    double pr = weights.reduce((a, b) => a > b ? a : b);
+    final weights = sortedData.map((e) => double.tryParse(e.weight) ?? 0).toList();
+    final reps = sortedData.map((e) => double.tryParse(e.reps) ?? 0).toList();
+    final useWeight = weights.any((value) => value > 0);
+    final chartValues = useWeight ? weights : reps;
+    final pr = chartValues.reduce((a, b) => a > b ? a : b);
+    final maxValue = chartValues.reduce((a, b) => a > b ? a : b);
+    final yInterval = maxValue <= 5 ? 1.0 : (maxValue / 4).ceilToDouble();
 
     /// generate chart spots
     List<FlSpot> spots = [];
     for (int i = 0; i < sortedData.length; i++) {
-      spots.add(
-        FlSpot(i.toDouble(), double.tryParse(sortedData[i].weight) ?? 0),
-      );
+      spots.add(FlSpot(i.toDouble(), chartValues[i]));
     }
+    final labelStep = sortedData.length <= 4 ? 1 : (sortedData.length / 4).ceil();
+    final dateFormat = DateFormat('dd/MM');
+
     return Container(
       height: 220,
       padding: const EdgeInsets.all(20),
@@ -55,20 +57,27 @@ class ProgressChart extends StatelessWidget {
           gridData: FlGridData(
             show: true,
             drawVerticalLine: false,
-            horizontalInterval: 10,
+            horizontalInterval: yInterval,
             getDrawingHorizontalLine: (value) {
               return FlLine(color: Colors.white.withAlpha(20), strokeWidth: 1);
             },
           ),
           titlesData: FlTitlesData(
+            topTitles: const AxisTitles(
+              sideTitles: SideTitles(showTitles: false),
+            ),
+            rightTitles: const AxisTitles(
+              sideTitles: SideTitles(showTitles: false),
+            ),
             leftTitles: AxisTitles(
               sideTitles: SideTitles(
                 showTitles: true,
                 reservedSize: 40,
+                interval: yInterval,
                 getTitlesWidget: (value, meta) {
                   return Text(
                     value.toInt().toString(),
-                    style: const TextStyle(fontSize: 10, color: Colors.white70),
+                    style: const TextStyle(fontSize: 10, color: Colors.white),
                   );
                 },
               ),
@@ -76,20 +85,30 @@ class ProgressChart extends StatelessWidget {
             bottomTitles: AxisTitles(
               sideTitles: SideTitles(
                 showTitles: true,
-                reservedSize: 35,
+                reservedSize: 42,
+                interval: 1,
                 getTitlesWidget: (value, meta) {
                   int index = value.toInt();
-                  if (index >= sortedData.length) {
+                  if (value != index.toDouble() || index >= sortedData.length) {
+                    return const SizedBox();
+                  }
+
+                  final shouldShow =
+                      index == 0 ||
+                      index == sortedData.length - 1 ||
+                      index % labelStep == 0;
+
+                  if (!shouldShow) {
                     return const SizedBox();
                   }
 
                   return Padding(
                     padding: const EdgeInsets.only(top: 8),
                     child: Text(
-                      sortedData[index].date.substring(5),
+                      dateFormat.format(DateTime.parse(sortedData[index].date)),
                       style: const TextStyle(
                         fontSize: 10,
-                        color: Colors.white70,
+                        color: Colors.white,
                       ),
                     ),
                   );
@@ -111,11 +130,10 @@ class ProgressChart extends StatelessWidget {
               dotData: FlDotData(
                 show: true,
                 getDotPainter: (spot, percent, barData, index) {
-                  double weight =
-                      double.tryParse(sortedData[index].weight) ?? 0;
+                  final value = chartValues[index];
 
                   /// highlight PR
-                  if (weight == pr) {
+                  if (value == pr) {
                     return FlDotCirclePainter(
                       radius: 3,
                       color: const Color(0xFF66BB6A),

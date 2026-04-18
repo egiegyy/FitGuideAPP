@@ -30,6 +30,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
         visualDensity: VisualDensity.adaptivePlatformDensity,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.black,
+          foregroundColor: Colors.white,
+          centerTitle: true,
+          iconTheme: IconThemeData(color: Colors.white, size: 24),
+          actionsIconTheme: IconThemeData(color: Colors.white, size: 24),
+          elevation: 0,
+        ),
         dialogTheme: DialogThemeData(
           backgroundColor: const Color(0xFF1B5E20),
           shape: RoundedRectangleBorder(

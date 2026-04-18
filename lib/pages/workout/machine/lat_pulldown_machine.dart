@@ -16,7 +16,6 @@ class _LatPulldownMachineState extends State<LatPulldownMachine> {
       backgroundColor: Colors.black,
 
       appBar: AppBar(
-        iconTheme: const IconThemeData(color: Colors.white, size: 30),
         backgroundColor: Colors.black,
         elevation: 0,
         centerTitle: true,
@@ -249,3 +248,4 @@ class _LatPulldownMachineState extends State<LatPulldownMachine> {
     );
   }
 }
+

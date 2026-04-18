@@ -28,7 +28,7 @@ final List<ExerciseItem> allExercises = [
 
   ExerciseItem(
     name: "Wide Grip Lat Pulldown",
-    image: "assets/images/exercises/pull/lat_pulldown_machine.png",
+    image: "assets/images/exercises/pull/lat_pulldown.png",
     page: const WideGripLatPulldownPage(),
   ),
 

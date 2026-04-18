@@ -17,6 +17,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
 
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           backgroundColor: Colors.black,
           elevation: 0,
 

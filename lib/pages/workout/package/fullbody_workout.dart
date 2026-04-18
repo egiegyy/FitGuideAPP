@@ -31,6 +31,8 @@ class _FullBodyWorkoutState extends State<FullBodyWorkout> {
       ),
 
       body: Container(
+        width: double.infinity,
+        height: double.infinity,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
@@ -63,7 +65,7 @@ class _FullBodyWorkoutState extends State<FullBodyWorkout> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(18),
                     child: Image.asset(
-                      "assets/images/profile_fullbody.png",
+                      "assets/images/contoh_fullBody.png",
                       fit: BoxFit.cover,
                     ),
                   ),

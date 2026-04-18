@@ -16,7 +16,6 @@ class _CloseGripLatPulldownPageState extends State<CloseGripLatPulldownPage> {
 
       appBar: AppBar(
         elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.white, size: 28),
         backgroundColor: Colors.black,
         centerTitle: true,
         title: const Text(
@@ -269,3 +268,4 @@ class _StepText extends StatelessWidget {
     );
   }
 }
+

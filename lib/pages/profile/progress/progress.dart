@@ -58,6 +58,20 @@ class _ProgressState extends State<Progress> {
       firstDate: DateTime(2023),
       lastDate: DateTime(2100),
       initialDate: selectedDate,
+      builder: (context, child) {
+        return Theme(
+          data: ThemeData.dark().copyWith(
+            colorScheme: const ColorScheme.dark(
+              primary: Color(0xFF66BB6A), // header & selected date
+              onPrimary: Colors.white, // text on selected
+              surface: Color(0xFF0A0F0A), // background dialog
+              onSurface: Colors.white, // text default
+            ),
+            dialogBackgroundColor: const Color(0xFF0A0F0A),
+          ),
+          child: child!,
+        );
+      },
     );
 
     if (picked != null) {
@@ -234,27 +248,26 @@ class _ProgressState extends State<Progress> {
           SizedBox(
             width: double.infinity,
             height: 45,
-            child: Ink(
+            child: Container(
               decoration: BoxDecoration(
                 gradient: const LinearGradient(
                   colors: [Color(0xFF2E7D32), Color(0xFF66BB6A)],
                 ),
                 borderRadius: BorderRadius.circular(20),
               ),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF2E7D32),
-                  shadowColor: Colors.transparent,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                ),
-                onPressed: saveProgress,
-                child: const Text(
-                  "Save Workout",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
+              child: Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(20),
+                  onTap: saveProgress,
+                  child: const Center(
+                    child: Text(
+                      "Save Workout",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -304,7 +317,7 @@ class _ProgressState extends State<Progress> {
                     ),
                   ),
                   subtitle: Text(
-                    "${e.weight} kg • ${e.reps} reps",
+                    "${e.weight} kg - ${e.reps} reps",
                     style: const TextStyle(color: Colors.white70),
                   ),
                   trailing: Row(

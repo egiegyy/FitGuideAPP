@@ -1,12 +1,12 @@
 import 'dart:io';
 import 'package:fitguide/database/preferance.dart';
+import 'package:fitguide/pages/profile/edit_profile.dart';
 import 'package:fitguide/pages/gate/sign_in.dart';
 import 'package:fitguide/pages/gate/sign_up.dart';
 import 'package:fitguide/services/auth_service.dart';
 import 'package:fitguide/database/sqflite.dart';
 import 'package:fitguide/pages/profile/progress/progress.dart';
 import 'package:fitguide/pages/profile/routine/routine.dart';
-import 'package:fitguide/pages/profile/setting.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -20,7 +20,9 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   List<String> routineDays = [];
   String username = "";
+  String email = "";
   File? profileImage;
+  String? profileImageUrl;
 
   final ImagePicker picker = ImagePicker();
 
@@ -41,6 +43,10 @@ class _ProfilePageState extends State<ProfilePage> {
     if (currentUser != null) {
       setState(() {
         username = currentUser.username;
+        email = currentUser.email;
+        profileImageUrl = currentUser.profileImageUrl.isEmpty
+            ? null
+            : currentUser.profileImageUrl;
       });
       return;
     }
@@ -49,10 +55,20 @@ class _ProfilePageState extends State<ProfilePage> {
 
     setState(() {
       username = user ?? "username";
+      email = user ?? "-";
     });
   }
 
   Future loadProfileImage() async {
+    final currentUser = await AuthService.getCurrentUser();
+    if (currentUser != null && currentUser.profileImageUrl.isNotEmpty) {
+      setState(() {
+        profileImageUrl = currentUser.profileImageUrl;
+        profileImage = null;
+      });
+      return;
+    }
+
     String? user = await UserPref.getLoginUser();
 
     if (user == null) return;
@@ -62,6 +78,7 @@ class _ProfilePageState extends State<ProfilePage> {
     if (path != null) {
       setState(() {
         profileImage = File(path);
+        profileImageUrl = null;
       });
     }
   }
@@ -86,15 +103,11 @@ class _ProfilePageState extends State<ProfilePage> {
 
       setState(() {
         profileImage = File(image.path);
+        profileImageUrl = null;
       });
-    }
-  }
 
-  void settingButton() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const SettingPage()),
-    );
+      await loadProfileImage();
+    }
   }
 
   void chooseImageSource() {
@@ -236,6 +249,7 @@ class _ProfilePageState extends State<ProfilePage> {
       extendBodyBehindAppBar: true,
 
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
@@ -285,10 +299,8 @@ class _ProfilePageState extends State<ProfilePage> {
                         child: CircleAvatar(
                           radius: 55,
                           backgroundColor: Colors.grey[900],
-                          backgroundImage: profileImage != null
-                              ? FileImage(profileImage!)
-                              : null,
-                          child: profileImage == null
+                          backgroundImage: _profileImageProvider(),
+                          child: _profileImageProvider() == null
                               ? const Icon(
                                   Icons.person,
                                   size: 60,
@@ -329,6 +341,15 @@ class _ProfilePageState extends State<ProfilePage> {
                       color: Colors.white,
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    email,
+                    style: const TextStyle(
+                      color: Colors.white70,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
 
@@ -422,9 +443,19 @@ class _ProfilePageState extends State<ProfilePage> {
 
                   /// SETTINGS
                   buildMenuTile(
-                    icon: Icons.settings_rounded,
-                    title: "Settings",
-                    onTap: settingButton,
+                    icon: Icons.edit_rounded,
+                    title: "Edit Profile",
+                    onTap: () async {
+                      final result = await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const EditProfilePage(),
+                        ),
+                      );
+                      if (result == true) {
+                        initProfile();
+                      }
+                    },
                   ),
 
                   const SizedBox(height: 10),
@@ -478,5 +509,15 @@ class _ProfilePageState extends State<ProfilePage> {
         onTap: onTap,
       ),
     );
+  }
+
+  ImageProvider? _profileImageProvider() {
+    if (profileImageUrl != null && profileImageUrl!.isNotEmpty) {
+      return NetworkImage(profileImageUrl!);
+    }
+    if (profileImage != null) {
+      return FileImage(profileImage!);
+    }
+    return null;
   }
 }

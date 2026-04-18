@@ -30,6 +30,8 @@ class _PushWorkoutState extends State<PushWorkout> {
       ),
 
       body: Container(
+        width: double.infinity,
+        height: double.infinity,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [

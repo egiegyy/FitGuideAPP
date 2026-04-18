@@ -14,7 +14,6 @@ class _LegPressCalfRaisePageState extends State<LegPressCalfRaisePage> {
       backgroundColor: Colors.transparent,
       appBar: AppBar(
         elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.white, size: 28),
         backgroundColor: Colors.black,
         centerTitle: true,
         title: const Text(
@@ -264,3 +263,4 @@ class _StepText extends StatelessWidget {
     );
   }
 }
+

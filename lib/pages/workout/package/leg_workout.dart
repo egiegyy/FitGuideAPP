@@ -30,6 +30,8 @@ class _LegWorkoutState extends State<LegWorkout> {
       ),
 
       body: Container(
+        width: double.infinity,
+        height: double.infinity,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [

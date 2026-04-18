@@ -16,7 +16,6 @@ class _LegPressMachineState extends State<LegPressMachine> {
       backgroundColor: Colors.black,
 
       appBar: AppBar(
-        iconTheme: const IconThemeData(color: Colors.white, size: 30),
         backgroundColor: Colors.black,
         elevation: 0,
         centerTitle: true,
@@ -248,3 +247,4 @@ class _LegPressMachineState extends State<LegPressMachine> {
     );
   }
 }
+
