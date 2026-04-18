@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fitguide/database/preferance.dart';
 import 'package:fitguide/services/models/user_firebase_model.dart';
 import 'package:fitguide/services/firebase_service.dart';
+import 'package:fitguide/services/user_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -19,6 +21,7 @@ class AuthService {
       password: password,
       username: username,
     );
+    await UserPref.saveLoginUser(email);
   }
 
   // LOGIN
@@ -27,6 +30,7 @@ class AuthService {
     required String password,
   }) async {
     await FirebaseService.loginUser(email: email, password: password);
+    await UserPref.saveLoginUser(email);
   }
 
   // GOOGLE LOGIN
@@ -47,7 +51,24 @@ class AuthService {
         idToken: googleAuth.idToken,
       );
 
-      return await _auth.signInWithCredential(credential);
+      final result = await _auth.signInWithCredential(credential);
+      final user = result.user;
+      if (user != null) {
+        final email = user.email ?? user.uid;
+        final name = user.displayName ?? email.split('@').first;
+        await UserService.createUser(
+          UserFirebaseModel(
+            uid: user.uid,
+            email: email,
+            username: name,
+            profileImageUrl: user.photoURL ?? '',
+            createdAt: DateTime.now(),
+          ),
+        );
+        await UserPref.saveLoginUser(email);
+      }
+
+      return result;
     } on GoogleSignInException catch (e) {
       if (e.code != GoogleSignInExceptionCode.canceled) {
         debugPrint('Google Sign-In Error: $e');
@@ -57,6 +78,14 @@ class AuthService {
       debugPrint('Google Sign-In Error: $e');
       return null;
     }
+  }
+
+  static String? getCurrentUserId() {
+    return _auth.currentUser?.uid;
+  }
+
+  static Stream<User?> authStateChanges() {
+    return _auth.authStateChanges();
   }
 
   static Future<void> _ensureGoogleSignInInitialized() async {
@@ -73,6 +102,7 @@ class AuthService {
 
   // SIGN OUT
   static Future<void> signOut() async {
+    await UserPref.logout();
     await _auth.signOut();
   }
 }

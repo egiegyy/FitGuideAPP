@@ -1,86 +1,45 @@
-import 'dart:convert';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:fitguide/database/sqflite.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class UserPref {
-  static const String userKey = "users";
-  static const String loginUserKey = "loginUser";
+class UserModel {
+  final String uid;
+  final String username;
+  final String email;
+  final String profileImageUrl;
 
-  /// REGISTER USER
-  static Future<bool> saveUser({
-    required String username,
-    required String email,
-    required String password,
-  }) async {
-    final prefs = await SharedPreferences.getInstance();
+  UserModel({
+    required this.uid,
+    required this.username,
+    required this.email,
+    this.profileImageUrl = '',
+  });
 
-    List<String> users = prefs.getStringList(userKey) ?? [];
-
-    /// cek duplicate username/email
-    for (var user in users) {
-      final decoded = jsonDecode(user);
-      if (decoded["username"] == username) {
-        return false;
-      }
-      if (decoded["email"] == email) {
-        return false;
-      }
-    }
-    Map<String, dynamic> newUser = {
-      "username": username.trim(),
-      "email": email.trim(),
-      "password": password.trim(),
+  Map<String, dynamic> toMap() {
+    return {
+      'uid': uid,
+      'username': username,
+      'email': email,
+      'profileImageUrl': profileImageUrl,
     };
-    users.add(jsonEncode(newUser));
-    await prefs.setStringList(userKey, users);
-    return true;
   }
 
-  /// GET ALL USERS
-  static Future<List<Map<String, dynamic>>> getUsers() async {
-    final prefs = await SharedPreferences.getInstance();
-    List<String> users = prefs.getStringList(userKey) ?? [];
-    return users.map((e) => jsonDecode(e) as Map<String, dynamic>).toList();
+  Map<String, dynamic> toFirestore() {
+    return {
+      'username': username,
+      'email': email,
+      'profileImageUrl': profileImageUrl,
+    };
   }
 
-  /// LOGIN USER (USERNAME BASED)
-  static Future<bool> login(String username, String password) async {
-    final prefs = await SharedPreferences.getInstance();
-    final users = await getUsers();
-    for (var user in users) {
-      if (user["username"].toString().toLowerCase() == username.toLowerCase() &&
-          user["password"] == password) {
-        /// reset database supaya database user sebelumnya tidak dipakai
-        await DBHelper.resetDB();
-
-        /// simpan user login
-        await prefs.setString(loginUserKey, user["username"]);
-        return true;
-      }
-    }
-
-    return false;
+  factory UserModel.fromMap(Map<String, dynamic> map) {
+    return UserModel(
+      uid: map['uid'] as String? ?? '',
+      username: map['username'] as String? ?? '',
+      email: map['email'] as String? ?? '',
+      profileImageUrl: map['profileImageUrl'] as String? ?? '',
+    );
   }
 
-  /// GET CURRENT LOGIN USER
-  static Future<String?> getLoginUser() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString(loginUserKey);
-  }
-
-  /// CHECK LOGIN STATUS
-  static Future<bool> isLogin() async {
-    final prefs = await SharedPreferences.getInstance();
-    final user = prefs.getString(loginUserKey);
-    return user != null;
-  }
-
-  /// LOGOUT USER
-  static Future<void> logout() async {
-    final prefs = await SharedPreferences.getInstance();
-
-    /// reset database connection
-    await DBHelper.resetDB();
-    await prefs.remove(loginUserKey);
+  factory UserModel.fromFirestore(DocumentSnapshot<Map<String, dynamic>> doc) {
+    return UserModel.fromMap({'uid': doc.id, ...?doc.data()});
   }
 }

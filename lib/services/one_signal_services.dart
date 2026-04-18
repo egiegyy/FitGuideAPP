@@ -14,9 +14,6 @@ void setupOneSignal() {
 
   // Tangani notifikasi saat diklik
   OneSignal.Notifications.addClickListener((event) {
-    Map<String, dynamic> additionalData =
-        event.notification.additionalData ?? {};
-
     // if (additionalData.containsKey('type')) {
     //   String type = additionalData['type'];
     //   String? idString = additionalData['id'];

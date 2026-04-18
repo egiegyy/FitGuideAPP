@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitguide/services/models/user_firebase_model.dart';
 import 'package:fitguide/services/models/student_firebase_model.dart';
+import 'package:fitguide/services/user_service.dart';
 
 class FirebaseService {
   static final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -31,7 +32,7 @@ class FirebaseService {
         createdAt: DateTime.now(),
       );
 
-      await _firestore.collection('users').doc(user.uid).set(model.toMap());
+      await UserService.createUser(model);
 
       return model;
     } on FirebaseAuthException catch (e) {
@@ -64,11 +65,7 @@ class FirebaseService {
     final user = _auth.currentUser;
     if (user == null) return null;
 
-    final snap = await _firestore.collection('users').doc(user.uid).get();
-
-    if (!snap.exists || snap.data() == null) return null;
-
-    return UserFirebaseModel.fromMap({'uid': user.uid, ...snap.data()!});
+    return UserService.getUserData(user.uid);
   }
 
   // SAVE STUDENT

@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fitguide/database/sqflite.dart';
+import 'package:fitguide/services/user_service.dart';
 
 class UserPref {
   static const String userKey = "users";
@@ -76,6 +78,12 @@ class UserPref {
 
   /// GET CURRENT USER DATA
   static Future<Map<String, dynamic>?> getCurrentUser() async {
+    final firebaseUser = FirebaseAuth.instance.currentUser;
+    if (firebaseUser != null) {
+      final user = await UserService.getUserData(firebaseUser.uid);
+      return user?.toMap();
+    }
+
     String? email = await getLoginUser();
 
     if (email == null) return null;
@@ -99,6 +107,12 @@ class UserPref {
 
   /// GET USERNAME FROM EMAIL
   static Future<String?> getUsername(String email) async {
+    final firebaseUser = FirebaseAuth.instance.currentUser;
+    if (firebaseUser != null && firebaseUser.email == email) {
+      final user = await UserService.getUserData(firebaseUser.uid);
+      return user?.username;
+    }
+
     final users = await getUsers();
 
     for (var user in users) {
@@ -174,6 +188,15 @@ class UserPref {
     images[email] = path;
 
     await prefs.setString(profileImageKey, jsonEncode(images));
+
+    final userId = FirebaseAuth.instance.currentUser?.uid;
+    if (userId != null) {
+      try {
+        await UserService.uploadProfileImage(userId: userId, localPath: path);
+      } catch (_) {
+        return;
+      }
+    }
   }
 
   /// GET PROFILE IMAGE
