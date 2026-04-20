@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fitguide/services/models/user_firebase_model.dart';
-import 'package:fitguide/services/models/student_firebase_model.dart';
+import 'package:fitguide/model/user_firebase_model.dart';
 import 'package:fitguide/services/user_service.dart';
 
 class FirebaseService {
@@ -66,17 +65,6 @@ class FirebaseService {
     if (user == null) return null;
 
     return UserService.getUserData(user.uid);
-  }
-
-  // SAVE STUDENT
-  static Future<void> createStudent(StudentFirebaseModel student) async {
-    await _firestore.collection('students').add(student.toMap());
-  }
-
-  // GET STUDENTS
-  static Future<List<StudentFirebaseModel>> getAllStudents() async {
-    final snap = await _firestore.collection('students').get();
-    return snap.docs.map((doc) => StudentFirebaseModel.fromDoc(doc)).toList();
   }
 
   // LOGOUT

@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitguide/database/preferance.dart';
-import 'package:fitguide/services/models/user_firebase_model.dart';
+import 'package:fitguide/model/user_firebase_model.dart';
 import 'package:fitguide/services/firebase_service.dart';
 import 'package:fitguide/services/user_service.dart';
 import 'package:flutter/foundation.dart';

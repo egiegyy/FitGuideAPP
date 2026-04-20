@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitguide/database/preferance.dart';
 import 'package:fitguide/pages/profile/edit_profile.dart';
 import 'package:fitguide/pages/gate/sign_in.dart';
@@ -223,11 +224,21 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             TextButton(
               onPressed: () async {
-                final db = await DBHelper.db(); //ambil database
-                await db.delete("progress"); //hapus kolom
+                try {
+                  final user = FirebaseAuth.instance.currentUser;
+                  await user?.delete();
+                } on FirebaseAuthException catch (e) {
+                  if (e.code == 'requires-recent-login') {
+                    await FirebaseAuth.instance.signOut();
+                  }
+                }
+
+                final db = await DBHelper.db();
+                await db.delete("progress");
                 await db.delete("routine");
-                await UserPref.deleteAccount(); //hapus akun
-                await DBHelper.resetDB(); //reset db
+                await UserPref.deleteAccount();
+                await DBHelper.resetDB();
+
                 if (!context.mounted) return;
                 Navigator.pushAndRemoveUntil(
                   context,
