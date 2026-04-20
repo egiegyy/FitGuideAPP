@@ -7,9 +7,37 @@ import 'package:flutter/material.dart';
 class Package extends StatelessWidget {
   const Package({super.key});
 
+  static const List<({
+    String title,
+    String imagePath,
+    Widget page,
+  })> _packageCategories = [
+    (
+      title: "Push",
+      imagePath: "assets/images/exercises/push/profile_push.png",
+      page: PushWorkout(),
+    ),
+    (
+      title: "Pull",
+      imagePath: "assets/images/exercises/pull/profile_pull.png",
+      page: PullWorkout(),
+    ),
+    (
+      title: "Leg",
+      imagePath: "assets/images/exercises/leg/profile_leg.png",
+      page: LegWorkout(),
+    ),
+    (
+      title: "Full Body",
+      imagePath: "assets/images/contoh_fullBody.png",
+      page: FullBodyWorkout(),
+    ),
+  ];
+
   Widget buildPackageCard({
     required BuildContext context,
     required String title,
+    required String imagePath,
     required Widget page,
   }) {
     return Container(
@@ -27,10 +55,13 @@ class Package extends StatelessWidget {
             color: Colors.white.withValues(alpha: 0.08),
             borderRadius: BorderRadius.circular(12),
           ),
-          child: Image.asset(
-            "assets/images/profile_fullbody.png",
+          child: SizedBox(
             width: 40,
             height: 40,
+            child: AspectRatio(
+              aspectRatio: 1,
+              child: Image.asset(imagePath, fit: BoxFit.cover),
+            ),
           ),
         ),
         title: Text(
@@ -72,6 +103,8 @@ class Package extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: double.infinity,
+      height: double.infinity,
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           colors: [
@@ -89,25 +122,13 @@ class Package extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              buildPackageCard(
-                context: context,
-                title: "Push",
-                page: const PushWorkout(),
-              ),
-              buildPackageCard(
-                context: context,
-                title: "Pull",
-                page: const PullWorkout(),
-              ),
-              buildPackageCard(
-                context: context,
-                title: "Leg",
-                page: const LegWorkout(),
-              ),
-              buildPackageCard(
-                context: context,
-                title: "Full Body",
-                page: const FullBodyWorkout(),
+              ..._packageCategories.map(
+                (item) => buildPackageCard(
+                  context: context,
+                  title: item.title,
+                  imagePath: item.imagePath,
+                  page: item.page,
+                ),
               ),
             ],
           ),

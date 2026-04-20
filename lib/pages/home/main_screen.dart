@@ -12,25 +12,18 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
-
-  /// LIST PAGE UTAMA
-  final List<Widget> pages = [
-    /// HOME
-    HomePage(),
-
-    /// WORKOUT
-    WorkoutPage(),
-
-    /// SCANNER
-    ScannerPage(),
-
-    /// PROFILE
-    ProfilePage(),
-  ];
+  int _homeRefreshVersion = 0;
+  int _scannerSession = 0;
 
   /// NAVIGATION FUNCTION
   void _onItemTapped(int index) {
     setState(() {
+      if (index == 0) {
+        _homeRefreshVersion++;
+      }
+      if (_selectedIndex != 2 && index == 2) {
+        _scannerSession++;
+      }
       _selectedIndex = index;
     });
   }
@@ -41,7 +34,17 @@ class _MainScreenState extends State<MainScreen> {
       backgroundColor: Colors.black,
 
       /// PAGE SWITCHER
-      body: IndexedStack(index: _selectedIndex, children: pages),
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: [
+          HomePage(key: ValueKey(_homeRefreshVersion)),
+          const WorkoutPage(),
+          _selectedIndex == 2
+              ? ScannerPage(key: ValueKey(_scannerSession))
+              : const SizedBox.shrink(),
+          ProfilePage(),
+        ],
+      ),
 
       /// BOTTOM NAVIGATION
       bottomNavigationBar: BottomNavigationBar(

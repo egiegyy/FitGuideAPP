@@ -1,20 +1,17 @@
+import 'package:fitguide/model/exercise.dart';
 import 'package:flutter/material.dart';
 
-class LegPressPage extends StatefulWidget {
-  const LegPressPage({super.key});
+class ExerciseDetailPage extends StatelessWidget {
+  final Exercise exercise;
 
-  @override
-  State<LegPressPage> createState() => _LegPressPageState();
-}
+  const ExerciseDetailPage({super.key, required this.exercise});
 
-class _LegPressPageState extends State<LegPressPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar: AppBar(
         elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.white, size: 28),
         backgroundColor: Colors.black,
         centerTitle: true,
         title: const Text(
@@ -32,7 +29,6 @@ class _LegPressPageState extends State<LegPressPage> {
           ),
         ],
       ),
-
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -46,7 +42,6 @@ class _LegPressPageState extends State<LegPressPage> {
             end: Alignment.bottomRight,
           ),
         ),
-
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: SingleChildScrollView(
@@ -64,25 +59,20 @@ class _LegPressPageState extends State<LegPressPage> {
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(18),
-                    child: Image.asset(
-                      "assets/images/animations/leg_press_animation.gif",
-                      fit: BoxFit.contain,
-                    ),
+                    child: Image.asset(exercise.image, fit: BoxFit.contain),
                   ),
                 ),
-
                 const SizedBox(height: 20),
 
                 /// TITLE
-                const Text(
-                  "Leg Press",
-                  style: TextStyle(
+                Text(
+                  exercise.name,
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 26,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-
                 const SizedBox(height: 16),
 
                 /// INFO
@@ -93,25 +83,18 @@ class _LegPressPageState extends State<LegPressPage> {
                     border: Border.all(color: Colors.white24),
                     borderRadius: BorderRadius.circular(18),
                   ),
-                  child: const Column(
+                  child: Column(
                     children: [
-                      _InfoRow(label: "Equipment", value: "Leg Press Machine"),
-                      SizedBox(height: 10),
-                      _InfoRow(
-                        label: "Category",
-                        value: "Legs / Lower / Full Body",
-                      ),
-                      SizedBox(height: 10),
-                      _InfoRow(label: "Level", value: "Beginner"),
-                      SizedBox(height: 10),
-                      _InfoRow(
-                        label: "Repetitions",
-                        value: "3 sets × 10–15 reps",
-                      ),
+                      _InfoRow(label: "Equipment", value: exercise.equipment),
+                      const SizedBox(height: 10),
+                      _InfoRow(label: "Category", value: exercise.category),
+                      const SizedBox(height: 10),
+                      _InfoRow(label: "Level", value: exercise.level),
+                      const SizedBox(height: 10),
+                      _InfoRow(label: "Repetitions", value: exercise.reps),
                     ],
                   ),
                 ),
-
                 const SizedBox(height: 25),
 
                 /// DESCRIPTION
@@ -123,9 +106,7 @@ class _LegPressPageState extends State<LegPressPage> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-
                 const SizedBox(height: 10),
-
                 Container(
                   padding: const EdgeInsets.all(14),
                   decoration: BoxDecoration(
@@ -133,16 +114,15 @@ class _LegPressPageState extends State<LegPressPage> {
                     border: Border.all(color: Colors.white24),
                     borderRadius: BorderRadius.circular(18),
                   ),
-                  child: const Text(
-                    "The leg press is a fundamental exercise for training the quadriceps, hamstrings, and glutes. This machine provides high stability, allowing users—especially beginners—to lift heavier loads compared to squats.",
-                    style: TextStyle(
+                  child: Text(
+                    exercise.description,
+                    style: const TextStyle(
                       fontSize: 15,
                       height: 1.6,
                       color: Colors.white70,
                     ),
                   ),
                 ),
-
                 const SizedBox(height: 25),
 
                 /// HOW TO USE
@@ -154,9 +134,7 @@ class _LegPressPageState extends State<LegPressPage> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-
                 const SizedBox(height: 10),
-
                 Container(
                   padding: const EdgeInsets.all(14),
                   decoration: BoxDecoration(
@@ -164,28 +142,10 @@ class _LegPressPageState extends State<LegPressPage> {
                     border: Border.all(color: Colors.white24),
                     borderRadius: BorderRadius.circular(18),
                   ),
-                  child: const Column(
-                    children: [
-                      _StepText(
-                        "Sit or lie on the leg press machine with your back firmly against the backrest.",
-                      ),
-                      _StepText(
-                        "Place both feet on the platform at shoulder-width distance.",
-                      ),
-                      _StepText("Release the safety locks if available."),
-                      _StepText(
-                        "Push the platform with your legs until your knees are almost fully extended.",
-                      ),
-                      _StepText(
-                        "Do not lock your knees to protect your joints.",
-                      ),
-                      _StepText(
-                        "Lower the platform slowly until your knees form approximately a 90-degree angle.",
-                      ),
-                    ],
+                  child: Column(
+                    children: exercise.steps.map(_StepText.new).toList(),
                   ),
                 ),
-
                 const SizedBox(height: 40),
               ],
             ),

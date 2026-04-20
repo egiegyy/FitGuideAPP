@@ -1,4 +1,5 @@
 import 'package:fitguide/database/sqflite.dart';
+import 'package:fitguide/utils/ui_components.dart';
 import 'package:flutter/material.dart';
 import 'exercise_list.dart';
 
@@ -21,11 +22,9 @@ class _AddExercisePageState extends State<AddExercisePage> {
         ),
       );
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("$exercise added to ${widget.day}"),
-          backgroundColor: Colors.green,
-        ),
+      UIComponents.showSuccessSnackBar(
+        context,
+        "$exercise added to ${widget.day}",
       );
       setState(() {});
     }

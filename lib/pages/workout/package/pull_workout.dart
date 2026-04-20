@@ -1,5 +1,5 @@
-import 'package:fitguide/pages/workout/exercise/close_grip_lat_pulldown.dart';
-import 'package:fitguide/pages/workout/exercise/lat_pulldown.dart';
+import 'package:fitguide/pages/workout/exercise_detail_page.dart';
+import 'package:fitguide/utils/exercise_data.dart';
 import 'package:flutter/material.dart';
 
 class PullWorkout extends StatefulWidget {
@@ -30,6 +30,8 @@ class _PullWorkoutState extends State<PullWorkout> {
       ),
 
       body: Container(
+        width: double.infinity,
+        height: double.infinity,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
@@ -118,7 +120,7 @@ class _PullWorkoutState extends State<PullWorkout> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8),
                         child: Image.asset(
-                          "assets/images/exercises/push/close_grip_chest_press.png",
+                          "assets/images/exercises/pull/close_grip_lat_pulldown.png",
                           width: 45,
                           height: 45,
                           fit: BoxFit.cover,
@@ -140,7 +142,9 @@ class _PullWorkoutState extends State<PullWorkout> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => CloseGripLatPulldownPage(),
+                            builder: (context) => const ExerciseDetailPage(
+                              exercise: ExerciseData.closeGripLatPulldown,
+                            ),
                           ),
                         );
                       },
@@ -224,7 +228,9 @@ class _PullWorkoutState extends State<PullWorkout> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => WideGripLatPulldownPage(),
+                            builder: (context) => const ExerciseDetailPage(
+                              exercise: ExerciseData.wideGripLatPulldown,
+                            ),
                           ),
                         );
                       },

@@ -1,5 +1,5 @@
-import 'package:fitguide/pages/workout/machine/equipment.dart';
-import 'package:fitguide/pages/workout/package/package.dart';
+import 'package:fitguide/pages/workout/equipment.dart';
+import 'package:fitguide/pages/workout/package.dart';
 import 'package:flutter/material.dart';
 
 class WorkoutPage extends StatefulWidget {
@@ -17,6 +17,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
 
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           backgroundColor: Colors.black,
           elevation: 0,
 

@@ -1,7 +1,7 @@
-import 'package:fitguide/firebase/services/models/student_firebase_model.dart';
+import 'package:fitguide/services/models/student_firebase_model.dart';
 import 'package:fitguide/pages/gate/sign_in.dart';
 import 'package:fitguide/pages/students/student_form_page.dart';
-import 'package:fitguide/firebase/services/firebase_service.dart';
+import 'package:fitguide/services/firebase_service.dart';
 import 'package:flutter/material.dart';
 
 class StudentListPage extends StatelessWidget {

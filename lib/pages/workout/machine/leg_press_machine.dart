@@ -1,5 +1,5 @@
-import 'package:fitguide/pages/workout/exercise/leg_press.dart';
-import 'package:fitguide/pages/workout/exercise/leg_press_calf_raise.dart';
+import 'package:fitguide/pages/workout/exercise_detail_page.dart';
+import 'package:fitguide/utils/exercise_data.dart';
 import 'package:flutter/material.dart';
 
 class LegPressMachine extends StatefulWidget {
@@ -16,7 +16,6 @@ class _LegPressMachineState extends State<LegPressMachine> {
       backgroundColor: Colors.black,
 
       appBar: AppBar(
-        iconTheme: const IconThemeData(color: Colors.white, size: 30),
         backgroundColor: Colors.black,
         elevation: 0,
         centerTitle: true,
@@ -123,7 +122,9 @@ class _LegPressMachineState extends State<LegPressMachine> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const LegPressPage(),
+                          builder: (context) => const ExerciseDetailPage(
+                            exercise: ExerciseData.legPress,
+                          ),
                         ),
                       );
                     },
@@ -193,7 +194,9 @@ class _LegPressMachineState extends State<LegPressMachine> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const LegPressCalfRaisePage(),
+                          builder: (context) => const ExerciseDetailPage(
+                            exercise: ExerciseData.legPressCalfRaise,
+                          ),
                         ),
                       );
                     },
@@ -248,3 +251,4 @@ class _LegPressMachineState extends State<LegPressMachine> {
     );
   }
 }
+

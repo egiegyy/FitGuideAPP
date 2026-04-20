@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:animations/animations.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitguide/pages/gate/sign_in.dart';
@@ -7,8 +9,13 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class AppRouter {
+  static final _authRefreshNotifier = _AuthStateRefreshNotifier(
+    FirebaseAuth.instance.authStateChanges(),
+  );
+
   static final GoRouter router = GoRouter(
-    initialLocation: '/signin',
+    initialLocation: '/',
+    refreshListenable: _authRefreshNotifier,
     redirect: (context, state) {
       final user = FirebaseAuth.instance.currentUser;
       final signedIn = user != null;
@@ -28,6 +35,12 @@ class AppRouter {
       return null;
     },
     routes: [
+      GoRoute(
+        path: '/',
+        redirect: (context, state) {
+          return FirebaseAuth.instance.currentUser == null ? '/signin' : '/home';
+        },
+      ),
       GoRoute(
         path: '/signin',
         pageBuilder: (context, state) => CustomTransitionPage(
@@ -49,21 +62,6 @@ class AppRouter {
         pageBuilder: (context, state) => CustomTransitionPage(
           key: state.pageKey,
           transitionDuration: const Duration(milliseconds: 350),
-          child: const SignUp(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            return SharedAxisTransition(
-              animation: animation,
-              secondaryAnimation: secondaryAnimation,
-              transitionType: SharedAxisTransitionType.horizontal,
-              child: child,
-            );
-          },
-        ),
-      ),
-      GoRoute(
-        path: '/signup',
-        pageBuilder: (context, state) => CustomTransitionPage(
-          key: state.pageKey,
           child: const SignUp(),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return SharedAxisTransition(
@@ -120,5 +118,19 @@ class AuthWrapper extends StatelessWidget {
         }
       },
     );
+  }
+}
+
+class _AuthStateRefreshNotifier extends ChangeNotifier {
+  _AuthStateRefreshNotifier(Stream<User?> stream) {
+    _subscription = stream.listen((_) => notifyListeners());
+  }
+
+  late final StreamSubscription<User?> _subscription;
+
+  @override
+  void dispose() {
+    _subscription.cancel();
+    super.dispose();
   }
 }

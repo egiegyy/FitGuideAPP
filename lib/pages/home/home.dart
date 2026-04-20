@@ -109,7 +109,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        iconTheme: const IconThemeData(color: Colors.white, size: 28),
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.black.withValues(alpha: 0.6),
         elevation: 0,
         centerTitle: true,
@@ -146,7 +146,7 @@ class _HomePageState extends State<HomePage> {
                         fontSize: 25,
                       ),
                     ),
-                    Text("Let's be better 1% everyday!"),
+                    Text("Let's be better 1% everyday!", style: bodyText),
                   ],
                 ),
                 const SizedBox(height: 30),
@@ -312,6 +312,7 @@ class _HomePageState extends State<HomePage> {
                       _packageTile(
                         context,
                         "Push Work out",
+                        "assets/images/exercises/push/profile_push.png",
                         const PushWorkout(),
                       ),
                       Container(
@@ -322,6 +323,7 @@ class _HomePageState extends State<HomePage> {
                       _packageTile(
                         context,
                         "Pull Workout",
+                        "assets/images/exercises/pull/profile_pull.png",
                         const PullWorkout(),
                       ),
                     ],
@@ -366,7 +368,12 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _packageTile(BuildContext context, String title, Widget page) {
+  Widget _packageTile(
+    BuildContext context,
+    String title,
+    String imagePath,
+    Widget page,
+  ) {
     return ListTile(
       contentPadding: const EdgeInsets.all(8),
       leading: Container(
@@ -375,9 +382,16 @@ class _HomePageState extends State<HomePage> {
           color: Colors.white.withValues(alpha: 0.08),
           borderRadius: BorderRadius.circular(12),
         ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(10),
-          child: Image.asset("assets/images/exercises/push/profile_push.png"),
+        child: SizedBox(
+          width: 55,
+          height: 55,
+          child: AspectRatio(
+            aspectRatio: 1,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Image.asset(imagePath, fit: BoxFit.cover),
+            ),
+          ),
         ),
       ),
       title: Text(title, style: cardTitle),
@@ -405,3 +419,4 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+

@@ -1,5 +1,5 @@
-import 'package:fitguide/pages/workout/exercise/chest_press.dart';
-import 'package:fitguide/pages/workout/exercise/close_grip_chest_press.dart';
+import 'package:fitguide/pages/workout/exercise_detail_page.dart';
+import 'package:fitguide/utils/exercise_data.dart';
 import 'package:flutter/material.dart';
 
 class PushWorkout extends StatefulWidget {
@@ -30,6 +30,8 @@ class _PushWorkoutState extends State<PushWorkout> {
       ),
 
       body: Container(
+        width: double.infinity,
+        height: double.infinity,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
@@ -141,7 +143,9 @@ class _PushWorkoutState extends State<PushWorkout> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => ChestPressPage(),
+                            builder: (context) => const ExerciseDetailPage(
+                              exercise: ExerciseData.chestPress,
+                            ),
                           ),
                         );
                       },
@@ -225,7 +229,9 @@ class _PushWorkoutState extends State<PushWorkout> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => CloseGripCPPage(),
+                            builder: (context) => const ExerciseDetailPage(
+                              exercise: ExerciseData.closeGripChestPress,
+                            ),
                           ),
                         );
                       },

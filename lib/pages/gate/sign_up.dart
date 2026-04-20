@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fitguide/firebase/services/auth_service.dart';
+import 'package:fitguide/services/auth_service.dart';
 import 'package:fitguide/utils/animation_utils.dart';
 import 'package:fitguide/utils/ui_components.dart';
+import 'package:fitguide/pages/gate/sign_in.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -44,6 +44,7 @@ class _SignUpState extends State<SignUp> {
         if (!mounted) return;
         await AuthService.signOut();
         if (!mounted) return;
+
         UIComponents.showSuccessSnackBar(
           context,
           "Registrasi berhasil. Silakan masuk untuk melanjutkan.",
@@ -54,7 +55,11 @@ class _SignUpState extends State<SignUp> {
         passwordController.clear();
         confirmPasswordController.clear();
 
-        context.go('/signin');
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => const SignIn()),
+          (route) => false,
+        );
       } on FirebaseAuthException catch (e) {
         if (!mounted) return;
         String message = "Registrasi gagal";
@@ -89,194 +94,189 @@ class _SignUpState extends State<SignUp> {
 
   @override
   Widget build(BuildContext context) {
-    return UIComponents.loadingOverlay(
-      isLoading: isLoading,
-      loadingMessage: "Mendaftarkan akun...",
-      child: Scaffold(
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
         backgroundColor: Colors.black,
-        appBar: AppBar(
-          iconTheme: const IconThemeData(color: Colors.white, size: 30),
-          backgroundColor: Colors.black,
-          centerTitle: true,
-          title: const Text(
-            "Sign Up",
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
+        centerTitle: true,
+        title: const Text(
+          "Sign Up",
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
           ),
         ),
-        body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  const SizedBox(height: 20),
-                  AnimationUtils.bounceIn(
-                    child: const Image(
-                      image: AssetImage("assets/images/logo_fitguide.png"),
-                      alignment: Alignment.topCenter,
-                    ),
+      ),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const SizedBox(height: 20),
+
+                AnimationUtils.bounceIn(
+                  child: const Image(
+                    image: AssetImage("assets/images/logo_fitguide.png"),
+                    alignment: Alignment.topCenter,
                   ),
-                  const SizedBox(height: 20),
-                  AnimationUtils.fadeIn(
-                    delay: const Duration(milliseconds: 300),
-                    child: Form(
-                      key: _formKey,
-                      child: UIComponents.animatedCard(
-                        padding: const EdgeInsets.all(20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: AnimationUtils.staggeredAnimation(
-                            children: [
-                              /// USERNAME
-                              UIComponents.animatedTextField(
-                                controller: usernameController,
-                                label: "Username",
-                                hint: "Username",
-                                icon: Icons.person,
-                                validator: (value) {
-                                  if (value == null || value.trim().isEmpty) {
-                                    return "Username cannot be empty";
-                                  }
-                                  return null;
+                ),
+
+                const SizedBox(height: 20),
+
+                AnimationUtils.fadeIn(
+                  delay: const Duration(milliseconds: 300),
+                  child: Form(
+                    key: _formKey,
+                    child: UIComponents.animatedCard(
+                      padding: const EdgeInsets.all(20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: AnimationUtils.staggeredAnimation(
+                          children: [
+                            UIComponents.animatedTextField(
+                              controller: usernameController,
+                              label: "Username",
+                              hint: "Username",
+                              icon: Icons.person,
+                              validator: (value) {
+                                if (value == null || value.trim().isEmpty) {
+                                  return "Username cannot be empty";
+                                }
+                                return null;
+                              },
+                            ),
+                            const SizedBox(height: 15),
+
+                            UIComponents.animatedTextField(
+                              controller: emailController,
+                              label: "Email",
+                              hint: "Email",
+                              icon: Icons.email_rounded,
+                              validator: (value) {
+                                if (value == null || value.trim().isEmpty) {
+                                  return "Email cannot be empty";
+                                }
+                                if (!value.contains("@gmail.com")) {
+                                  return "Email is not valid";
+                                }
+                                return null;
+                              },
+                            ),
+                            const SizedBox(height: 15),
+
+                            UIComponents.animatedTextField(
+                              controller: passwordController,
+                              label: "Password",
+                              hint: "Password",
+                              icon: Icons.lock,
+                              obscureText: !isPasswordVisible,
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  isPasswordVisible
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                  color: Colors.black54,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    isPasswordVisible = !isPasswordVisible;
+                                  });
                                 },
                               ),
-                              const SizedBox(height: 15),
+                              validator: (value) {
+                                if (value == null || value.trim().isEmpty) {
+                                  return "Password cannot be empty";
+                                }
+                                if (value.trim().length < 6) {
+                                  return "Password must be at least 6 characters";
+                                }
+                                return null;
+                              },
+                            ),
+                            const SizedBox(height: 15),
 
-                              /// EMAIL
-                              UIComponents.animatedTextField(
-                                controller: emailController,
-                                label: "Email",
-                                hint: "Email",
-                                icon: Icons.email_rounded,
-                                validator: (value) {
-                                  if (value == null || value.trim().isEmpty) {
-                                    return "Email cannot be empty";
-                                  }
-                                  if (!value.contains("@gmail.com")) {
-                                    return "Email is not valid";
-                                  }
-                                  return null;
+                            UIComponents.animatedTextField(
+                              controller: confirmPasswordController,
+                              label: "Confirm Password",
+                              hint: "Confirm Password",
+                              icon: Icons.lock,
+                              obscureText: !isConfirmPasswordVisible,
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  isConfirmPasswordVisible
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                  color: Colors.black54,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    isConfirmPasswordVisible =
+                                        !isConfirmPasswordVisible;
+                                  });
                                 },
                               ),
-                              const SizedBox(height: 15),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "Confirm password cannot be empty";
+                                }
+                                if (value != passwordController.text) {
+                                  return "Password does not match";
+                                }
+                                return null;
+                              },
+                            ),
+                            const SizedBox(height: 20),
 
-                              /// PASSWORD
-                              UIComponents.animatedTextField(
-                                controller: passwordController,
-                                label: "Password",
-                                hint: "Password",
-                                icon: Icons.lock,
-                                obscureText: !isPasswordVisible,
-                                suffixIcon: IconButton(
-                                  icon: Icon(
-                                    isPasswordVisible
-                                        ? Icons.visibility
-                                        : Icons.visibility_off,
-                                    color: Colors.black54,
+                            UIComponents.animatedButton(
+                              text: "Sign Up",
+                              onPressed: register,
+                              isLoading: isLoading,
+                            ),
+                            const SizedBox(height: 10),
+
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text(
+                                  "Already have account? ",
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                TextButton(
+                                  style: TextButton.styleFrom(
+                                    padding: EdgeInsets.zero,
+                                    minimumSize: Size.zero,
+                                    tapTargetSize:
+                                        MaterialTapTargetSize.shrinkWrap,
                                   ),
                                   onPressed: () {
-                                    setState(() {
-                                      isPasswordVisible = !isPasswordVisible;
-                                    });
+                                    Navigator.pushAndRemoveUntil(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const SignIn()),
+                                      (route) => false,
+                                    );
                                   },
-                                ),
-                                validator: (value) {
-                                  if (value == null || value.trim().isEmpty) {
-                                    return "Password cannot be empty";
-                                  }
-                                  if (value.trim().length < 6) {
-                                    return "Password must be at least 6 characters";
-                                  }
-                                  return null;
-                                },
-                              ),
-                              const SizedBox(height: 15),
-
-                              /// CONFIRM PASSWORD
-                              UIComponents.animatedTextField(
-                                controller: confirmPasswordController,
-                                label: "Confirm Password",
-                                hint: "Confirm Password",
-                                icon: Icons.lock,
-                                obscureText: !isConfirmPasswordVisible,
-                                suffixIcon: IconButton(
-                                  icon: Icon(
-                                    isConfirmPasswordVisible
-                                        ? Icons.visibility
-                                        : Icons.visibility_off,
-                                    color: Colors.black54,
-                                  ),
-                                  onPressed: () {
-                                    setState(() {
-                                      isConfirmPasswordVisible =
-                                          !isConfirmPasswordVisible;
-                                    });
-                                  },
-                                ),
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return "Confirm password cannot be empty";
-                                  }
-                                  if (value != passwordController.text) {
-                                    return "Password does not match";
-                                  }
-                                  return null;
-                                },
-                              ),
-                              const SizedBox(height: 20),
-
-                              /// SIGN UP BUTTON
-                              UIComponents.animatedButton(
-                                text: "Sign Up",
-                                onPressed: register,
-                                isLoading: isLoading,
-                              ),
-                              const SizedBox(height: 10),
-
-                              /// ALREADY HAVE ACCOUNT
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Text(
-                                    "Already have account? ",
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-
-                                  TextButton(
-                                    style: TextButton.styleFrom(
-                                      padding: EdgeInsets.zero,
-                                      minimumSize: Size.zero,
-                                      tapTargetSize:
-                                          MaterialTapTargetSize.shrinkWrap,
-                                    ),
-
-                                    onPressed: () {
-                                      context.go('/signin');
-                                    },
-
-                                    child: const Text(
-                                      "Sign In",
-                                      style: TextStyle(
-                                        color: Colors.green,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                                  child: const Text(
+                                    "Sign In",
+                                    style: TextStyle(
+                                      color: Colors.green,
+                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                ],
-                              ),
-                            ],
-                            baseDelay: const Duration(milliseconds: 100),
-                          ),
+                                ),
+                              ],
+                            ),
+                          ],
+                          baseDelay: const Duration(milliseconds: 100),
                         ),
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

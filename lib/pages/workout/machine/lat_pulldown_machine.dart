@@ -1,5 +1,5 @@
-import 'package:fitguide/pages/workout/exercise/close_grip_lat_pulldown.dart';
-import 'package:fitguide/pages/workout/exercise/lat_pulldown.dart';
+import 'package:fitguide/pages/workout/exercise_detail_page.dart';
+import 'package:fitguide/utils/exercise_data.dart';
 import 'package:flutter/material.dart';
 
 class LatPulldownMachine extends StatefulWidget {
@@ -16,7 +16,6 @@ class _LatPulldownMachineState extends State<LatPulldownMachine> {
       backgroundColor: Colors.black,
 
       appBar: AppBar(
-        iconTheme: const IconThemeData(color: Colors.white, size: 30),
         backgroundColor: Colors.black,
         elevation: 0,
         centerTitle: true,
@@ -123,7 +122,9 @@ class _LatPulldownMachineState extends State<LatPulldownMachine> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const WideGripLatPulldownPage(),
+                          builder: (context) => const ExerciseDetailPage(
+                            exercise: ExerciseData.wideGripLatPulldown,
+                          ),
                         ),
                       );
                     },
@@ -193,8 +194,9 @@ class _LatPulldownMachineState extends State<LatPulldownMachine> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) =>
-                              const CloseGripLatPulldownPage(),
+                          builder: (context) => const ExerciseDetailPage(
+                            exercise: ExerciseData.closeGripLatPulldown,
+                          ),
                         ),
                       );
                     },
@@ -249,3 +251,4 @@ class _LatPulldownMachineState extends State<LatPulldownMachine> {
     );
   }
 }
+

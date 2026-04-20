@@ -1,6 +1,5 @@
 import 'package:fitguide/utils/animation_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 
 class UIComponents {
   // Loading overlay
@@ -33,12 +32,14 @@ class UIComponents {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      AnimationUtils.bounceIn(
-                        child: Lottie.asset(
-                          'assets/animations/loading.json',
-                          width: 80,
-                          height: 80,
-                          fit: BoxFit.contain,
+                      const SizedBox(
+                        width: 32,
+                        height: 32,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 3,
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            Colors.white,
+                          ),
                         ),
                       ),
                       const SizedBox(height: 16),

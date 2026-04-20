@@ -1,6 +1,5 @@
-import 'package:fitguide/pages/workout/exercise/chest_press.dart';
-import 'package:fitguide/pages/workout/exercise/leg_press.dart';
-import 'package:fitguide/pages/workout/exercise/lat_pulldown.dart';
+import 'package:fitguide/pages/workout/exercise_detail_page.dart';
+import 'package:fitguide/utils/exercise_data.dart';
 import 'package:flutter/material.dart';
 
 class FullBodyWorkout extends StatefulWidget {
@@ -31,6 +30,8 @@ class _FullBodyWorkoutState extends State<FullBodyWorkout> {
       ),
 
       body: Container(
+        width: double.infinity,
+        height: double.infinity,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
@@ -63,7 +64,7 @@ class _FullBodyWorkoutState extends State<FullBodyWorkout> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(18),
                     child: Image.asset(
-                      "assets/images/profile_fullbody.png",
+                      "assets/images/contoh_fullBody.png",
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -141,7 +142,9 @@ class _FullBodyWorkoutState extends State<FullBodyWorkout> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => ChestPressPage(),
+                            builder: (context) => const ExerciseDetailPage(
+                              exercise: ExerciseData.chestPress,
+                            ),
                           ),
                         );
                       },
@@ -226,7 +229,9 @@ class _FullBodyWorkoutState extends State<FullBodyWorkout> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => WideGripLatPulldownPage(),
+                            builder: (context) => const ExerciseDetailPage(
+                              exercise: ExerciseData.wideGripLatPulldown,
+                            ),
                           ),
                         );
                       },
@@ -310,7 +315,9 @@ class _FullBodyWorkoutState extends State<FullBodyWorkout> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => LegPressPage(),
+                            builder: (context) => const ExerciseDetailPage(
+                              exercise: ExerciseData.legPress,
+                            ),
                           ),
                         );
                       },
