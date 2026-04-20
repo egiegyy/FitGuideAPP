@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:fitguide/firebase_options.dart';
 import 'package:fitguide/services/one_signal_services.dart';
 import 'package:fitguide/utils/router.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:animations/animations.dart';
@@ -9,21 +10,40 @@ import 'package:animations/animations.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initializeDateFormatting('id_ID');
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  String? startupError;
 
   try {
-    setupOneSignal();
+    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  } on UnsupportedError catch (e) {
+    startupError = e.message?.toString() ?? e.toString();
+  } catch (e) {
+    startupError = e.toString();
+  }
+
+  try {
+    if (!kIsWeb) {
+      setupOneSignal();
+    }
   } catch (e) {
     // debugPrint('OneSignal setup error: $e');
   }
-  runApp(const MyApp());
+  runApp(MyApp(startupError: startupError));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({super.key, this.startupError});
+
+  final String? startupError;
 
   @override
   Widget build(BuildContext context) {
+    if (startupError != null) {
+      return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: _StartupIssueScreen(message: startupError!),
+      );
+    }
+
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'FitGuide Firebase',
@@ -78,6 +98,59 @@ class MyApp extends StatelessWidget {
         ),
       ),
       routerConfig: AppRouter.router,
+    );
+  }
+}
+
+class _StartupIssueScreen extends StatelessWidget {
+  const _StartupIssueScreen({required this.message});
+
+  final String message;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: const Color(0xFF08110A),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 480),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'FitGuide belum bisa dijalankan di platform ini.',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                const Text(
+                  'Aplikasi Android tetap bisa dipakai seperti biasa. Untuk web, konfigurasi Firebase perlu ditambahkan lebih dulu.',
+                  style: TextStyle(
+                    color: Colors.white70,
+                    fontSize: 16,
+                    height: 1.5,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  message,
+                  style: const TextStyle(
+                    color: Colors.greenAccent,
+                    fontSize: 14,
+                    height: 1.5,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
