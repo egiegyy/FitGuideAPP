@@ -8,17 +8,30 @@ class ProgressChart extends StatelessWidget {
 
   const ProgressChart({super.key, required this.data});
 
+  DateTime parseDate(String date) {
+    try {
+      return DateTime.parse(date);
+    } catch (_) {
+      try {
+        return DateFormat("d MMMM yyyy", "en_US").parse(date);
+      } catch (_) {
+        return DateTime.now();
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     if (data.isEmpty) {
       return const SizedBox();
     }
 
-    /// SORT DATA BY DATE (OLD → NEW)
     final sortedData = [...data];
-    sortedData.sort((a, b) => a.date.compareTo(b.date));
+    sortedData.sort((a, b) => parseDate(a.date).compareTo(parseDate(b.date)));
 
-    final weights = sortedData.map((e) => double.tryParse(e.weight) ?? 0).toList();
+    final weights = sortedData
+        .map((e) => double.tryParse(e.weight) ?? 0)
+        .toList();
     final reps = sortedData.map((e) => double.tryParse(e.reps) ?? 0).toList();
     final useWeight = weights.any((value) => value > 0);
     final chartValues = useWeight ? weights : reps;
@@ -26,12 +39,15 @@ class ProgressChart extends StatelessWidget {
     final maxValue = chartValues.reduce((a, b) => a > b ? a : b);
     final yInterval = maxValue <= 5 ? 1.0 : (maxValue / 4).ceilToDouble();
 
-    /// generate chart spots
     List<FlSpot> spots = [];
     for (int i = 0; i < sortedData.length; i++) {
       spots.add(FlSpot(i.toDouble(), chartValues[i]));
     }
-    final labelStep = sortedData.length <= 4 ? 1 : (sortedData.length / 4).ceil();
+
+    final labelStep = sortedData.length <= 4
+        ? 1
+        : (sortedData.length / 4).ceil();
+
     final dateFormat = DateFormat('dd/MM');
 
     return Container(
@@ -102,14 +118,13 @@ class ProgressChart extends StatelessWidget {
                     return const SizedBox();
                   }
 
+                  final parsedDate = parseDate(sortedData[index].date);
+
                   return Padding(
                     padding: const EdgeInsets.only(top: 8),
                     child: Text(
-                      dateFormat.format(DateTime.parse(sortedData[index].date)),
-                      style: const TextStyle(
-                        fontSize: 10,
-                        color: Colors.white,
-                      ),
+                      dateFormat.format(parsedDate),
+                      style: const TextStyle(fontSize: 10, color: Colors.white),
                     ),
                   );
                 },
@@ -125,14 +140,11 @@ class ProgressChart extends StatelessWidget {
                 colors: [Color(0xFF2E7D32), Color(0xFF66BB6A)],
               ),
               barWidth: 4,
-
-              /// DOT STYLE
               dotData: FlDotData(
                 show: true,
                 getDotPainter: (spot, percent, barData, index) {
                   final value = chartValues[index];
 
-                  /// highlight PR
                   if (value == pr) {
                     return FlDotCirclePainter(
                       radius: 3,

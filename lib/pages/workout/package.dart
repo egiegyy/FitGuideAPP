@@ -7,11 +7,8 @@ import 'package:flutter/material.dart';
 class Package extends StatelessWidget {
   const Package({super.key});
 
-  static const List<({
-    String title,
-    String imagePath,
-    Widget page,
-  })> _packageCategories = [
+  static const List<({String title, String imagePath, Widget page})>
+  _packageCategories = [
     (
       title: "Push",
       imagePath: "assets/images/exercises/push/profile_push.png",
@@ -29,7 +26,7 @@ class Package extends StatelessWidget {
     ),
     (
       title: "Full Body",
-      imagePath: "assets/images/contoh_fullBody.png",
+      imagePath: "assets/images/profile_fullbody.png",
       page: FullBodyWorkout(),
     ),
   ];

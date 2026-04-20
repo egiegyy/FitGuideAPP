@@ -21,30 +21,36 @@ class _HomePageState extends State<HomePage> {
   final PageController _controller = PageController();
   int currentPage = 0;
   Timer? timer;
+
   final TextStyle pageTitle = const TextStyle(
     fontSize: 24,
     fontWeight: FontWeight.bold,
     color: Colors.white,
   );
+
   final TextStyle sectionTitle = const TextStyle(
     fontSize: 22,
     fontWeight: FontWeight.bold,
     color: Colors.white,
   );
+
   final TextStyle cardTitle = const TextStyle(
     fontSize: 18,
     fontWeight: FontWeight.bold,
     color: Colors.white,
   );
+
   final TextStyle bodyText = const TextStyle(
     fontSize: 14,
     color: Colors.white70,
   );
+
   final TextStyle buttonText = const TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.bold,
     color: Colors.white,
   );
+
   Future<void> getUser() async {
     final user = await UserPref.getCurrentUser();
     if (!mounted) return;
@@ -140,7 +146,7 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     Text(
                       "Halo $username,",
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Color(0xFF66BB6A),
                         fontWeight: FontWeight.bold,
                         fontSize: 25,
@@ -181,33 +187,56 @@ class _HomePageState extends State<HomePage> {
                 ),
                 const SizedBox(height: 10),
 
-                /// DOT INDICATOR
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: List.generate(
-                    2,
-                    (index) => AnimatedContainer(
-                      duration: const Duration(milliseconds: 300),
-                      margin: const EdgeInsets.symmetric(horizontal: 4),
-                      height: 8,
-                      width: currentPage == index ? 20 : 8,
-                      decoration: BoxDecoration(
-                        gradient: currentPage == index
-                            ? const LinearGradient(
-                                colors: [Color(0xFF2E7D32), Color(0xFF66BB6A)],
-                              )
-                            : null,
-                        color: currentPage == index ? null : Colors.white24,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                  ),
+                /// DOT INDICATOR (SMOOTH FIX)
+                AnimatedBuilder(
+                  animation: _controller,
+                  builder: (context, child) {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: List.generate(2, (index) {
+                        double selectedness = 0.0;
+
+                        if (_controller.hasClients &&
+                            _controller.page != null) {
+                          selectedness =
+                              (1 - ((_controller.page! - index).abs())).clamp(
+                                0.0,
+                                1.0,
+                              );
+                        } else {
+                          selectedness = currentPage == index ? 1.0 : 0.0;
+                        }
+
+                        final width = 8 + (12 * selectedness);
+
+                        return Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 4),
+                          height: 8,
+                          width: width,
+                          decoration: BoxDecoration(
+                            gradient: selectedness > 0
+                                ? const LinearGradient(
+                                    colors: [
+                                      Color(0xFF2E7D32),
+                                      Color(0xFF66BB6A),
+                                    ],
+                                  )
+                                : null,
+                            color: selectedness == 0 ? Colors.white24 : null,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        );
+                      }),
+                    );
+                  },
                 ),
+
                 const SizedBox(height: 25),
 
                 /// ROUTINE
                 Text("Your Routine", style: sectionTitle),
                 const SizedBox(height: 10),
+
                 routineDays.isEmpty
                     ? Container(
                         width: double.infinity,
@@ -263,39 +292,47 @@ class _HomePageState extends State<HomePage> {
                           children: routineDays.map((day) {
                             return Padding(
                               padding: const EdgeInsets.only(right: 12),
-                              child: Container(
-                                width: 150,
-                                padding: const EdgeInsets.all(12),
-                                decoration: BoxDecoration(
-                                  color: Colors.white.withValues(alpha: 0.05),
-                                  borderRadius: BorderRadius.circular(18),
-                                  border: Border.all(color: Colors.white24),
-                                ),
-                                child: Column(
-                                  children: [
-                                    Text(day, style: cardTitle),
-                                    Align(
-                                      alignment: Alignment.bottomRight,
-                                      child: TextButton(
-                                        onPressed: () {
-                                          openRoutineDay(day);
-                                        },
-                                        child: const Text(
-                                          "More",
-                                          style: TextStyle(
-                                            color: Color(0xFF66BB6A),
-                                            fontWeight: FontWeight.bold,
-                                          ),
+                              child: InkWell(
+                                borderRadius: BorderRadius.circular(18),
+                                onTap: () {
+                                  openRoutineDay(day);
+                                },
+                                child: Container(
+                                  width: 150,
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 14,
+                                    vertical: 16,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white.withValues(alpha: 0.05),
+                                    borderRadius: BorderRadius.circular(18),
+                                    border: Border.all(color: Colors.white24),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          day,
+                                          style: cardTitle,
+                                          overflow: TextOverflow.ellipsis,
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                      const Icon(
+                                        Icons.arrow_forward_ios_rounded,
+                                        color: Color(0xFF66BB6A),
+                                        size: 18,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             );
                           }).toList(),
                         ),
                       ),
+
                 const SizedBox(height: 25),
 
                 /// PACKAGE
@@ -330,6 +367,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 const SizedBox(height: 10),
+
                 SizedBox(
                   width: double.infinity,
                   child: Container(
@@ -419,4 +457,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-

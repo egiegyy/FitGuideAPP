@@ -22,12 +22,6 @@ class ExerciseDetailPage extends StatelessWidget {
             color: Colors.white,
           ),
         ),
-        actions: const [
-          Padding(
-            padding: EdgeInsets.only(right: 16),
-            child: Icon(Icons.search_rounded, color: Colors.white, size: 28),
-          ),
-        ],
       ),
       body: Container(
         decoration: const BoxDecoration(

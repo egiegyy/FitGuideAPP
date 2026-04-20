@@ -2,6 +2,7 @@ import 'package:fitguide/pages/profile/progress/progress_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:fitguide/controller/progress_controller.dart';
 import 'package:fitguide/model/progress_model.dart';
+import 'package:fitguide/utils/ui_components.dart';
 
 enum ChartRange { week, month, year }
 
@@ -18,6 +19,34 @@ class _ProgressState extends State<Progress> {
   final repsController = TextEditingController();
   DateTime selectedDate = DateTime.now();
   ChartRange selectedRange = ChartRange.week;
+
+  String formatDate(DateTime date) {
+    const months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+    return "${date.day} ${months[date.month - 1]} ${date.year}";
+  }
+
+  String formatDisplayDate(String date) {
+    try {
+      final parsed = DateTime.parse(date);
+      return formatDate(parsed);
+    } catch (_) {
+      return date;
+    }
+  }
+
   InputDecoration inputDecoration({
     required String hint,
     required IconData icon,
@@ -62,10 +91,10 @@ class _ProgressState extends State<Progress> {
         return Theme(
           data: ThemeData.dark().copyWith(
             colorScheme: const ColorScheme.dark(
-              primary: Color(0xFF66BB6A), // header & selected date
-              onPrimary: Colors.white, // text on selected
-              surface: Color(0xFF0A0F0A), // background dialog
-              onSurface: Colors.white, // text default
+              primary: Color(0xFF66BB6A),
+              onPrimary: Colors.white,
+              surface: Color(0xFF0A0F0A),
+              onSurface: Colors.white,
             ),
             dialogBackgroundColor: const Color(0xFF0A0F0A),
           ),
@@ -85,21 +114,24 @@ class _ProgressState extends State<Progress> {
     if (exerciseController.text.isEmpty ||
         weightController.text.isEmpty ||
         repsController.text.isEmpty) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text("All fields are required")));
+      UIComponents.showErrorSnackBar(context, "All fields are required");
       return;
     }
+
     final progress = ProgressModel(
       exercise: exerciseController.text,
       weight: weightController.text,
       reps: repsController.text,
       date: selectedDate.toString().split(" ")[0],
     );
+
     await ProgressController.insertProgress(progress);
+
     exerciseController.clear();
     weightController.clear();
     repsController.clear();
+
+    UIComponents.showSuccessSnackBar(context, "Workout saved successfully");
 
     setState(() {});
   }
@@ -209,7 +241,6 @@ class _ProgressState extends State<Progress> {
             decoration: inputDecoration(hint: "Reps", icon: Icons.repeat),
           ),
           const SizedBox(height: 12),
-
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
             decoration: BoxDecoration(
@@ -221,7 +252,7 @@ class _ProgressState extends State<Progress> {
               children: [
                 Expanded(
                   child: Text(
-                    selectedDate.toString().split(" ")[0],
+                    formatDate(selectedDate),
                     style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w500,
@@ -298,7 +329,7 @@ class _ProgressState extends State<Progress> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                entry.key,
+                formatDisplayDate(entry.key),
                 style: const TextStyle(
                   color: Color(0xFF66BB6A),
                   fontSize: 18,

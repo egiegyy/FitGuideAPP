@@ -64,7 +64,7 @@ class _FullBodyWorkoutState extends State<FullBodyWorkout> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(18),
                     child: Image.asset(
-                      "assets/images/contoh_fullBody.png",
+                      "assets/images/profile_fullbody.png",
                       fit: BoxFit.cover,
                     ),
                   ),

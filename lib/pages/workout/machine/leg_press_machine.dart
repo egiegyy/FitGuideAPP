@@ -27,9 +27,6 @@ class _LegPressMachineState extends State<LegPressMachine> {
             color: Colors.white,
           ),
         ),
-        actions: const [
-          Icon(Icons.search_rounded, color: Colors.white, size: 30),
-        ],
       ),
 
       body: Container(
