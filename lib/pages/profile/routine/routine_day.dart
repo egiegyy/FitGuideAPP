@@ -39,6 +39,61 @@ class _RoutineDayPageState extends State<RoutineDayPage> {
     loadRoutine();
   }
 
+  // Dialog sudah disamakan dengan logout dialog
+  Future confirmDelete(int id) async {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: const Color(0xFF1B5E20),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          title: const Text(
+            "Hapus Exercise",
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+            ),
+          ),
+          content: const Text(
+            "Apakah anda yakin ingin menghapus exercise ini?",
+            style: TextStyle(color: Colors.white70, fontSize: 16),
+          ),
+          actionsPadding: const EdgeInsets.only(right: 12, bottom: 8),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text(
+                "Tidak",
+                style: TextStyle(
+                  color: Colors.greenAccent,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+            TextButton(
+              onPressed: () async {
+                Navigator.pop(context);
+                await deleteExercise(id);
+              },
+              child: const Text(
+                "Ya",
+                style: TextStyle(
+                  color: Colors.red,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   Future openAddExercise() async {
     await Navigator.push(
       context,
@@ -159,7 +214,7 @@ class _RoutineDayPageState extends State<RoutineDayPage> {
                                     size: 20,
                                   ),
                                   onPressed: () {
-                                    deleteExercise(routine['id']);
+                                    confirmDelete(routine['id']);
                                   },
                                 ),
                               ),

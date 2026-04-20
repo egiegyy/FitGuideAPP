@@ -9,7 +9,7 @@ class ExerciseDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      backgroundColor: const Color(0xFF000000), // ✅ FIX: dari transparent → solid
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.black,
@@ -53,13 +53,16 @@ class ExerciseDetailPage extends StatelessWidget {
                   width: double.infinity,
                   height: 260,
                   decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.05),
+                    color: Colors.white.withOpacity(0.05),
                     border: Border.all(color: Colors.white24),
                     borderRadius: BorderRadius.circular(18),
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(18),
-                    child: Image.asset(exercise.image, fit: BoxFit.contain),
+                    child: Image.asset(
+                      exercise.image,
+                      fit: BoxFit.contain,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -79,7 +82,7 @@ class ExerciseDetailPage extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(14),
                   decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.05),
+                    color: Colors.white.withOpacity(0.05),
                     border: Border.all(color: Colors.white24),
                     borderRadius: BorderRadius.circular(18),
                   ),
@@ -110,7 +113,7 @@ class ExerciseDetailPage extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(14),
                   decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.05),
+                    color: Colors.white.withOpacity(0.05),
                     border: Border.all(color: Colors.white24),
                     borderRadius: BorderRadius.circular(18),
                   ),
@@ -138,7 +141,7 @@ class ExerciseDetailPage extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(14),
                   decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.05),
+                    color: Colors.white.withOpacity(0.05),
                     border: Border.all(color: Colors.white24),
                     borderRadius: BorderRadius.circular(18),
                   ),

@@ -181,15 +181,17 @@ class _SignInState extends State<SignIn> {
                               isLoading: isLoading,
                             ),
                             const SizedBox(height: 10),
-                            SizedBox(
-                              width: double.infinity,
-                              height: 50,
-                              child: ElevatedButton.icon(
-                                onPressed: isLoading ? null : loginWithGoogle,
-                                icon: const Icon(Icons.login),
-                                label: const Text("Login with Google"),
-                              ),
-                            ),
+
+                            // GOOGLE SIGN IN BUTTON
+                            // SizedBox(
+                            //   width: double.infinity,
+                            //   height: 50,
+                            //   child: ElevatedButton.icon(
+                            //     onPressed: isLoading ? null : loginWithGoogle,
+                            //     icon: const Icon(Icons.login),
+                            //     label: const Text("Login with Google"),
+                            //   ),
+                            // ),
                             const SizedBox(height: 10),
 
                             /// SIGN UP LINK
