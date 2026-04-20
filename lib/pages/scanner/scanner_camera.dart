@@ -1,8 +1,7 @@
 import 'dart:async';
 import 'package:fitguide/database/sqflite.dart';
-import 'package:fitguide/pages/workout/exercise/chest_press.dart';
-import 'package:fitguide/pages/workout/exercise/leg_press.dart';
-import 'package:fitguide/pages/workout/exercise/lat_pulldown.dart';
+import 'package:fitguide/pages/workout/exercise_detail_page.dart';
+import 'package:fitguide/utils/exercise_data.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
@@ -23,9 +22,13 @@ class _ScannerCameraPageState extends State<ScannerCameraPage>
   static const double scanSize = 280;
 
   final Map<String, WidgetBuilder> machineRoutes = {
-    "lat_pulldown": (context) => const WideGripLatPulldownPage(),
-    "leg_press": (context) => const LegPressPage(),
-    "chest_press": (context) => const ChestPressPage(),
+    "lat_pulldown": (context) => const ExerciseDetailPage(
+      exercise: ExerciseData.wideGripLatPulldown,
+    ),
+    "leg_press": (context) =>
+        const ExerciseDetailPage(exercise: ExerciseData.legPress),
+    "chest_press": (context) =>
+        const ExerciseDetailPage(exercise: ExerciseData.chestPress),
   };
 
   @override
@@ -64,6 +67,7 @@ class _ScannerCameraPageState extends State<ScannerCameraPage>
 
     if (equipment != null) {
       await _controller.stop();
+      if (!mounted) return;
 
       final pageId = equipment['page'];
 
@@ -79,6 +83,7 @@ class _ScannerCameraPageState extends State<ScannerCameraPage>
         isScanning = false;
         await _controller.start();
       } else {
+        if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("Halaman alat belum tersedia")),
         );
@@ -86,6 +91,7 @@ class _ScannerCameraPageState extends State<ScannerCameraPage>
         await _controller.start();
       }
     } else {
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Alat tidak ditemukan di FitGuide")),
       );
@@ -161,7 +167,7 @@ class _ScannerCameraPageState extends State<ScannerCameraPage>
                     ..._buildCorners(),
                     AnimatedBuilder(
                       animation: _animation,
-                      builder: (_, __) {
+                      builder: (context, child) {
                         return Positioned(
                           top: _animation.value,
                           left: 0,

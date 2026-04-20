@@ -1,5 +1,5 @@
-import 'package:fitguide/pages/workout/exercise/leg_press.dart';
-import 'package:fitguide/pages/workout/exercise/leg_press_calf_raise.dart';
+import 'package:fitguide/pages/workout/exercise_detail_page.dart';
+import 'package:fitguide/utils/exercise_data.dart';
 import 'package:flutter/material.dart';
 
 class LegWorkout extends StatefulWidget {
@@ -142,7 +142,9 @@ class _LegWorkoutState extends State<LegWorkout> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => LegPressPage(),
+                            builder: (context) => const ExerciseDetailPage(
+                              exercise: ExerciseData.legPress,
+                            ),
                           ),
                         );
                       },
@@ -226,7 +228,9 @@ class _LegWorkoutState extends State<LegWorkout> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => LegPressCalfRaisePage(),
+                            builder: (context) => const ExerciseDetailPage(
+                              exercise: ExerciseData.legPressCalfRaise,
+                            ),
                           ),
                         );
                       },

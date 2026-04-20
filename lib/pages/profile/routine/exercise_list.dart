@@ -1,52 +1,47 @@
-import 'package:fitguide/pages/workout/exercise/chest_press.dart';
-import 'package:fitguide/pages/workout/exercise/close_grip_chest_press.dart';
-import 'package:fitguide/pages/workout/exercise/close_grip_lat_pulldown.dart';
-import 'package:fitguide/pages/workout/exercise/leg_press.dart';
-import 'package:fitguide/pages/workout/exercise/leg_press_calf_raise.dart';
-import 'package:fitguide/pages/workout/exercise/lat_pulldown.dart';
+import 'package:fitguide/model/exercise.dart';
+import 'package:fitguide/pages/workout/exercise_detail_page.dart';
+import 'package:fitguide/utils/exercise_data.dart';
+import 'package:flutter/material.dart';
 
 class ExerciseItem {
-  final String name;
   final String image;
-  final dynamic page;
+  final Exercise exercise;
 
-  ExerciseItem({required this.name, required this.image, required this.page});
+  ExerciseItem({required this.image, required this.exercise});
+
+  String get name => exercise.name;
+
+  Widget get page => ExerciseDetailPage(exercise: exercise);
 }
 
 final List<ExerciseItem> allExercises = [
   ExerciseItem(
-    name: "Chest Press",
     image: "assets/images/exercises/push/chest_press.png",
-    page: const ChestPressPage(),
+    exercise: ExerciseData.chestPress,
   ),
 
   ExerciseItem(
-    name: "Close Grip Chest Press",
     image: "assets/images/exercises/push/close_grip_chest_press.png",
-    page: const CloseGripCPPage(),
+    exercise: ExerciseData.closeGripChestPress,
   ),
 
   ExerciseItem(
-    name: "Wide Grip Lat Pulldown",
     image: "assets/images/exercises/pull/lat_pulldown.png",
-    page: const WideGripLatPulldownPage(),
+    exercise: ExerciseData.wideGripLatPulldown,
   ),
 
   ExerciseItem(
-    name: "Close Grip Lat Pulldown",
     image: "assets/images/exercises/pull/close_grip_lat_pulldown.png",
-    page: const CloseGripLatPulldownPage(),
+    exercise: ExerciseData.closeGripLatPulldown,
   ),
 
   ExerciseItem(
-    name: "Leg Press",
     image: "assets/images/exercises/leg/leg_press.png",
-    page: const LegPressPage(),
+    exercise: ExerciseData.legPress,
   ),
 
   ExerciseItem(
-    name: "Leg Press Calf Raise",
     image: "assets/images/exercises/leg/leg_press_calf_raise.png",
-    page: const LegPressCalfRaisePage(),
+    exercise: ExerciseData.legPressCalfRaise,
   ),
 ];

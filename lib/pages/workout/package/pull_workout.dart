@@ -1,5 +1,5 @@
-import 'package:fitguide/pages/workout/exercise/close_grip_lat_pulldown.dart';
-import 'package:fitguide/pages/workout/exercise/lat_pulldown.dart';
+import 'package:fitguide/pages/workout/exercise_detail_page.dart';
+import 'package:fitguide/utils/exercise_data.dart';
 import 'package:flutter/material.dart';
 
 class PullWorkout extends StatefulWidget {
@@ -142,7 +142,9 @@ class _PullWorkoutState extends State<PullWorkout> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => CloseGripLatPulldownPage(),
+                            builder: (context) => const ExerciseDetailPage(
+                              exercise: ExerciseData.closeGripLatPulldown,
+                            ),
                           ),
                         );
                       },
@@ -226,7 +228,9 @@ class _PullWorkoutState extends State<PullWorkout> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => WideGripLatPulldownPage(),
+                            builder: (context) => const ExerciseDetailPage(
+                              exercise: ExerciseData.wideGripLatPulldown,
+                            ),
                           ),
                         );
                       },

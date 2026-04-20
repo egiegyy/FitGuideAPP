@@ -1,5 +1,5 @@
-import 'package:fitguide/pages/workout/exercise/chest_press.dart';
-import 'package:fitguide/pages/workout/exercise/close_grip_chest_press.dart';
+import 'package:fitguide/pages/workout/exercise_detail_page.dart';
+import 'package:fitguide/utils/exercise_data.dart';
 import 'package:flutter/material.dart';
 
 class ChestPressMachine extends StatefulWidget {
@@ -122,7 +122,9 @@ class _ChestPressState extends State<ChestPressMachine> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const ChestPressPage(),
+                          builder: (context) => const ExerciseDetailPage(
+                            exercise: ExerciseData.chestPress,
+                          ),
                         ),
                       );
                     },
@@ -192,7 +194,9 @@ class _ChestPressState extends State<ChestPressMachine> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const CloseGripCPPage(),
+                          builder: (context) => const ExerciseDetailPage(
+                            exercise: ExerciseData.closeGripChestPress,
+                          ),
                         ),
                       );
                     },
