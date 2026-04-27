@@ -13,7 +13,7 @@ class _PullWorkoutState extends State<PullWorkout> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      backgroundColor: const Color(0xFF000000),
 
       appBar: AppBar(
         elevation: 0,

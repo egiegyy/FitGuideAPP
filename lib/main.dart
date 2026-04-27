@@ -49,7 +49,13 @@ class MyApp extends StatelessWidget {
       title: 'FitGuide Firebase',
       theme: ThemeData(
         useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFF4CAF50)),
+        brightness: Brightness.dark,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Color(0xFF4CAF50),
+          brightness: Brightness.dark,
+        ),
+        scaffoldBackgroundColor: const Color(0xFF000000),
+        canvasColor: const Color(0xFF000000),
         visualDensity: VisualDensity.adaptivePlatformDensity,
         appBarTheme: const AppBarTheme(
           backgroundColor: Colors.black,

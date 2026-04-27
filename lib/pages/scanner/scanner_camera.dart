@@ -104,6 +104,7 @@ class _ScannerCameraPageState extends State<ScannerCameraPage>
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
+      backgroundColor: const Color(0xFF000000),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,

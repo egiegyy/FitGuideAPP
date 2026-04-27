@@ -16,6 +16,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
       length: 2,
 
       child: Scaffold(
+        backgroundColor: Colors.black,
         appBar: AppBar(
           automaticallyImplyLeading: false,
           backgroundColor: Colors.black,
