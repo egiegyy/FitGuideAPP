@@ -1,4 +1,5 @@
 import 'package:fitguide/model/exercise.dart';
+import 'package:fitguide/localization/app_language.dart';
 import 'package:flutter/material.dart';
 
 class ExerciseDetailPage extends StatelessWidget {
@@ -14,8 +15,8 @@ class ExerciseDetailPage extends StatelessWidget {
         elevation: 0,
         backgroundColor: Colors.black,
         centerTitle: true,
-        title: const Text(
-          "Workout",
+        title: Text(
+          context.tr("Workout"),
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 22,
@@ -47,7 +48,7 @@ class ExerciseDetailPage extends StatelessWidget {
                   width: double.infinity,
                   height: 260,
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.05),
+                    color: Colors.white.withValues(alpha: 0.05),
                     border: Border.all(color: Colors.white24),
                     borderRadius: BorderRadius.circular(18),
                   ),
@@ -63,7 +64,7 @@ class ExerciseDetailPage extends StatelessWidget {
 
                 /// TITLE
                 Text(
-                  exercise.name,
+                  exercise.displayName(context),
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 26,
@@ -76,27 +77,39 @@ class ExerciseDetailPage extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(14),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.05),
+                    color: Colors.white.withValues(alpha: 0.05),
                     border: Border.all(color: Colors.white24),
                     borderRadius: BorderRadius.circular(18),
                   ),
                   child: Column(
                     children: [
-                      _InfoRow(label: "Equipment", value: exercise.equipment),
+                      _InfoRow(
+                        label: context.tr("Equipment"),
+                        value: exercise.displayEquipment(context),
+                      ),
                       const SizedBox(height: 10),
-                      _InfoRow(label: "Category", value: exercise.category),
+                      _InfoRow(
+                        label: context.tr("Category"),
+                        value: exercise.displayCategory(context),
+                      ),
                       const SizedBox(height: 10),
-                      _InfoRow(label: "Level", value: exercise.level),
+                      _InfoRow(
+                        label: context.tr("Level"),
+                        value: exercise.displayLevel(context),
+                      ),
                       const SizedBox(height: 10),
-                      _InfoRow(label: "Repetitions", value: exercise.reps),
+                      _InfoRow(
+                        label: context.tr("Repetitions"),
+                        value: exercise.displayReps(context),
+                      ),
                     ],
                   ),
                 ),
                 const SizedBox(height: 25),
 
                 /// DESCRIPTION
-                const Text(
-                  "Description",
+                Text(
+                  context.tr("Description"),
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 22,
@@ -107,12 +120,12 @@ class ExerciseDetailPage extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(14),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.05),
+                    color: Colors.white.withValues(alpha: 0.05),
                     border: Border.all(color: Colors.white24),
                     borderRadius: BorderRadius.circular(18),
                   ),
                   child: Text(
-                    exercise.description,
+                    exercise.displayDescription(context),
                     style: const TextStyle(
                       fontSize: 15,
                       height: 1.6,
@@ -123,8 +136,8 @@ class ExerciseDetailPage extends StatelessWidget {
                 const SizedBox(height: 25),
 
                 /// HOW TO USE
-                const Text(
-                  "How to Use",
+                Text(
+                  context.tr("How to Use"),
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 22,
@@ -135,12 +148,15 @@ class ExerciseDetailPage extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(14),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.05),
+                    color: Colors.white.withValues(alpha: 0.05),
                     border: Border.all(color: Colors.white24),
                     borderRadius: BorderRadius.circular(18),
                   ),
                   child: Column(
-                    children: exercise.steps.map(_StepText.new).toList(),
+                    children: exercise
+                        .displaySteps(context)
+                        .map(_StepText.new)
+                        .toList(),
                   ),
                 ),
                 const SizedBox(height: 40),

@@ -1,3 +1,4 @@
+import 'package:fitguide/localization/app_language.dart';
 import 'package:fitguide/pages/workout/exercise_detail_page.dart';
 import 'package:fitguide/utils/exercise_data.dart';
 import 'package:flutter/material.dart';
@@ -19,8 +20,8 @@ class _LatPulldownMachineState extends State<LatPulldownMachine> {
         backgroundColor: Colors.black,
         elevation: 0,
         centerTitle: true,
-        title: const Text(
-          "Workout",
+        title: Text(
+          context.tr("Workout"),
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 24,
@@ -60,8 +61,8 @@ class _LatPulldownMachineState extends State<LatPulldownMachine> {
 
                 const SizedBox(height: 20),
 
-                const Text(
-                  "Lat Pulldown Machine",
+                Text(
+                  context.tr("Lat Pulldown Machine"),
                   style: TextStyle(
                     color: Color(0xFF66BB6A),
                     fontSize: 24,
@@ -80,16 +81,18 @@ class _LatPulldownMachineState extends State<LatPulldownMachine> {
                     border: Border.all(color: Colors.white24),
                   ),
 
-                  child: const Text(
-                    "A gym tool for training back muscles by pulling a bar from above toward the chest. This exercise helps strengthen and tone the upper back. The main muscles worked are the latissimus dorsi, with assistance from the biceps and rear shoulders.",
+                  child: Text(
+                    context.tr(
+                      "A gym tool for training back muscles by pulling a bar from above toward the chest. This exercise helps strengthen and tone the upper back. The main muscles worked are the latissimus dorsi, with assistance from the biceps and rear shoulders.",
+                    ),
                     style: TextStyle(color: Colors.white70, fontSize: 15),
                   ),
                 ),
 
                 const SizedBox(height: 25),
 
-                const Text(
-                  "Exercise",
+                Text(
+                  context.tr("Exercise"),
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -136,8 +139,8 @@ class _LatPulldownMachineState extends State<LatPulldownMachine> {
                       ),
                     ),
 
-                    title: const Text(
-                      "Wide Grip Lat Pulldown",
+                    title: Text(
+                      context.tr("Wide Grip Lat Pulldown"),
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 18,
@@ -158,8 +161,8 @@ class _LatPulldownMachineState extends State<LatPulldownMachine> {
                         borderRadius: BorderRadius.circular(20),
                       ),
 
-                      child: const Text(
-                        "More",
+                      child: Text(
+                        context.tr("More"),
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -208,8 +211,8 @@ class _LatPulldownMachineState extends State<LatPulldownMachine> {
                       ),
                     ),
 
-                    title: const Text(
-                      "Close Grip Lat Pulldown",
+                    title: Text(
+                      context.tr("Close Grip Lat Pulldown"),
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 18,
@@ -230,8 +233,8 @@ class _LatPulldownMachineState extends State<LatPulldownMachine> {
                         borderRadius: BorderRadius.circular(20),
                       ),
 
-                      child: const Text(
-                        "More",
+                      child: Text(
+                        context.tr("More"),
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,

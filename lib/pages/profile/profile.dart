@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitguide/database/preferance.dart';
+import 'package:fitguide/localization/app_language.dart';
 import 'package:fitguide/pages/profile/edit_profile.dart';
 import 'package:fitguide/pages/gate/sign_in.dart';
 import 'package:fitguide/pages/gate/sign_up.dart';
@@ -120,7 +121,7 @@ class _ProfilePageState extends State<ProfilePage> {
             children: [
               ListTile(
                 leading: const Icon(Icons.camera_alt),
-                title: const Text("Camera"),
+                title: Text(context.tr("Camera")),
                 onTap: () {
                   Navigator.pop(context);
                   pickImage(ImageSource.camera);
@@ -128,7 +129,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               ListTile(
                 leading: const Icon(Icons.photo),
-                title: const Text("Gallery"),
+                title: Text(context.tr("Gallery")),
                 onTap: () {
                   Navigator.pop(context);
                   pickImage(ImageSource.gallery);
@@ -150,16 +151,16 @@ class _ProfilePageState extends State<ProfilePage> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
-          title: const Text(
-            "Logout",
+          title: Text(
+            context.tr("Logout"),
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
               fontSize: 18,
             ),
           ),
-          content: const Text(
-            "Apakah anda yakin ingin keluar?",
+          content: Text(
+            context.tr("Apakah anda yakin ingin keluar?"),
             style: TextStyle(color: Colors.white70, fontSize: 16),
           ),
           actions: [
@@ -167,8 +168,8 @@ class _ProfilePageState extends State<ProfilePage> {
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: const Text(
-                "Tidak",
+              child: Text(
+                context.tr("Tidak"),
                 style: TextStyle(color: Colors.greenAccent),
               ),
             ),
@@ -183,7 +184,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   (route) => false,
                 );
               },
-              child: const Text("Ya", style: TextStyle(color: Colors.red)),
+              child: Text(context.tr("Ya"), style: const TextStyle(color: Colors.red)),
             ),
           ],
         );
@@ -200,16 +201,16 @@ class _ProfilePageState extends State<ProfilePage> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
-          title: const Text(
-            "Delete Account",
+          title: Text(
+            context.tr("Delete Account"),
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
               fontSize: 18,
             ),
           ),
-          content: const Text(
-            "Apakah anda yakin ingin menghapus akun?",
+          content: Text(
+            context.tr("Apakah anda yakin ingin menghapus akun?"),
             style: TextStyle(color: Colors.white70, fontSize: 16),
           ),
           actions: [
@@ -217,8 +218,8 @@ class _ProfilePageState extends State<ProfilePage> {
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: const Text(
-                "Tidak",
+              child: Text(
+                context.tr("Tidak"),
                 style: TextStyle(color: Colors.greenAccent),
               ),
             ),
@@ -246,7 +247,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   (route) => false,
                 );
               },
-              child: const Text("Ya", style: TextStyle(color: Colors.red)),
+              child: Text(context.tr("Ya"), style: const TextStyle(color: Colors.red)),
             ),
           ],
         );
@@ -256,47 +257,50 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      backgroundColor: const Color(0xFF000000),
+    return AnimatedBuilder(
+      animation: AppLanguageController.instance,
+      builder: (context, _) {
+        return Scaffold(
+          extendBodyBehindAppBar: true,
+          backgroundColor: const Color(0xFF000000),
 
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        centerTitle: true,
-        title: const Text(
-          "Profile",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-            fontSize: 25,
-          ),
-        ),
-      ),
-
-      body: Stack(
-        children: [
-          Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Color(0xFF000000),
-                  Color(0xFF0A0F0A),
-                  Color(0xFF101810),
-                  Color(0xFF000000),
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            centerTitle: true,
+            title: Text(
+              context.tr("Profile"),
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+                fontSize: 25,
               ),
             ),
           ),
-          SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(20, 100, 20, 20),
 
-              child: Column(
-                children: [
+          body: Stack(
+            children: [
+              Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Color(0xFF000000),
+                      Color(0xFF0A0F0A),
+                      Color(0xFF101810),
+                      Color(0xFF000000),
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                ),
+              ),
+              SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 100, 20, 20),
+
+                  child: Column(
+                    children: [
                   /// PROFILE PHOTO
                   Stack(
                     children: [
@@ -389,7 +393,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                               borderRadius: BorderRadius.circular(15),
                             ),
-                            child: const Column(
+                            child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Icon(
@@ -399,8 +403,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ),
                                 SizedBox(height: 8),
                                 Text(
-                                  "Progress",
-                                  style: TextStyle(color: Colors.white),
+                                  context.tr("Progress"),
+                                  style: const TextStyle(color: Colors.white),
                                 ),
                               ],
                             ),
@@ -430,7 +434,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                               borderRadius: BorderRadius.circular(15),
                             ),
-                            child: const Column(
+                            child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Icon(
@@ -440,8 +444,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ),
                                 SizedBox(height: 8),
                                 Text(
-                                  "Routine",
-                                  style: TextStyle(color: Colors.white),
+                                  context.tr("Routine"),
+                                  style: const TextStyle(color: Colors.white),
                                 ),
                               ],
                             ),
@@ -456,7 +460,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   /// SETTINGS
                   buildMenuTile(
                     icon: Icons.edit_rounded,
-                    title: "Edit Profile",
+                    title: context.tr("Edit Profile"),
                     onTap: () async {
                       final result = await Navigator.push(
                         context,
@@ -473,8 +477,16 @@ class _ProfilePageState extends State<ProfilePage> {
                   const SizedBox(height: 10),
 
                   buildMenuTile(
+                    icon: Icons.language_rounded,
+                    title: context.tr("Language"),
+                    onTap: languageDialog,
+                  ),
+
+                  const SizedBox(height: 10),
+
+                  buildMenuTile(
                     icon: Icons.logout_rounded,
-                    title: "Logout",
+                    title: context.tr("Logout"),
                     onTap: logoutDialog,
                   ),
 
@@ -482,15 +494,83 @@ class _ProfilePageState extends State<ProfilePage> {
 
                   buildMenuTile(
                     icon: Icons.delete,
-                    title: "Delete Account",
+                    title: context.tr("Delete Account"),
                     onTap: deleteAccountDialog,
                   ),
-                ],
+                    ],
+                  ),
+                ),
               ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void languageDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        final selected = context.language.locale;
+        return AlertDialog(
+          backgroundColor: const Color(0xFF1B5E20),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          title: Text(
+            context.tr("Language Settings"),
+            style: const TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
             ),
           ),
-        ],
-      ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                leading: Icon(
+                  selected == AppLocale.id
+                      ? Icons.radio_button_checked
+                      : Icons.radio_button_off,
+                  color: Colors.greenAccent,
+                ),
+                title: Text(
+                  context.tr("Bahasa Indonesia"),
+                  style: const TextStyle(color: Colors.white),
+                ),
+                onTap: () async {
+                  final language = context.language;
+                  final navigator = Navigator.of(context);
+                  await language.setLocale(AppLocale.id);
+                  if (!mounted) return;
+                  navigator.pop();
+                },
+              ),
+              ListTile(
+                leading: Icon(
+                  selected == AppLocale.en
+                      ? Icons.radio_button_checked
+                      : Icons.radio_button_off,
+                  color: Colors.greenAccent,
+                ),
+                title: Text(
+                  context.tr("English"),
+                  style: const TextStyle(color: Colors.white),
+                ),
+                onTap: () async {
+                  final language = context.language;
+                  final navigator = Navigator.of(context);
+                  await language.setLocale(AppLocale.en);
+                  if (!mounted) return;
+                  navigator.pop();
+                },
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 

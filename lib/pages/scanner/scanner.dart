@@ -1,3 +1,4 @@
+import 'package:fitguide/localization/app_language.dart';
 import 'package:fitguide/pages/scanner/scanner_camera.dart';
 import 'package:flutter/material.dart';
 
@@ -14,8 +15,8 @@ class ScannerPage extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
-        title: const Text(
-          "Scanner",
+        title: Text(
+          context.tr("Scanner"),
           style: TextStyle(
             fontSize: 22,
             fontWeight: FontWeight.bold,
@@ -54,8 +55,8 @@ class ScannerPage extends StatelessWidget {
                   color: Colors.green,
                 ),
                 const SizedBox(height: 20),
-                const Text(
-                  "Scan Gym Equipment",
+                Text(
+                  context.tr("Scan Gym Equipment"),
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
@@ -63,8 +64,10 @@ class ScannerPage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 10),
-                const Text(
-                  "Scan the barcode on the gym machine to see workout guidance.",
+                Text(
+                  context.tr(
+                    "Scan the barcode on the gym machine to see workout guidance.",
+                  ),
                   textAlign: TextAlign.center,
                   style: TextStyle(color: Colors.white70),
                 ),
@@ -89,8 +92,8 @@ class ScannerPage extends StatelessWidget {
                       ),
                       borderRadius: BorderRadius.circular(30),
                     ),
-                    child: const Text(
-                      "Start Scan",
+                    child: Text(
+                      context.tr("Start Scan"),
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,

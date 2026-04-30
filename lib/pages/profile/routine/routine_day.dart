@@ -1,4 +1,5 @@
 import 'package:fitguide/database/sqflite.dart';
+import 'package:fitguide/localization/app_language.dart';
 import 'package:flutter/material.dart';
 import 'add_exercise.dart';
 import 'exercise_list.dart';
@@ -49,16 +50,16 @@ class _RoutineDayPageState extends State<RoutineDayPage> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
-          title: const Text(
-            "Hapus Exercise",
+          title: Text(
+            context.tr("Hapus Exercise"),
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
               fontSize: 18,
             ),
           ),
-          content: const Text(
-            "Apakah anda yakin ingin menghapus exercise ini?",
+          content: Text(
+            context.tr("Apakah anda yakin ingin menghapus exercise ini?"),
             style: TextStyle(color: Colors.white70, fontSize: 16),
           ),
           actionsPadding: const EdgeInsets.only(right: 12, bottom: 8),
@@ -67,8 +68,8 @@ class _RoutineDayPageState extends State<RoutineDayPage> {
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: const Text(
-                "Tidak",
+              child: Text(
+                context.tr("Tidak"),
                 style: TextStyle(
                   color: Colors.greenAccent,
                   fontWeight: FontWeight.w500,
@@ -80,8 +81,8 @@ class _RoutineDayPageState extends State<RoutineDayPage> {
                 Navigator.pop(context);
                 await deleteExercise(id);
               },
-              child: const Text(
-                "Ya",
+              child: Text(
+                context.tr("Ya"),
                 style: TextStyle(
                   color: Colors.red,
                   fontWeight: FontWeight.w500,
@@ -114,7 +115,7 @@ class _RoutineDayPageState extends State<RoutineDayPage> {
         centerTitle: true,
         elevation: 0,
         title: Text(
-          widget.day,
+          context.tr(widget.day),
           style: const TextStyle(
             color: Colors.white,
             fontSize: 22,
@@ -144,10 +145,13 @@ class _RoutineDayPageState extends State<RoutineDayPage> {
             children: [
               Expanded(
                 child: exercises.isEmpty
-                    ? const Center(
+                    ? Center(
                         child: Text(
-                          "No Exercise Yet",
-                          style: TextStyle(color: Colors.white70, fontSize: 16),
+                          context.tr("No Exercise Yet"),
+                          style: const TextStyle(
+                            color: Colors.white70,
+                            fontSize: 16,
+                          ),
                         ),
                       )
                     : ListView.builder(
@@ -185,7 +189,7 @@ class _RoutineDayPageState extends State<RoutineDayPage> {
                               ),
 
                               title: Text(
-                                exerciseData.name,
+                                exerciseData.exercise.displayName(context),
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 17,

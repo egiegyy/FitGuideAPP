@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:fitguide/firebase_options.dart';
+import 'package:fitguide/localization/app_language.dart';
 import 'package:fitguide/services/one_signal_services.dart';
 import 'package:fitguide/utils/router.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
@@ -10,6 +11,7 @@ import 'package:animations/animations.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initializeDateFormatting('id_ID');
+  await AppLanguageController.instance.load();
   String? startupError;
 
   try {
@@ -38,72 +40,82 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (startupError != null) {
-      return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: _StartupIssueScreen(message: startupError!),
+      return AnimatedBuilder(
+        animation: AppLanguageController.instance,
+        builder: (context, _) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            home: _StartupIssueScreen(message: startupError!),
+          );
+        },
       );
     }
 
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      title: 'FitGuide Firebase',
-      theme: ThemeData(
-        useMaterial3: true,
-        brightness: Brightness.dark,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Color(0xFF4CAF50),
-          brightness: Brightness.dark,
-        ),
-        scaffoldBackgroundColor: const Color(0xFF000000),
-        canvasColor: const Color(0xFF000000),
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.black,
-          foregroundColor: Colors.white,
-          centerTitle: true,
-          iconTheme: IconThemeData(color: Colors.white, size: 24),
-          actionsIconTheme: IconThemeData(color: Colors.white, size: 24),
-          elevation: 0,
-        ),
-        dialogTheme: DialogThemeData(
-          backgroundColor: const Color(0xFF1B5E20),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-          titleTextStyle: const TextStyle(
-            color: Colors.white,
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
-          contentTextStyle: const TextStyle(
-            color: Colors.white70,
-            fontSize: 16,
-          ),
-        ),
-        textButtonTheme: TextButtonThemeData(
-          style: TextButton.styleFrom(foregroundColor: Colors.greenAccent),
-        ),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.green,
-            foregroundColor: Colors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
+    return AnimatedBuilder(
+      animation: AppLanguageController.instance,
+      builder: (context, _) {
+        return MaterialApp.router(
+          debugShowCheckedModeBanner: false,
+          title: 'FitGuide Firebase',
+          theme: ThemeData(
+            useMaterial3: true,
+            brightness: Brightness.dark,
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: Color(0xFF4CAF50),
+              brightness: Brightness.dark,
+            ),
+            scaffoldBackgroundColor: const Color(0xFF000000),
+            canvasColor: const Color(0xFF000000),
+            visualDensity: VisualDensity.adaptivePlatformDensity,
+            appBarTheme: const AppBarTheme(
+              backgroundColor: Colors.black,
+              foregroundColor: Colors.white,
+              centerTitle: true,
+              iconTheme: IconThemeData(color: Colors.white, size: 24),
+              actionsIconTheme: IconThemeData(color: Colors.white, size: 24),
+              elevation: 0,
+            ),
+            dialogTheme: DialogThemeData(
+              backgroundColor: const Color(0xFF1B5E20),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              titleTextStyle: const TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+              contentTextStyle: const TextStyle(
+                color: Colors.white70,
+                fontSize: 16,
+              ),
+            ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(foregroundColor: Colors.greenAccent),
+            ),
+            elevatedButtonTheme: ElevatedButtonThemeData(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green,
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+              ),
+            ),
+            pageTransitionsTheme: const PageTransitionsTheme(
+              builders: {
+                TargetPlatform.android: SharedAxisPageTransitionsBuilder(
+                  transitionType: SharedAxisTransitionType.horizontal,
+                ),
+                TargetPlatform.iOS: SharedAxisPageTransitionsBuilder(
+                  transitionType: SharedAxisTransitionType.horizontal,
+                ),
+              },
             ),
           ),
-        ),
-        pageTransitionsTheme: const PageTransitionsTheme(
-          builders: {
-            TargetPlatform.android: SharedAxisPageTransitionsBuilder(
-              transitionType: SharedAxisTransitionType.horizontal,
-            ),
-            TargetPlatform.iOS: SharedAxisPageTransitionsBuilder(
-              transitionType: SharedAxisTransitionType.horizontal,
-            ),
-          },
-        ),
-      ),
-      routerConfig: AppRouter.router,
+          routerConfig: AppRouter.router,
+        );
+      },
     );
   }
 }
@@ -126,8 +138,8 @@ class _StartupIssueScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'FitGuide belum bisa dijalankan di platform ini.',
+                Text(
+                  context.tr('FitGuide belum bisa dijalankan di platform ini.'),
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 28,
@@ -135,8 +147,10 @@ class _StartupIssueScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 16),
-                const Text(
-                  'Aplikasi Android tetap bisa dipakai seperti biasa. Untuk web, konfigurasi Firebase perlu ditambahkan lebih dulu.',
+                Text(
+                  context.tr(
+                    'Aplikasi Android tetap bisa dipakai seperti biasa. Untuk web, konfigurasi Firebase perlu ditambahkan lebih dulu.',
+                  ),
                   style: TextStyle(
                     color: Colors.white70,
                     fontSize: 16,

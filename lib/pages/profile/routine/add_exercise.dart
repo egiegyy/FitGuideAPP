@@ -1,4 +1,5 @@
 import 'package:fitguide/database/sqflite.dart';
+import 'package:fitguide/localization/app_language.dart';
 import 'package:fitguide/utils/ui_components.dart';
 import 'package:flutter/material.dart';
 import 'exercise_list.dart';
@@ -27,7 +28,12 @@ class _AddExercisePageState extends State<AddExercisePage> {
       // Jika sudah ada di database
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text("$exercise already exists in ${widget.day}"),
+          content: Text(
+            context.tr("add_exercise_exists", {
+              "exercise": context.tr(exercise),
+              "day": context.tr(widget.day),
+            }),
+          ),
           backgroundColor: Colors.red,
         ),
       );
@@ -35,7 +41,10 @@ class _AddExercisePageState extends State<AddExercisePage> {
       // Jika berhasil ditambahkan
       UIComponents.showSuccessSnackBar(
         context,
-        "$exercise added to ${widget.day}",
+        context.tr("add_exercise_success", {
+          "exercise": context.tr(exercise),
+          "day": context.tr(widget.day),
+        }),
       );
 
       // Tandai sebagai sudah dipilih
@@ -53,9 +62,9 @@ class _AddExercisePageState extends State<AddExercisePage> {
         backgroundColor: Colors.black,
         centerTitle: true,
         elevation: 0,
-        title: const Text(
-          "Exercise",
-          style: TextStyle(
+        title: Text(
+          context.tr("Exercise"),
+          style: const TextStyle(
             fontSize: 22,
             fontWeight: FontWeight.bold,
             color: Colors.white,
@@ -92,7 +101,7 @@ class _AddExercisePageState extends State<AddExercisePage> {
               decoration: BoxDecoration(
                 // Jika sudah dipilih, ubah warna jadi abu-abu
                 color: isSelected
-                    ? Colors.grey.withOpacity(0.3)
+                    ? Colors.grey.withValues(alpha: 0.3)
                     : Colors.white.withAlpha(13),
                 borderRadius: BorderRadius.circular(18),
                 border: Border.all(color: Colors.white24),
@@ -116,7 +125,7 @@ class _AddExercisePageState extends State<AddExercisePage> {
 
                 // Text ikut redup jika sudah dipilih
                 title: Text(
-                  exercise.name,
+                  exercise.exercise.displayName(context),
                   style: TextStyle(
                     color: isSelected ? Colors.white38 : Colors.white,
                     fontWeight: FontWeight.w600,

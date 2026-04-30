@@ -1,3 +1,4 @@
+import 'package:fitguide/localization/app_language.dart';
 import 'package:fitguide/pages/workout/exercise_detail_page.dart';
 import 'package:fitguide/utils/exercise_data.dart';
 import 'package:flutter/material.dart';
@@ -19,8 +20,8 @@ class _PushWorkoutState extends State<PushWorkout> {
         elevation: 0,
         backgroundColor: Colors.black,
         centerTitle: true,
-        title: const Text(
-          "Package",
+        title: Text(
+          context.tr("Package"),
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
@@ -74,8 +75,8 @@ class _PushWorkoutState extends State<PushWorkout> {
                 const SizedBox(height: 14),
 
                 /// TITLE
-                const Text(
-                  "Push Workout",
+                Text(
+                  context.tr("Push Workout"),
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -86,8 +87,8 @@ class _PushWorkoutState extends State<PushWorkout> {
                 const SizedBox(height: 4),
 
                 /// CREATOR
-                const Text(
-                  "Created by FitGuide",
+                Text(
+                  context.tr("Created by FitGuide"),
                   style: TextStyle(
                     color: Colors.white70,
                     fontWeight: FontWeight.w500,
@@ -129,8 +130,8 @@ class _PushWorkoutState extends State<PushWorkout> {
                       ),
                     ),
 
-                    title: const Text(
-                      "Chest Press",
+                    title: Text(
+                      context.tr("Chest Press"),
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 18,
@@ -165,14 +166,14 @@ class _PushWorkoutState extends State<PushWorkout> {
                           ),
                           borderRadius: BorderRadius.all(Radius.circular(20)),
                         ),
-                        child: const Padding(
-                          padding: EdgeInsets.symmetric(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
                             horizontal: 18,
                             vertical: 8,
                           ),
                           child: Text(
-                            "More",
-                            style: TextStyle(
+                            context.tr("More"),
+                            style: const TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                             ),
@@ -215,8 +216,8 @@ class _PushWorkoutState extends State<PushWorkout> {
                       ),
                     ),
 
-                    title: const Text(
-                      "Close Grip Chest Press",
+                    title: Text(
+                      context.tr("Close Grip Chest Press"),
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 18,
@@ -251,14 +252,14 @@ class _PushWorkoutState extends State<PushWorkout> {
                           ),
                           borderRadius: BorderRadius.all(Radius.circular(20)),
                         ),
-                        child: const Padding(
-                          padding: EdgeInsets.symmetric(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
                             horizontal: 18,
                             vertical: 8,
                           ),
                           child: Text(
-                            "More",
-                            style: TextStyle(
+                            context.tr("More"),
+                            style: const TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                             ),

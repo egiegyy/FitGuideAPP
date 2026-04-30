@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:fitguide/database/sqflite.dart';
+import 'package:fitguide/localization/app_language.dart';
 import 'package:fitguide/pages/workout/exercise_detail_page.dart';
 import 'package:fitguide/utils/exercise_data.dart';
 import 'package:flutter/material.dart';
@@ -85,7 +86,7 @@ class _ScannerCameraPageState extends State<ScannerCameraPage>
       } else {
         if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Halaman alat belum tersedia")),
+          SnackBar(content: Text(context.tr("Halaman alat belum tersedia"))),
         );
         isScanning = false;
         await _controller.start();
@@ -93,7 +94,7 @@ class _ScannerCameraPageState extends State<ScannerCameraPage>
     } else {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Alat tidak ditemukan di FitGuide")),
+        SnackBar(content: Text(context.tr("Alat tidak ditemukan di FitGuide"))),
       );
       await Future.delayed(const Duration(milliseconds: 1200));
       isScanning = false;
@@ -109,8 +110,8 @@ class _ScannerCameraPageState extends State<ScannerCameraPage>
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
-        title: const Text(
-          "Scanner",
+        title: Text(
+          context.tr("Scanner"),
           style: TextStyle(
             fontSize: 22,
             fontWeight: FontWeight.bold,
@@ -193,14 +194,14 @@ class _ScannerCameraPageState extends State<ScannerCameraPage>
               ),
             ),
 
-            const Positioned(
+            Positioned(
               bottom: 120,
               left: 0,
               right: 0,
               child: Center(
                 child: Text(
-                  "Scan the barcode",
-                  style: TextStyle(color: Colors.green, fontSize: 18),
+                  context.tr("Scan the barcode"),
+                  style: const TextStyle(color: Colors.green, fontSize: 18),
                 ),
               ),
             ),

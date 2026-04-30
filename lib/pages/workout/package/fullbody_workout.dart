@@ -1,3 +1,4 @@
+import 'package:fitguide/localization/app_language.dart';
 import 'package:fitguide/pages/workout/exercise_detail_page.dart';
 import 'package:fitguide/utils/exercise_data.dart';
 import 'package:flutter/material.dart';
@@ -19,8 +20,8 @@ class _FullBodyWorkoutState extends State<FullBodyWorkout> {
         elevation: 0,
         centerTitle: true,
         backgroundColor: Colors.black,
-        title: const Text(
-          "Package",
+        title: Text(
+          context.tr("Package"),
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
@@ -73,8 +74,8 @@ class _FullBodyWorkoutState extends State<FullBodyWorkout> {
                 const SizedBox(height: 14),
 
                 /// TITLE
-                const Text(
-                  "Full Body Workout",
+                Text(
+                  context.tr("Full Body Workout"),
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -85,8 +86,8 @@ class _FullBodyWorkoutState extends State<FullBodyWorkout> {
                 const SizedBox(height: 4),
 
                 /// CREATOR
-                const Text(
-                  "Created by FitGuide",
+                Text(
+                  context.tr("Created by FitGuide"),
                   style: TextStyle(
                     color: Colors.white70,
                     fontWeight: FontWeight.w500,
@@ -128,8 +129,8 @@ class _FullBodyWorkoutState extends State<FullBodyWorkout> {
                       ),
                     ),
 
-                    title: const Text(
-                      "Chest Press",
+                    title: Text(
+                      context.tr("Chest Press"),
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 18,
@@ -165,14 +166,14 @@ class _FullBodyWorkoutState extends State<FullBodyWorkout> {
                           ),
                           borderRadius: BorderRadius.all(Radius.circular(20)),
                         ),
-                        child: const Padding(
-                          padding: EdgeInsets.symmetric(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
                             horizontal: 18,
                             vertical: 8,
                           ),
                           child: Text(
-                            "More",
-                            style: TextStyle(
+                            context.tr("More"),
+                            style: const TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                             ),
@@ -215,8 +216,8 @@ class _FullBodyWorkoutState extends State<FullBodyWorkout> {
                       ),
                     ),
 
-                    title: const Text(
-                      "Lat Pulldown",
+                    title: Text(
+                      context.tr("Lat Pulldown"),
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 18,
@@ -251,14 +252,14 @@ class _FullBodyWorkoutState extends State<FullBodyWorkout> {
                           ),
                           borderRadius: BorderRadius.all(Radius.circular(20)),
                         ),
-                        child: const Padding(
-                          padding: EdgeInsets.symmetric(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
                             horizontal: 18,
                             vertical: 8,
                           ),
                           child: Text(
-                            "More",
-                            style: TextStyle(
+                            context.tr("More"),
+                            style: const TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                             ),
@@ -301,8 +302,8 @@ class _FullBodyWorkoutState extends State<FullBodyWorkout> {
                       ),
                     ),
 
-                    title: const Text(
-                      "Leg Press",
+                    title: Text(
+                      context.tr("Leg Press"),
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 18,
@@ -337,14 +338,14 @@ class _FullBodyWorkoutState extends State<FullBodyWorkout> {
                           ),
                           borderRadius: BorderRadius.all(Radius.circular(20)),
                         ),
-                        child: const Padding(
-                          padding: EdgeInsets.symmetric(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
                             horizontal: 18,
                             vertical: 8,
                           ),
                           child: Text(
-                            "More",
-                            style: TextStyle(
+                            context.tr("More"),
+                            style: const TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                             ),

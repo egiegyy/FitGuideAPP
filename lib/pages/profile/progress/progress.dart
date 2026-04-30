@@ -1,6 +1,7 @@
 import 'package:fitguide/pages/profile/progress/progress_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:fitguide/controller/progress_controller.dart';
+import 'package:fitguide/localization/app_language.dart';
 import 'package:fitguide/model/progress_model.dart';
 import 'package:fitguide/utils/ui_components.dart';
 
@@ -21,7 +22,7 @@ class _ProgressState extends State<Progress> {
   ChartRange selectedRange = ChartRange.week;
 
   String formatDate(DateTime date) {
-    const months = [
+    const englishMonths = [
       "January",
       "February",
       "March",
@@ -35,6 +36,23 @@ class _ProgressState extends State<Progress> {
       "November",
       "December",
     ];
+    const indonesianMonths = [
+      "Januari",
+      "Februari",
+      "Maret",
+      "April",
+      "Mei",
+      "Juni",
+      "Juli",
+      "Agustus",
+      "September",
+      "Oktober",
+      "November",
+      "Desember",
+    ];
+    final months = AppLanguageController.instance.isIndonesian
+        ? indonesianMonths
+        : englishMonths;
     return "${date.day} ${months[date.month - 1]} ${date.year}";
   }
 
@@ -96,7 +114,9 @@ class _ProgressState extends State<Progress> {
               surface: Color(0xFF0A0F0A),
               onSurface: Colors.white,
             ),
-            dialogBackgroundColor: const Color(0xFF0A0F0A),
+            dialogTheme: const DialogThemeData(
+              backgroundColor: Color(0xFF0A0F0A),
+            ),
           ),
           child: child!,
         );
@@ -114,7 +134,10 @@ class _ProgressState extends State<Progress> {
     if (exerciseController.text.isEmpty ||
         weightController.text.isEmpty ||
         repsController.text.isEmpty) {
-      UIComponents.showErrorSnackBar(context, "All fields are required");
+      UIComponents.showErrorSnackBar(
+        context,
+        context.tr("All fields are required"),
+      );
       return;
     }
 
@@ -124,14 +147,16 @@ class _ProgressState extends State<Progress> {
       reps: repsController.text,
       date: selectedDate.toString().split(" ")[0],
     );
+    final successMessage = context.tr("Workout saved successfully");
 
     await ProgressController.insertProgress(progress);
+    if (!mounted) return;
 
     exerciseController.clear();
     weightController.clear();
     repsController.clear();
 
-    UIComponents.showSuccessSnackBar(context, "Workout saved successfully");
+    UIComponents.showSuccessSnackBar(context, successMessage);
 
     setState(() {});
   }
@@ -222,7 +247,7 @@ class _ProgressState extends State<Progress> {
             controller: exerciseController,
             style: const TextStyle(color: Colors.white),
             decoration: inputDecoration(
-              hint: "Exercise",
+              hint: context.tr("Exercise"),
               icon: Icons.fitness_center,
             ),
           ),
@@ -231,14 +256,17 @@ class _ProgressState extends State<Progress> {
             controller: weightController,
             keyboardType: TextInputType.number,
             style: const TextStyle(color: Colors.white),
-            decoration: inputDecoration(hint: "Weight (kg)", icon: Icons.scale),
+            decoration: inputDecoration(
+              hint: context.tr("Weight (kg)"),
+              icon: Icons.scale,
+            ),
           ),
           const SizedBox(height: 12),
           TextFormField(
             controller: repsController,
             keyboardType: TextInputType.number,
             style: const TextStyle(color: Colors.white),
-            decoration: inputDecoration(hint: "Reps", icon: Icons.repeat),
+            decoration: inputDecoration(hint: context.tr("Reps"), icon: Icons.repeat),
           ),
           const SizedBox(height: 12),
           Container(
@@ -291,10 +319,10 @@ class _ProgressState extends State<Progress> {
                 child: InkWell(
                   borderRadius: BorderRadius.circular(20),
                   onTap: saveProgress,
-                  child: const Center(
+                  child: Center(
                     child: Text(
-                      "Save Workout",
-                      style: TextStyle(
+                      context.tr("Save Workout"),
+                      style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
@@ -348,7 +376,10 @@ class _ProgressState extends State<Progress> {
                     ),
                   ),
                   subtitle: Text(
-                    "${e.weight} kg - ${e.reps} reps",
+                    context.tr("progress_entry_subtitle", {
+                      "weight": e.weight,
+                      "reps": e.reps,
+                    }),
                     style: const TextStyle(color: Colors.white70),
                   ),
                   trailing: Row(
@@ -427,10 +458,10 @@ class _ProgressState extends State<Progress> {
                 final data = snapshot.data ?? [];
                 return ListView(
                   children: [
-                    const Center(
+                    Center(
                       child: Text(
-                        "Workout Progress",
-                        style: TextStyle(
+                        context.tr("Workout Progress"),
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 22,
                           color: Colors.white,
@@ -469,8 +500,8 @@ class _ProgressState extends State<Progress> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(18),
           ),
-          title: const Text(
-            "Edit Workout",
+          title: Text(
+            context.tr("Edit Workout"),
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           ),
           content: Column(
@@ -480,7 +511,7 @@ class _ProgressState extends State<Progress> {
                 controller: exerciseEdit,
                 style: const TextStyle(color: Colors.white),
                 decoration: inputDecoration(
-                  hint: "Exercise",
+                  hint: context.tr("Exercise"),
                   icon: Icons.fitness_center,
                 ),
               ),
@@ -488,20 +519,26 @@ class _ProgressState extends State<Progress> {
               TextFormField(
                 controller: weightEdit,
                 style: const TextStyle(color: Colors.white),
-                decoration: inputDecoration(hint: "Weight", icon: Icons.scale),
+                decoration: inputDecoration(
+                  hint: context.tr("Weight"),
+                  icon: Icons.scale,
+                ),
               ),
               const SizedBox(height: 10),
               TextFormField(
                 controller: repsEdit,
                 style: const TextStyle(color: Colors.white),
-                decoration: inputDecoration(hint: "Reps", icon: Icons.repeat),
+                decoration: inputDecoration(
+                  hint: context.tr("Reps"),
+                  icon: Icons.repeat,
+                ),
               ),
             ],
           ),
           actions: [
             TextButton(
-              child: const Text(
-                "Cancel",
+              child: Text(
+                context.tr("Cancel"),
                 style: TextStyle(color: Colors.greenAccent),
               ),
               onPressed: () => Navigator.pop(context),
@@ -517,7 +554,10 @@ class _ProgressState extends State<Progress> {
                   borderRadius: BorderRadius.circular(20),
                 ),
               ),
-              child: const Text("Save", style: TextStyle(color: Colors.white)),
+              child: Text(
+                context.tr("Save"),
+                style: const TextStyle(color: Colors.white),
+              ),
               onPressed: () async {
                 final navigator = Navigator.of(context);
                 await ProgressController.updateProgress(

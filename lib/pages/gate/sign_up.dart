@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fitguide/localization/app_language.dart';
 import 'package:fitguide/services/auth_service.dart';
 import 'package:fitguide/utils/animation_utils.dart';
 import 'package:fitguide/utils/ui_components.dart';
@@ -47,7 +48,7 @@ class _SignUpState extends State<SignUp> {
 
         UIComponents.showSuccessSnackBar(
           context,
-          "Registrasi berhasil. Silakan masuk untuk melanjutkan.",
+          context.tr("Registrasi berhasil. Silakan masuk untuk melanjutkan."),
         );
 
         usernameController.clear();
@@ -62,18 +63,18 @@ class _SignUpState extends State<SignUp> {
         );
       } on FirebaseAuthException catch (e) {
         if (!mounted) return;
-        String message = "Registrasi gagal";
+        String message = context.tr("Registrasi gagal");
         if (e.code == 'email-already-in-use') {
-          message = "Email sudah digunakan";
+          message = context.tr("Email sudah digunakan");
         } else if (e.code == 'weak-password') {
-          message = "Password terlalu lemah";
+          message = context.tr("Password terlalu lemah");
         }
         UIComponents.showErrorSnackBar(context, message);
       } catch (_) {
         if (!mounted) return;
         UIComponents.showErrorSnackBar(
           context,
-          "Terjadi kesalahan saat registrasi",
+          context.tr("Terjadi kesalahan saat registrasi"),
         );
       } finally {
         if (mounted) {
@@ -99,8 +100,8 @@ class _SignUpState extends State<SignUp> {
       appBar: AppBar(
         backgroundColor: Colors.black,
         centerTitle: true,
-        title: const Text(
-          "Sign Up",
+        title: Text(
+          context.tr("Sign Up"),
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
@@ -137,12 +138,12 @@ class _SignUpState extends State<SignUp> {
                           children: [
                             UIComponents.animatedTextField(
                               controller: usernameController,
-                              label: "Username",
-                              hint: "Username",
+                              label: context.tr("Username"),
+                              hint: context.tr("Username"),
                               icon: Icons.person,
                               validator: (value) {
                                 if (value == null || value.trim().isEmpty) {
-                                  return "Username cannot be empty";
+                                  return context.tr("Username cannot be empty");
                                 }
                                 return null;
                               },
@@ -151,15 +152,15 @@ class _SignUpState extends State<SignUp> {
 
                             UIComponents.animatedTextField(
                               controller: emailController,
-                              label: "Email",
-                              hint: "Email",
+                              label: context.tr("Email"),
+                              hint: context.tr("Email"),
                               icon: Icons.email_rounded,
                               validator: (value) {
                                 if (value == null || value.trim().isEmpty) {
-                                  return "Email cannot be empty";
+                                  return context.tr("Email cannot be empty");
                                 }
                                 if (!value.contains("@gmail.com")) {
-                                  return "Email is not valid";
+                                  return context.tr("Email is not valid");
                                 }
                                 return null;
                               },
@@ -168,8 +169,8 @@ class _SignUpState extends State<SignUp> {
 
                             UIComponents.animatedTextField(
                               controller: passwordController,
-                              label: "Password",
-                              hint: "Password",
+                              label: context.tr("Password"),
+                              hint: context.tr("Password"),
                               icon: Icons.lock,
                               obscureText: !isPasswordVisible,
                               suffixIcon: IconButton(
@@ -187,10 +188,12 @@ class _SignUpState extends State<SignUp> {
                               ),
                               validator: (value) {
                                 if (value == null || value.trim().isEmpty) {
-                                  return "Password cannot be empty";
+                                  return context.tr("Password cannot be empty");
                                 }
                                 if (value.trim().length < 6) {
-                                  return "Password must be at least 6 characters";
+                                  return context.tr(
+                                    "Password must be at least 6 characters",
+                                  );
                                 }
                                 return null;
                               },
@@ -199,8 +202,8 @@ class _SignUpState extends State<SignUp> {
 
                             UIComponents.animatedTextField(
                               controller: confirmPasswordController,
-                              label: "Confirm Password",
-                              hint: "Confirm Password",
+                              label: context.tr("Confirm Password"),
+                              hint: context.tr("Confirm Password"),
                               icon: Icons.lock,
                               obscureText: !isConfirmPasswordVisible,
                               suffixIcon: IconButton(
@@ -219,10 +222,12 @@ class _SignUpState extends State<SignUp> {
                               ),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return "Confirm password cannot be empty";
+                                  return context.tr(
+                                    "Confirm password cannot be empty",
+                                  );
                                 }
                                 if (value != passwordController.text) {
-                                  return "Password does not match";
+                                  return context.tr("Password does not match");
                                 }
                                 return null;
                               },
@@ -230,7 +235,7 @@ class _SignUpState extends State<SignUp> {
                             const SizedBox(height: 20),
 
                             UIComponents.animatedButton(
-                              text: "Sign Up",
+                              text: context.tr("Sign Up"),
                               onPressed: register,
                               isLoading: isLoading,
                             ),
@@ -239,8 +244,8 @@ class _SignUpState extends State<SignUp> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                const Text(
-                                  "Already have account? ",
+                                Text(
+                                  context.tr("Already have account? "),
                                   style: TextStyle(color: Colors.white),
                                 ),
                                 TextButton(
@@ -259,8 +264,8 @@ class _SignUpState extends State<SignUp> {
                                       (route) => false,
                                     );
                                   },
-                                  child: const Text(
-                                    "Sign In",
+                                  child: Text(
+                                    context.tr("Sign In"),
                                     style: TextStyle(
                                       color: Colors.green,
                                       fontWeight: FontWeight.bold,

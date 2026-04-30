@@ -1,3 +1,4 @@
+import 'package:fitguide/localization/app_language.dart';
 import 'package:fitguide/pages/workout/machine/chest_press_machine.dart';
 import 'package:fitguide/pages/workout/machine/lat_pulldown_machine.dart';
 import 'package:fitguide/pages/workout/machine/leg_press_machine.dart';
@@ -66,7 +67,7 @@ class _EquipmentState extends State<Equipment> {
                 ),
 
                 title: Text(
-                  kategoriLatihan[index],
+                  context.tr(kategoriLatihan[index]),
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 22,
@@ -97,8 +98,8 @@ class _EquipmentState extends State<Equipment> {
                       borderRadius: BorderRadius.circular(20),
                     ),
 
-                    child: const Text(
-                      "More",
+                    child: Text(
+                      context.tr("More"),
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,

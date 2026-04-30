@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:fitguide/database/preferance.dart';
 import 'package:fitguide/database/sqflite.dart';
+import 'package:fitguide/localization/app_language.dart';
 import 'package:fitguide/pages/profile/routine/routine.dart';
 import 'package:fitguide/pages/profile/routine/routine_day.dart';
 import 'package:fitguide/pages/workout/package/pull_workout.dart';
@@ -119,7 +120,7 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.black.withValues(alpha: 0.6),
         elevation: 0,
         centerTitle: true,
-        title: Text("Home", style: pageTitle),
+        title: Text(context.tr("Home"), style: pageTitle),
       ),
       body: Container(
         decoration: const BoxDecoration(
@@ -145,14 +146,17 @@ class _HomePageState extends State<HomePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Halo $username,",
+                      context.tr("greeting", {"username": username}),
                       style: const TextStyle(
                         color: Color(0xFF66BB6A),
                         fontWeight: FontWeight.bold,
                         fontSize: 25,
                       ),
                     ),
-                    Text("Let's be better 1% everyday!", style: bodyText),
+                    Text(
+                      context.tr("Let's be better 1% everyday!"),
+                      style: bodyText,
+                    ),
                   ],
                 ),
                 const SizedBox(height: 30),
@@ -234,7 +238,7 @@ class _HomePageState extends State<HomePage> {
                 const SizedBox(height: 25),
 
                 /// ROUTINE
-                Text("Your Routine", style: sectionTitle),
+                Text(context.tr("Your Routine"), style: sectionTitle),
                 const SizedBox(height: 10),
 
                 routineDays.isEmpty
@@ -249,7 +253,7 @@ class _HomePageState extends State<HomePage> {
                         child: Column(
                           children: [
                             Text(
-                              "There is no Routine",
+                              context.tr("There is no Routine"),
                               style: bodyText.copyWith(color: Colors.white),
                             ),
                             const SizedBox(height: 10),
@@ -280,7 +284,10 @@ class _HomePageState extends State<HomePage> {
                                   );
                                   loadRoutine();
                                 },
-                                child: Text("Add Routine", style: buttonText),
+                                child: Text(
+                                  context.tr("Add Routine"),
+                                  style: buttonText,
+                                ),
                               ),
                             ),
                           ],
@@ -314,7 +321,7 @@ class _HomePageState extends State<HomePage> {
                                     children: [
                                       Expanded(
                                         child: Text(
-                                          day,
+                                          context.tr(day),
                                           style: cardTitle,
                                           overflow: TextOverflow.ellipsis,
                                         ),
@@ -336,7 +343,7 @@ class _HomePageState extends State<HomePage> {
                 const SizedBox(height: 25),
 
                 /// PACKAGE
-                Text("Package Exercise", style: sectionTitle),
+                Text(context.tr("Package Exercise"), style: sectionTitle),
                 const SizedBox(height: 10),
                 Container(
                   decoration: BoxDecoration(
@@ -348,7 +355,7 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       _packageTile(
                         context,
-                        "Push Work out",
+                        context.tr("Push Work out"),
                         "assets/images/exercises/push/profile_push.png",
                         const PushWorkout(),
                       ),
@@ -359,7 +366,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       _packageTile(
                         context,
-                        "Pull Workout",
+                        context.tr("Pull Workout"),
                         "assets/images/exercises/pull/profile_pull.png",
                         const PullWorkout(),
                       ),
@@ -393,7 +400,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                         );
                       },
-                      child: Text("See More", style: buttonText),
+                      child: Text(context.tr("See More"), style: buttonText),
                     ),
                   ),
                 ),
@@ -434,7 +441,9 @@ class _HomePageState extends State<HomePage> {
       ),
       title: Text(title, style: cardTitle),
       subtitle: Text(
-        "Push Pull Leg is a workout split that groups exercises based on movement patterns.",
+        context.tr(
+          "Push Pull Leg is a workout split that groups exercises based on movement patterns.",
+        ),
         style: bodyText,
         maxLines: 2,
         overflow: TextOverflow.ellipsis,
@@ -446,8 +455,8 @@ class _HomePageState extends State<HomePage> {
             MaterialPageRoute(builder: (context) => page),
           );
         },
-        child: const Text(
-          "More",
+        child: Text(
+          context.tr("More"),
           style: TextStyle(
             color: Color(0xFF66BB6A),
             fontWeight: FontWeight.bold,

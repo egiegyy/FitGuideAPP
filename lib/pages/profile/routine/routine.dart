@@ -1,4 +1,5 @@
 import 'package:fitguide/database/sqflite.dart';
+import 'package:fitguide/localization/app_language.dart';
 import 'package:fitguide/pages/profile/routine/add_exercise.dart';
 import 'package:flutter/material.dart';
 import 'routine_day.dart';
@@ -45,7 +46,7 @@ class _MyRoutineState extends State<MyRoutine> {
 
     if (availableDays.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("All days already have routine")),
+        SnackBar(content: Text(context.tr("All days already have routine"))),
       );
       return;
     }
@@ -58,15 +59,18 @@ class _MyRoutineState extends State<MyRoutine> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(18),
           ),
-          title: const Text(
-            "Select Day",
+          title: Text(
+            context.tr("Select Day"),
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: availableDays.map((d) {
               return ListTile(
-                title: Text(d, style: const TextStyle(color: Colors.white)),
+                title: Text(
+                  context.tr(d),
+                  style: const TextStyle(color: Colors.white),
+                ),
                 onTap: () {
                   Navigator.pop(context, d);
                 },
@@ -128,9 +132,9 @@ class _MyRoutineState extends State<MyRoutine> {
         backgroundColor: Colors.black,
         elevation: 0,
         centerTitle: true,
-        title: const Text(
-          "Routine",
-          style: TextStyle(
+        title: Text(
+          context.tr("Routine"),
+          style: const TextStyle(
             fontSize: 22,
             fontWeight: FontWeight.bold,
             color: Colors.white,
@@ -191,7 +195,7 @@ class _MyRoutineState extends State<MyRoutine> {
 
                                   children: [
                                     Text(
-                                      day,
+                                      context.tr(day),
                                       style: const TextStyle(
                                         color: Color(0xFF66BB6A),
                                         fontWeight: FontWeight.bold,

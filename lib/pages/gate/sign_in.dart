@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fitguide/localization/app_language.dart';
 import 'package:fitguide/pages/gate/sign_up.dart';
 import 'package:fitguide/services/auth_service.dart';
 import 'package:fitguide/utils/animation_utils.dart';
@@ -36,16 +37,19 @@ class _SignInState extends State<SignIn> {
         }
       } on FirebaseAuthException catch (e) {
         if (!mounted) return;
-        String message = "Email atau password salah";
+        String message = context.tr("Email atau password salah");
         if (e.code == 'user-not-found') {
-          message = "Akun tidak ditemukan";
+          message = context.tr("Akun tidak ditemukan");
         } else if (e.code == 'wrong-password') {
-          message = "Password salah";
+          message = context.tr("Password salah");
         }
         UIComponents.showErrorSnackBar(context, message);
       } catch (_) {
         if (!mounted) return;
-        UIComponents.showErrorSnackBar(context, "Terjadi kesalahan saat login");
+        UIComponents.showErrorSnackBar(
+          context,
+          context.tr("Terjadi kesalahan saat login"),
+        );
       } finally {
         if (mounted) {
           setState(() => isLoading = false);
@@ -68,7 +72,7 @@ class _SignInState extends State<SignIn> {
       if (!mounted) return;
       UIComponents.showErrorSnackBar(
         context,
-        "Terjadi kesalahan saat login Google",
+        context.tr("Terjadi kesalahan saat login Google"),
       );
     } finally {
       if (mounted) {
@@ -91,8 +95,8 @@ class _SignInState extends State<SignIn> {
       appBar: AppBar(
         backgroundColor: Colors.black,
         centerTitle: true,
-        title: const Text(
-          "Sign In",
+        title: Text(
+          context.tr("Sign In"),
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
@@ -127,15 +131,15 @@ class _SignInState extends State<SignIn> {
                           children: [
                             UIComponents.animatedTextField(
                               controller: emailController,
-                              label: "Email",
-                              hint: "Email",
+                              label: context.tr("Email"),
+                              hint: context.tr("Email"),
                               icon: Icons.email_rounded,
                               validator: (value) {
                                 if (value == null || value.trim().isEmpty) {
-                                  return "Email cannot be empty";
+                                  return context.tr("Email cannot be empty");
                                 }
                                 if (!value.contains("@gmail.com")) {
-                                  return "Email is not valid";
+                                  return context.tr("Email is not valid");
                                 }
                                 return null;
                               },
@@ -145,8 +149,8 @@ class _SignInState extends State<SignIn> {
                             /// PASSWORD
                             UIComponents.animatedTextField(
                               controller: passwordController,
-                              label: "Password",
-                              hint: "Password",
+                              label: context.tr("Password"),
+                              hint: context.tr("Password"),
                               icon: Icons.lock,
                               obscureText: !isPasswordVisible,
                               suffixIcon: IconButton(
@@ -164,10 +168,12 @@ class _SignInState extends State<SignIn> {
                               ),
                               validator: (value) {
                                 if (value == null || value.trim().isEmpty) {
-                                  return "Password cannot be empty";
+                                  return context.tr("Password cannot be empty");
                                 }
                                 if (value.trim().length < 6) {
-                                  return "Password must be at least 6 characters";
+                                  return context.tr(
+                                    "Password must be at least 6 characters",
+                                  );
                                 }
                                 return null;
                               },
@@ -176,7 +182,7 @@ class _SignInState extends State<SignIn> {
 
                             /// SIGN IN BUTTON
                             UIComponents.animatedButton(
-                              text: "Sign In",
+                              text: context.tr("Sign In"),
                               onPressed: login,
                               isLoading: isLoading,
                             ),
@@ -198,8 +204,8 @@ class _SignInState extends State<SignIn> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                const Text(
-                                  "Don't have account? ",
+                                Text(
+                                  context.tr("Don't have account? "),
                                   style: TextStyle(color: Colors.white),
                                 ),
                                 TextButton(
@@ -218,8 +224,8 @@ class _SignInState extends State<SignIn> {
                                       (route) => false,
                                     );
                                   },
-                                  child: const Text(
-                                    "Sign Up",
+                                  child: Text(
+                                    context.tr("Sign Up"),
                                     style: TextStyle(
                                       color: Colors.green,
                                       fontWeight: FontWeight.bold,

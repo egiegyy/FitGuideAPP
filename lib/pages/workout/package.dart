@@ -1,3 +1,4 @@
+import 'package:fitguide/localization/app_language.dart';
 import 'package:fitguide/pages/workout/package/fullbody_workout.dart';
 import 'package:fitguide/pages/workout/package/leg_workout.dart';
 import 'package:fitguide/pages/workout/package/pull_workout.dart';
@@ -62,7 +63,7 @@ class Package extends StatelessWidget {
           ),
         ),
         title: Text(
-          title,
+          context.tr(title),
           style: const TextStyle(
             color: Colors.white,
             fontSize: 22,
@@ -84,8 +85,8 @@ class Package extends StatelessWidget {
               ),
               borderRadius: BorderRadius.circular(20),
             ),
-            child: const Text(
-              "More",
+            child: Text(
+              context.tr("More"),
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,

@@ -1,3 +1,4 @@
+import 'package:fitguide/localization/app_language.dart';
 import 'package:fitguide/pages/workout/exercise_detail_page.dart';
 import 'package:fitguide/utils/exercise_data.dart';
 import 'package:flutter/material.dart';
@@ -19,8 +20,8 @@ class _LegPressMachineState extends State<LegPressMachine> {
         backgroundColor: Colors.black,
         elevation: 0,
         centerTitle: true,
-        title: const Text(
-          "Workout",
+        title: Text(
+          context.tr("Workout"),
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 24,
@@ -60,8 +61,8 @@ class _LegPressMachineState extends State<LegPressMachine> {
 
                 const SizedBox(height: 20),
 
-                const Text(
-                  "Leg Press Machine",
+                Text(
+                  context.tr("Leg Press Machine"),
                   style: TextStyle(
                     color: Color(0xFF66BB6A),
                     fontSize: 24,
@@ -80,16 +81,18 @@ class _LegPressMachineState extends State<LegPressMachine> {
                     border: Border.all(color: Colors.white24),
                   ),
 
-                  child: const Text(
-                    "A gym tool for strengthening leg muscles by pushing weights with the legs in a seated or semi-reclining position. This exercise targets the quadriceps as the primary muscle, while also engaging the glutes and hamstrings as supporting muscles.",
+                  child: Text(
+                    context.tr(
+                      "A gym tool for strengthening leg muscles by pushing weights with the legs in a seated or semi-reclining position. This exercise targets the quadriceps as the primary muscle, while also engaging the glutes and hamstrings as supporting muscles.",
+                    ),
                     style: TextStyle(color: Colors.white70, fontSize: 15),
                   ),
                 ),
 
                 const SizedBox(height: 25),
 
-                const Text(
-                  "Exercise",
+                Text(
+                  context.tr("Exercise"),
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -136,8 +139,8 @@ class _LegPressMachineState extends State<LegPressMachine> {
                       ),
                     ),
 
-                    title: const Text(
-                      "Leg Press",
+                    title: Text(
+                      context.tr("Leg Press"),
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 18,
@@ -158,8 +161,8 @@ class _LegPressMachineState extends State<LegPressMachine> {
                         borderRadius: BorderRadius.circular(20),
                       ),
 
-                      child: const Text(
-                        "More",
+                      child: Text(
+                        context.tr("More"),
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -208,8 +211,8 @@ class _LegPressMachineState extends State<LegPressMachine> {
                       ),
                     ),
 
-                    title: const Text(
-                      "Leg Press Calf Raise",
+                    title: Text(
+                      context.tr("Leg Press Calf Raise"),
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 18,
@@ -230,8 +233,8 @@ class _LegPressMachineState extends State<LegPressMachine> {
                         borderRadius: BorderRadius.circular(20),
                       ),
 
-                      child: const Text(
-                        "More",
+                      child: Text(
+                        context.tr("More"),
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,

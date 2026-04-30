@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fitguide/localization/app_language.dart';
 import 'package:fitguide/services/auth_service.dart';
 import 'package:fitguide/services/user_service.dart';
 import 'package:flutter/material.dart';
@@ -73,13 +74,17 @@ class _EditProfilePageState extends State<EditProfilePage> {
     if (username.isEmpty) {
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(const SnackBar(content: Text('Username cannot be empty')));
+      ).showSnackBar(
+        SnackBar(content: Text(context.tr('Username cannot be empty'))),
+      );
       return;
     }
 
     if (password.isNotEmpty && password.length < 6) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Password must be at least 6 characters')),
+        SnackBar(
+          content: Text(context.tr('Password must be at least 6 characters')),
+        ),
       );
       return;
     }
@@ -87,7 +92,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
     if (password.isNotEmpty && password != confirmPassword) {
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(const SnackBar(content: Text('Password does not match')));
+      ).showSnackBar(
+        SnackBar(content: Text(context.tr('Password does not match'))),
+      );
       return;
     }
 
@@ -108,7 +115,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(const SnackBar(content: Text('Profile updated')));
+      ).showSnackBar(SnackBar(content: Text(context.tr('Profile updated'))));
 
       Navigator.pop(context, true);
     } on FirebaseAuthException catch (e) {
@@ -122,7 +129,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(const SnackBar(content: Text('Failed to update profile')));
+      ).showSnackBar(
+        SnackBar(content: Text(context.tr('Failed to update profile'))),
+      );
     } finally {
       if (mounted) {
         setState(() => _isSaving = false);
@@ -167,8 +176,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Edit Profile',
+        title: Text(
+          context.tr('Edit Profile'),
           style: TextStyle(
             color: Colors.white,
             fontSize: 22,
@@ -199,7 +208,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 controller: _usernameController,
                 style: const TextStyle(color: Colors.white),
                 decoration: _inputDecoration(
-                  hint: 'Username',
+                  hint: context.tr('Username'),
                   icon: Icons.person_outline_rounded,
                 ),
               ),
@@ -215,8 +224,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Email',
+                    Text(
+                      context.tr('Email'),
                       style: TextStyle(
                         color: Colors.white70,
                         fontWeight: FontWeight.w600,
@@ -239,7 +248,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
               _buildPasswordField(
                 controller: _passwordController,
-                hint: 'New Password (Optional)',
+                hint: context.tr('New Password (Optional)'),
                 obscure: _obscurePassword,
                 toggle: () {
                   setState(() {
@@ -253,7 +262,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
               _buildPasswordField(
                 controller: _confirmPasswordController,
-                hint: 'Confirm Password',
+                hint: context.tr('Confirm Password'),
                 obscure: _obscureConfirmPassword,
                 toggle: () {
                   setState(() {
@@ -291,8 +300,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                   ),
                                 ),
                               )
-                            : const Text(
-                                'Save Changes',
+                            : Text(
+                                context.tr('Save Changes'),
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
