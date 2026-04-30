@@ -49,6 +49,14 @@ class _EquipmentState extends State<Equipment> {
 
               child: ListTile(
                 contentPadding: EdgeInsets.zero,
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => equipmentPages[index],
+                    ),
+                  );
+                },
 
                 leading: Container(
                   padding: const EdgeInsets.all(10),
@@ -75,37 +83,10 @@ class _EquipmentState extends State<Equipment> {
                   ),
                 ),
 
-                trailing: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => equipmentPages[index],
-                      ),
-                    );
-                  },
-
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 18,
-                      vertical: 8,
-                    ),
-
-                    decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        colors: [Color(0xFF2E7D32), Color(0xFF66BB6A)],
-                      ),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-
-                    child: Text(
-                      context.tr("More"),
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
+                trailing: const Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  color: Color(0xFF66BB6A),
+                  size: 18,
                 ),
               ),
             ),

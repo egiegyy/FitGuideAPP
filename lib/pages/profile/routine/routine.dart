@@ -14,6 +14,16 @@ class MyRoutine extends StatefulWidget {
 class _MyRoutineState extends State<MyRoutine> {
   List<String> days = [];
 
+  static const List<String> _orderedDays = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+  ];
+
   @override
   void initState() {
     super.initState();
@@ -22,6 +32,11 @@ class _MyRoutineState extends State<MyRoutine> {
 
   Future loadDays() async {
     final data = await DBHelper.getRoutineDays();
+    data.sort((a, b) {
+      final aIndex = _orderedDays.indexOf(a);
+      final bIndex = _orderedDays.indexOf(b);
+      return aIndex.compareTo(bIndex);
+    });
 
     if (!mounted) return;
     setState(() {
@@ -30,17 +45,7 @@ class _MyRoutineState extends State<MyRoutine> {
   }
 
   Future chooseDay() async {
-    List<String> allDays = [
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-      "Sunday",
-    ];
-
-    List<String> availableDays = allDays
+    List<String> availableDays = _orderedDays
         .where((d) => !days.contains(d))
         .toList();
 
@@ -103,26 +108,6 @@ class _MyRoutineState extends State<MyRoutine> {
     loadDays();
   }
 
-  Widget addButton() {
-    return InkWell(
-      onTap: () {
-        chooseDay();
-      },
-      child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.all(14),
-        decoration: BoxDecoration(
-          color: Colors.white.withAlpha(13),
-          borderRadius: BorderRadius.circular(18),
-          border: Border.all(color: Colors.white24),
-        ),
-        child: const Column(
-          children: [Icon(Icons.add, color: Color(0xFF66BB6A), size: 28)],
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -159,68 +144,90 @@ class _MyRoutineState extends State<MyRoutine> {
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: days.isEmpty
-              ? Column(children: [addButton()])
-              : Column(
-                  children: [
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: days.length,
-                        itemBuilder: (context, index) {
-                          final day = days[index];
+              ? Center(
+                  child: Text(
+                    context.tr("There is no Routine"),
+                    style: const TextStyle(color: Colors.white70, fontSize: 16),
+                  ),
+                )
+              : ListView.builder(
+                  padding: const EdgeInsets.only(bottom: 88),
+                  itemCount: days.length,
+                  itemBuilder: (context, index) {
+                    final day = days[index];
 
-                          return Padding(
-                            padding: const EdgeInsets.only(bottom: 14),
-
-                            child: InkWell(
-                              onTap: () {
-                                openDay(day);
-                              },
-
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 16,
-                                  vertical: 18,
-                                ),
-                                height: 90,
-
-                                decoration: BoxDecoration(
-                                  color: Colors.white.withAlpha(13),
-                                  borderRadius: BorderRadius.circular(18),
-                                  border: Border.all(color: Colors.white24),
-                                ),
-
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-
-                                  children: [
-                                    Text(
-                                      context.tr(day),
-                                      style: const TextStyle(
-                                        color: Color(0xFF66BB6A),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 24,
-                                      ),
-                                    ),
-
-                                    const Icon(
-                                      Icons.arrow_forward_ios,
-                                      color: Colors.white70,
-                                      size: 18,
-                                    ),
-                                  ],
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 14),
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(18),
+                        onTap: () {
+                          openDay(day);
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 18,
+                          ),
+                          height: 90,
+                          decoration: BoxDecoration(
+                            color: Colors.white.withAlpha(13),
+                            borderRadius: BorderRadius.circular(18),
+                            border: Border.all(color: Colors.white24),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                context.tr(day),
+                                style: const TextStyle(
+                                  color: Color(0xFF66BB6A),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 24,
                                 ),
                               ),
-                            ),
-                          );
-                        },
+                              const Icon(
+                                Icons.arrow_forward_ios,
+                                color: Colors.white70,
+                                size: 18,
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
-                    ),
-
-                    addButton(),
-                  ],
+                    );
+                  },
                 ),
         ),
+      ),
+      floatingActionButton: _buildAddFab(onTap: chooseDay),
+    );
+  }
+
+  Widget _buildAddFab({required VoidCallback onTap}) {
+    return Container(
+      width: 58,
+      height: 58,
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          colors: [Color(0xFF2E7D32), Color(0xFF66BB6A)],
+        ),
+        borderRadius: BorderRadius.circular(18),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.35),
+            blurRadius: 12,
+            offset: const Offset(0, 6),
+          ),
+        ],
+      ),
+      child: FloatingActionButton(
+        heroTag: 'add-routine-day',
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        foregroundColor: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+        onPressed: onTap,
+        child: const Icon(Icons.add_rounded, size: 30),
       ),
     );
   }

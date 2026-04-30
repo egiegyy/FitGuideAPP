@@ -52,6 +52,16 @@ class _HomePageState extends State<HomePage> {
     color: Colors.white,
   );
 
+  static const List<String> _orderedDays = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+  ];
+
   Future<void> getUser() async {
     final user = await UserPref.getCurrentUser();
     if (!mounted) return;
@@ -62,6 +72,11 @@ class _HomePageState extends State<HomePage> {
 
   void loadRoutine() async {
     final data = await DBHelper.getRoutineDays();
+    data.sort((a, b) {
+      final aIndex = _orderedDays.indexOf(a);
+      final bIndex = _orderedDays.indexOf(b);
+      return aIndex.compareTo(bIndex);
+    });
     if (!mounted) return;
     setState(() {
       routineDays = data;
@@ -375,32 +390,31 @@ class _HomePageState extends State<HomePage> {
                 ),
                 const SizedBox(height: 10),
 
-                SizedBox(
-                  width: double.infinity,
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [Color(0xFF2E7D32), Color(0xFF66BB6A)],
-                      ),
-                      borderRadius: BorderRadius.all(Radius.circular(18)),
-                    ),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.transparent,
-                        shadowColor: Colors.transparent,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(18),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const WorkoutPage(),
                         ),
+                      );
+                    },
+                    child: Container(
+                      width: 48,
+                      height: 48,
+                      decoration: BoxDecoration(
+                        color: Colors.white.withValues(alpha: 0.05),
+                        borderRadius: BorderRadius.circular(18),
+                        border: Border.all(color: Colors.white24),
                       ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const WorkoutPage(),
-                          ),
-                        );
-                      },
-                      child: Text(context.tr("See More"), style: buttonText),
+                      child: const Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        color: Color(0xFF66BB6A),
+                        size: 18,
+                      ),
                     ),
                   ),
                 ),
@@ -421,6 +435,9 @@ class _HomePageState extends State<HomePage> {
   ) {
     return ListTile(
       contentPadding: const EdgeInsets.all(8),
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context) => page));
+      },
       leading: Container(
         padding: const EdgeInsets.all(6),
         decoration: BoxDecoration(
@@ -448,20 +465,10 @@ class _HomePageState extends State<HomePage> {
         maxLines: 2,
         overflow: TextOverflow.ellipsis,
       ),
-      trailing: TextButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => page),
-          );
-        },
-        child: Text(
-          context.tr("More"),
-          style: TextStyle(
-            color: Color(0xFF66BB6A),
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+      trailing: const Icon(
+        Icons.arrow_forward_ios_rounded,
+        color: Color(0xFF66BB6A),
+        size: 18,
       ),
     );
   }

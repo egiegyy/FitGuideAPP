@@ -141,113 +141,111 @@ class _RoutineDayPageState extends State<RoutineDayPage> {
         child: Padding(
           padding: const EdgeInsets.all(20),
 
-          child: Column(
-            children: [
-              Expanded(
-                child: exercises.isEmpty
-                    ? Center(
-                        child: Text(
-                          context.tr("No Exercise Yet"),
-                          style: const TextStyle(
-                            color: Colors.white70,
-                            fontSize: 16,
+          child: exercises.isEmpty
+              ? Center(
+                  child: Text(
+                    context.tr("No Exercise Yet"),
+                    style: const TextStyle(color: Colors.white70, fontSize: 16),
+                  ),
+                )
+              : ListView.builder(
+                  padding: const EdgeInsets.only(bottom: 88),
+                  itemCount: exercises.length,
+                  itemBuilder: (context, index) {
+                    final routine = exercises[index];
+
+                    final exerciseData = allExercises.firstWhere(
+                      (e) => e.name == routine['exercise'],
+                      orElse: () => allExercises.first,
+                    );
+
+                    return Container(
+                      margin: const EdgeInsets.only(bottom: 14),
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 12,
+                        horizontal: 12,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withAlpha(13),
+                        borderRadius: BorderRadius.circular(18),
+                        border: Border.all(color: Colors.white24),
+                      ),
+                      child: ListTile(
+                        contentPadding: EdgeInsets.zero,
+                        leading: ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: Image.asset(
+                            exerciseData.image,
+                            width: 55,
+                            height: 55,
+                            fit: BoxFit.cover,
                           ),
                         ),
-                      )
-                    : ListView.builder(
-                        itemCount: exercises.length,
-                        itemBuilder: (context, index) {
-                          final routine = exercises[index];
-
-                          final exerciseData = allExercises.firstWhere(
-                            (e) => e.name == routine['exercise'],
-                            orElse: () => allExercises.first,
-                          );
-
-                          return Container(
-                            margin: const EdgeInsets.only(bottom: 14),
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 12,
-                              horizontal: 12,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.white.withAlpha(13),
-                              borderRadius: BorderRadius.circular(18),
-                              border: Border.all(color: Colors.white24),
-                            ),
-                            child: ListTile(
-                              contentPadding: EdgeInsets.zero,
-
-                              leading: ClipRRect(
-                                borderRadius: BorderRadius.circular(12),
-                                child: Image.asset(
-                                  exerciseData.image,
-                                  width: 55,
-                                  height: 55,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-
-                              title: Text(
-                                exerciseData.exercise.displayName(context),
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) => exerciseData.page,
-                                  ),
-                                );
-                              },
-
-                              trailing: Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.white.withAlpha(20),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: IconButton(
-                                  icon: const Icon(
-                                    Icons.delete,
-                                    color: Colors.red,
-                                    size: 20,
-                                  ),
-                                  onPressed: () {
-                                    confirmDelete(routine['id']);
-                                  },
-                                ),
-                              ),
-                            ),
+                        title: Text(
+                          exerciseData.exercise.displayName(context),
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 17,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (_) => exerciseData.page),
                           );
                         },
+                        trailing: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white.withAlpha(20),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: IconButton(
+                            icon: const Icon(
+                              Icons.delete,
+                              color: Colors.red,
+                              size: 20,
+                            ),
+                            onPressed: () {
+                              confirmDelete(routine['id']);
+                            },
+                          ),
+                        ),
                       ),
-              ),
-
-              InkWell(
-                onTap: openAddExercise,
-                child: Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(14),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withAlpha(13),
-                    borderRadius: BorderRadius.circular(18),
-                    border: Border.all(color: Colors.white24),
-                  ),
-                  child: const Column(
-                    children: [
-                      Icon(Icons.add, color: Color(0xFF66BB6A), size: 28),
-                    ],
-                  ),
+                    );
+                  },
                 ),
-              ),
-            ],
-          ),
         ),
+      ),
+      floatingActionButton: _buildAddFab(onTap: openAddExercise),
+    );
+  }
+
+  Widget _buildAddFab({required VoidCallback onTap}) {
+    return Container(
+      width: 58,
+      height: 58,
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          colors: [Color(0xFF2E7D32), Color(0xFF66BB6A)],
+        ),
+        borderRadius: BorderRadius.circular(18),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.35),
+            blurRadius: 12,
+            offset: const Offset(0, 6),
+          ),
+        ],
+      ),
+      child: FloatingActionButton(
+        heroTag: 'add-routine-exercise',
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        foregroundColor: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+        onPressed: onTap,
+        child: const Icon(Icons.add_rounded, size: 30),
       ),
     );
   }

@@ -138,7 +138,7 @@ class _FullBodyWorkoutState extends State<FullBodyWorkout> {
                       ),
                     ),
 
-                    trailing: TextButton(
+                    trailing: IconButton(
                       onPressed: () {
                         Navigator.push(
                           context,
@@ -149,36 +149,10 @@ class _FullBodyWorkoutState extends State<FullBodyWorkout> {
                           ),
                         );
                       },
-                      style: TextButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 18,
-                          vertical: 8,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        backgroundColor: Colors.transparent,
-                      ),
-                      child: Ink(
-                        decoration: const BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [Color(0xFF2E7D32), Color(0xFF66BB6A)],
-                          ),
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 18,
-                            vertical: 8,
-                          ),
-                          child: Text(
-                            context.tr("More"),
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
+                      icon: const Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        color: Color(0xFF66BB6A),
+                        size: 18,
                       ),
                     ),
                   ),
@@ -225,7 +199,7 @@ class _FullBodyWorkoutState extends State<FullBodyWorkout> {
                       ),
                     ),
 
-                    trailing: TextButton(
+                    trailing: IconButton(
                       onPressed: () {
                         Navigator.push(
                           context,
@@ -236,35 +210,10 @@ class _FullBodyWorkoutState extends State<FullBodyWorkout> {
                           ),
                         );
                       },
-                      style: TextButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 18,
-                          vertical: 8,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                      ),
-                      child: Ink(
-                        decoration: const BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [Color(0xFF2E7D32), Color(0xFF66BB6A)],
-                          ),
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 18,
-                            vertical: 8,
-                          ),
-                          child: Text(
-                            context.tr("More"),
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
+                      icon: const Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        color: Color(0xFF66BB6A),
+                        size: 18,
                       ),
                     ),
                   ),
@@ -311,7 +260,7 @@ class _FullBodyWorkoutState extends State<FullBodyWorkout> {
                       ),
                     ),
 
-                    trailing: TextButton(
+                    trailing: IconButton(
                       onPressed: () {
                         Navigator.push(
                           context,
@@ -322,35 +271,10 @@ class _FullBodyWorkoutState extends State<FullBodyWorkout> {
                           ),
                         );
                       },
-                      style: TextButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 18,
-                          vertical: 8,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                      ),
-                      child: Ink(
-                        decoration: const BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [Color(0xFF2E7D32), Color(0xFF66BB6A)],
-                          ),
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 18,
-                            vertical: 8,
-                          ),
-                          child: Text(
-                            context.tr("More"),
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
+                      icon: const Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        color: Color(0xFF66BB6A),
+                        size: 18,
                       ),
                     ),
                   ),

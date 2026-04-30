@@ -47,6 +47,9 @@ class Package extends StatelessWidget {
         border: Border.all(color: Colors.white24),
       ),
       child: ListTile(
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => page));
+        },
         leading: Container(
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
@@ -70,29 +73,10 @@ class Package extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        trailing: InkWell(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => page),
-            );
-          },
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
-            decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [Color(0xFF2E7D32), Color(0xFF66BB6A)],
-              ),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Text(
-              context.tr("More"),
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
+        trailing: const Icon(
+          Icons.arrow_forward_ios_rounded,
+          color: Color(0xFF66BB6A),
+          size: 18,
         ),
       ),
     );
